@@ -36,8 +36,6 @@ public:
 
    void setParent(int newParent) {parent = newParent;} // Parent's are used for Union-Find
    int getParent() {return parent;}
-   int getColumn() {return column;}
-   int getRow() {return row;}
 };
 
 // The board for the game to be played on
@@ -59,7 +57,6 @@ public:
    bool isGameOver(); //Change name?
    void printBoard() const;
    int getSize() const {return size;}
-   int getTileLocation(int row, int column) const;
    int getATurn() const {return aTurnInc;}
    int getBTurn() const {return bTurnInc;}
    void setATurn() {aTurnInc += 1;} //increment turn by one

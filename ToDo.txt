@@ -1,0 +1,11 @@
+Rework Main file
+   - Play different agents against each other?
+   - Play only single agents against themselves?
+   - Command line options to choose which agents to play?
+
+Agent files
+   - Try to code up 7x7 and 8x8 solutions found online?
+
+hex.h and hex.cpp
+   - remove unnecessary functions
+   - plan out architecture of code
