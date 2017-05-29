@@ -14,23 +14,24 @@ CXX='g++'
 CXXFLAGS='-O3 -Wall'   # Change -O3 to -g to get debug info.
 LDLIBS='-lm'
 
-if [[ ! -f "${challenge}.h" || ! -f "${challenge}.cpp" || ! -f "${challenge}Main.cpp" ]]
+if [[ ! -f "src/hex.h" || ! -f "src/hex.cpp" || ! -f "src/hexMain.cpp" ]]
 then
-   echo " * ${challenge}.h, ${challenge}.cpp and ${challenge}Main.cpp are required."
+   echo " * src/hex.h, src/hex.cpp and src/hexMain.cpp are required."
    echo " * Build failed."
    exit 1
 fi
 
-for fileName in ${challenge}Agent?*.cpp
+for fileName in agents/hexAgent?*.cpp
 do
-   funcName="${fileName%.cpp}"
-   agentName="${funcName#${challenge}Agent}"
+   funcName="${fileName#*s/}"
+   funcName="${funcName%.cpp}"
+   agentName="${funcName#hexAgent}"
    validAgentNameFormat='^[A-Z][0-9A-Za-z]*$'
    if [[ "${#agentName}" -le 20 && "${agentName}" =~ ${validAgentNameFormat} ]]
    then
-      if ! grep "#include \"${challenge}.h\"" "${fileName}" > /dev/null
+      if ! grep "#include \"../src/hex.h\"" "${fileName}" > /dev/null
       then
-         echo " * ${fileName}: No #include \"${challenge}.h\" found; skipping compilation."
+         echo " * ${fileName}: No #include \"../src/hex.h\" found; skipping compilation."
       elif ! grep -w "${funcName}" "${fileName}" > /dev/null
       then
          echo " * ${fileName}: No ${funcName} function found; skipping compilation."
@@ -54,23 +55,23 @@ done
 echo " * ${numAgents} agents found."
 if (( numAgents < 2 ))
 then
-   echo " * At least two agents (e.g., ${challenge}AgentSmith.cpp) is needed."
+   echo " * At least two agents (e.g., hexAgentSmith.cpp) is needed."
    echo " * Build failed."
    rm *.o
    exit 2
 fi
 
-cat >| "${challenge}Funcs.cpp" << END
-#include "${challenge}.h"
+cat >| "hexFuncs.cpp" << END
+#include "src/hex.h"
 
 END
 for funcName in ${funcNames}
 do
-   cat >> "${challenge}Funcs.cpp" << END
+   cat >> "hexFuncs.cpp" << END
 extern ${funcSignature/_/${funcName}};
 END
 done
-cat >> "${challenge}Funcs.cpp" << END
+cat >> "hexFuncs.cpp" << END
 
 extern const int numAgents = ${numAgents};
 
@@ -78,63 +79,63 @@ ${funcSignature/_/(*agentFunc[numAgents])} = {
 END
 for funcName in ${funcNames}
 do
-   cat >> "${challenge}Funcs.cpp" << END
+   cat >> "hexFuncs.cpp" << END
    &${funcName},
 END
 done
-cat >> "${challenge}Funcs.cpp" << END
+cat >> "hexFuncs.cpp" << END
 };
 
 string agentStr[numAgents] = {
 END
 for funcName in ${funcNames}
 do
-   cat >> "${challenge}Funcs.cpp" << END
-   "${funcName#${challenge}Agent}",
+   cat >> "hexFuncs.cpp" << END
+   "${funcName#hexAgent}",
 END
 done
-cat >> "${challenge}Funcs.cpp" << END
+cat >> "hexFuncs.cpp" << END
 };
 END
 
-echo " * ${challenge}.cpp: Compiling . . ."
-if ${CXX} ${CXXFLAGS} -c "${challenge}.cpp"
+echo " * hex.cpp: Compiling . . ."
+if ${CXX} ${CXXFLAGS} -c "src/hex.cpp"
 then
-   echo " * ${challenge}.cpp: Compilation succeeded."
+   echo " * hex.cpp: Compilation succeeded."
 else
-   echo " * ${challenge}.cpp: Compilation failed."
+   echo " * hex.cpp: Compilation failed."
    echo " * Build failed."
    rm *.o
    exit 3
 fi
 
-echo " * ${challenge}Funcs.cpp: Compiling . . ."
-if ${CXX} ${CXXFLAGS} -c "${challenge}Funcs.cpp"
+echo " * hexFuncs.cpp: Compiling . . ."
+if ${CXX} ${CXXFLAGS} -c "hexFuncs.cpp"
 then
-   echo " * ${challenge}Funcs.cpp: Compilation succeeded."
-   rm -f "${challenge}Funcs.cpp"
+   echo " * hexFuncs.cpp: Compilation succeeded."
+   rm -f "hexFuncs.cpp"
 else
-   echo " * ${challenge}Funcs.cpp: Compilation failed."
+   echo " * hexFuncs.cpp: Compilation failed."
    echo " * Build failed."
    rm *.o
    exit 4
 fi
 
-echo " * ${challenge}Main.cpp: Compiling . . ."
-if ${CXX} ${CXXFLAGS} -c "${challenge}Main.cpp"
+echo " * hexMain.cpp: Compiling . . ."
+if ${CXX} ${CXXFLAGS} -c "src/hexMain.cpp"
 then
-   echo " * ${challenge}Main.cpp: Compilation succeeded."
+   echo " * hexMain.cpp: Compilation succeeded."
 else
-   echo " * ${challenge}Main.cpp: Compilation failed."
+   echo " * hexMain.cpp: Compilation failed."
    echo " * Build failed."
-   rm *.o
+   rm *.ohex
    exit 5
 fi
 
 echo " * Linking . . ."
-execFile="${challenge}RunSim"
+execFile="hexRunSim"
 rm -f "${execFile}"
-if ${CXX} ${LDLIBS} -o "${execFile}" "${challenge}Main.o" "${challenge}Funcs.o" "${challenge}.o" ${objectFiles}
+if ${CXX} ${LDLIBS} -o "${execFile}" "hexMain.o" "hexFuncs.o" "hex.o" ${objectFiles}
 then
    echo " * Linking succeeded."
    echo " * Executable file ./${execFile} is ready to run!"
