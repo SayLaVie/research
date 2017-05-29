@@ -31,6 +31,9 @@ public:
    int getRank() {return rank;} // This is for Union-Find
    void incrementRank() {rank = rank + 1;}
 
+   int getRow() {return row;}
+   int getColumn() {return column;}
+
    int getTurn() const{return turn;} // Turn is used for printBoard() -- it tells whech turn the tile was taken
    void setTurn(int newTurn) {turn = newTurn;}
 

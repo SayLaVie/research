@@ -5,6 +5,8 @@ Rework Main file
 
 Agent files
    - Try to code up 7x7 and 8x8 solutions found online?
+   - Genetic algorithms for heuristic values
+   - SubGraph Idea
 
 hex.h and hex.cpp
    - remove unnecessary functions

@@ -1,10 +1,10 @@
-// CS 4318, spring 2017
-// Final Project, Hex Game
-//
-// Here's the main function that plays all agents against each other and
-// summarizes the results.
+/*
+   Research: The Game of Hex
+   Student: Michael McCarver
+   Professor: Dr. Rob LeGrand
 
-// This is based mostly off of the main function from ORR and CRR.
+   This research project is centered around The Game of Hex.
+*/
 
 #include "hex.h"
 
@@ -12,7 +12,7 @@ extern const int numAgents;
 extern int (*agentFunc[])(const Board &, player);
 extern string agentStr[];
 
-// plays the game and returns a char representing the result 
+// plays the game and returns a char representing the result
 char playHexGame(int (*agentA)(const Board&, player whichPlayer), int (*agentB)(const Board&, player whichPlayer), Board& hexGame);
 
 // main function
@@ -25,7 +25,7 @@ int main()
    // the hexBoard that will be played on
    Board *hexGrid;
 
-   cout << "Final Project: Hex\n"
+   cout << "The Game of Hex\n"
         << "Results\n\n";
 
    // intializes the arrays that will be used to sort for the top player
@@ -130,11 +130,11 @@ int main()
    for (i = 0; i < numAgents; i += 1)
    {
       double ratio;
-      if (numLossesA[order[i]] + numLossesB[order[i]] == 0) 
+      if (numLossesA[order[i]] + numLossesB[order[i]] == 0)
       {
          ratio = 1;
       }
-      else 
+      else
       {
          ratio = (static_cast<double>(numWinsA[order[i]]) + static_cast<double>(numWinsB[order[i]]))/(static_cast<double>(numLossesA[order[i]]) + static_cast<double>(numLossesB[order[i]]));
       }
@@ -146,7 +146,7 @@ int main()
            << " " << setw(7) << right << numWinsB[order[i]]
            << " " << setw(4) << right << numLossesB[order[i]]
            << " " << setw(8) << right << numMoves[order[i]]
-           << " " << setw(8) << right << numInvalid[order[i]] 
+           << " " << setw(8) << right << numInvalid[order[i]]
            << " " << setprecision(5) << setw(11) << right << ratio << "\n";
    }
 
@@ -163,7 +163,6 @@ char playHexGame(int (*agentA)(const Board&, player whichPlayer), int (*agentB)(
    {
       // player A goes first
       int playerA_move = (*agentA)(hexGrid, playerA);
-//      numMovesA += 1;
 
       //if it is an invalid move, B automatically wins
       if(!hexGrid.isValidMove(playerA_move))
@@ -188,7 +187,6 @@ char playHexGame(int (*agentA)(const Board&, player whichPlayer), int (*agentB)(
       }
 
       int playerB_move = (*agentB)(hexGrid, playerB);
-//      numMovesB += 1;
 
       // if it is an invalid move, A automatically wins
       if(!hexGrid.isValidMove(playerB_move))

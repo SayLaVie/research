@@ -103,6 +103,7 @@ void Board::makeMove(int location, player mover) // Updates the owner of a tile,
    if (isValidMove(location))
    {
       locationTile->setOwner(mover);
+
       //Set the turn for the tile
       if(mover == playerA)
       {
@@ -305,12 +306,4 @@ void Board::printBoard() const // Prints the board out
 
       cout << endl;
    }
-}
-
-int Board::getTileLocation(int row, int column) const // Takes row and column values and returns an index associated with location
-{
-   if (row < 0 || row > size || column < 0 || column > size)
-      return -1;
-
-   return size * row + column;
 }
