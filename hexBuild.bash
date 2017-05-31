@@ -11,7 +11,7 @@ declare -i numAgents
 (( numAgents = 0 ))
 
 CXX='g++'
-CXXFLAGS='-O3 -Wall'   # Change -O3 to -g to get debug info.
+CXXFLAGS='-g -Wall'   # Change -O3 to -g to get debug info.
 LDLIBS='-lm'
 
 if [[ ! -f "src/hex.h" || ! -f "src/hex.cpp" || ! -f "src/hexMain.cpp" ]]

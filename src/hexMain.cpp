@@ -40,7 +40,7 @@ int main()
    }
 
    // plays the game with all of the available agents and prints the board of moves made by the agents
-   for (boardSize = 3; boardSize <= 11; boardSize += 1)
+   for (boardSize = 3; boardSize <= 4; boardSize += 1)
    {
       // loops throug the agent functions
       for (i = 0; i < numAgents; i += 1)
@@ -112,9 +112,9 @@ int main()
    {
       for (j = i + 1; j < numAgents; j += 1)
       {
-         if (numWinsA[order[i]] + numWinsB[order[i]] < numWinsA[order[j]] + numWinsB[order[j]] || numWinsA[order[i]] + numWinsB[order[i]] == numWinsA[order[j]] + numWinsB[order[j]] &&
-             (numMoves[order[i]] > numMoves[order[j]] || numMoves[order[i]] == numMoves[order[j]]  &&
-              agentStr[order[i]] >= agentStr[order[j]])) // sort the agents from best to worst
+         if (numWinsA[order[i]] + numWinsB[order[i]] < numWinsA[order[j]] + numWinsB[order[j]] || (numWinsA[order[i]] + numWinsB[order[i]] == numWinsA[order[j]] + numWinsB[order[j]] &&
+             (numMoves[order[i]] > numMoves[order[j]] || (numMoves[order[i]] == numMoves[order[j]]  &&
+              agentStr[order[i]] >= agentStr[order[j]])))) // sort the agents from best to worst
          {
             temp = order[i];
             order[i] = order[j];
