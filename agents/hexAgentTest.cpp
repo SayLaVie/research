@@ -1,18 +1,21 @@
 /*
-   Simple player for hex game
+   Test player for hex game
 */
 
 #include "../src/hex.h"
 
-int hexAgentSimpleMiniMax(Board board, player whichPlayer, int depth, int alpha, int beta);
+int hexAgentTestMiniMax(Board board, player whichPlayer, int depth, int alpha, int beta);
+int hexAgentTestHeuristic(Board board);
 
-int hexAgentSimple(const Board &board, player whichPlayer)
+int maxDepth = 5;
+
+int hexAgentTest(const Board &board, player whichPlayer)
 {
    int bestMove, boardSize;
 
    boardSize = board.getSize();
 
-   bestMove = hexAgentSimpleMiniMax(board, whichPlayer, 0, -10000, 10000);
+   bestMove = hexAgentTestMiniMax(board, whichPlayer, 0, -10000, 10000);
 
    if (board.isValidMove(bestMove))
    {
@@ -30,9 +33,9 @@ int hexAgentSimple(const Board &board, player whichPlayer)
    return bestMove;
 }
 
-int hexAgentSimpleMiniMax(Board board, player whichPlayer, int depth, int alpha, int beta)
+int hexAgentTestMiniMax(Board board, player whichPlayer, int depth, int alpha, int beta)
 {
-   int boardSize, utilityValue, eval, location, tmpBestMove;
+   int boardSize, utilityValue, eval, location, tmpBestMove, heuristicValue;
    bool maximizer;
    Board copyBoard;
 
@@ -42,7 +45,13 @@ int hexAgentSimpleMiniMax(Board board, player whichPlayer, int depth, int alpha,
    if (board.isGameOver())
    {
       return maximizer ? -500 + depth : 500 - depth; // Try to weigh in favor of shallow depth winning moves
-      // return maximizer ? -1 : 1;
+   }
+
+   if (depth > maxDepth)
+   {
+      heuristicValue = hexAgentTestHeuristic(board);
+
+      return maximizer ? heuristicValue : -heuristicValue;
    }
 
    boardSize = board.getSize();
@@ -56,7 +65,7 @@ int hexAgentSimpleMiniMax(Board board, player whichPlayer, int depth, int alpha,
          copyBoard = board;
          copyBoard.makeMove(location, whichPlayer);
 
-         eval = hexAgentSimpleMiniMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1, alpha, beta);
+         eval = hexAgentTestMiniMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1, alpha, beta);
 
          if (maximizer)
          {
@@ -109,4 +118,19 @@ int hexAgentSimpleMiniMax(Board board, player whichPlayer, int depth, int alpha,
    }
 
    return utilityValue;
+}
+
+// This heuristic function should return a value between -500 and 500, representing how good of a board state
+// we think this board is. We should keep in mind that winning moves return (500 - currentDepth), and we will
+// not want to return a value that beats a winning move. We should determine what our max depth will be, then
+// figure out what the lowest value winning move is possible to be returned, then make sure that our heuristic
+// will never return something better than that, causing our minimax function to choose a well evaluated board
+// instead of a winning move.
+
+// For now, let's assume that the maxDepth will be 5 (*we will create a global variable). This means that the
+// best possible return value is 499. We'll let the minimax function determine whether it's positive or
+// negative.
+int hexAgentTestHeuristic(Board board)
+{
+
 }
