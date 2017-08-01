@@ -128,8 +128,9 @@ int hexAgentTestMiniMax(Board board, player whichPlayer, int depth, int alpha, i
 // instead of a winning move.
 
 // For now, let's assume that the maxDepth will be 5 (*we will create a global variable). This means that the
-// best possible return value is 499. We'll let the minimax function determine whether it's positive or
-// negative.
+// best possible return value is 499, and the worst winning move is 495. We'll let the minimax function
+// determine whether it's positive or negative.
+
 int hexAgentTestHeuristic(Board board)
 {
 

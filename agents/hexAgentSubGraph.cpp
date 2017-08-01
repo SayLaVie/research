@@ -1,11 +1,8 @@
-#include "hex.h"
-#include <queue>
+#include "../src/hex.h"
 
-int hexAgentSubGraph1MinMax(Board board, player whichPlayer, int depth, vector<int> moveList);
+int hexAgentSubGraphMinMax(Board board, player whichPlayer, int depth, vector<int> moveList);
 
-// priority_queue<int> hexAgentSubGraph1MoveList;
-
-int hexAgentSubGraph1 (const Board &board, player whichPlayer)
+int hexAgentSubGraph (const Board &board, player whichPlayer)
 {
    int subGraphSize, boardSize, row, column, moveToAdd, tmpRow, tmpCol;
    Board *subGraph;
@@ -15,7 +12,7 @@ int hexAgentSubGraph1 (const Board &board, player whichPlayer)
 
    boardSize = board.getSize();
    subGraphSize = 3;
-// cout << board.getBoard()[0].getOwner() << endl;
+
    do
    {
       // Break board into all subgraphs, evaluating each one and pushing
@@ -31,8 +28,6 @@ int hexAgentSubGraph1 (const Board &board, player whichPlayer)
             {
                for (int subCol = column; subCol < column + subGraphSize; ++subCol)
                {
-                  if (board.getATurn() == 2 && boardSize == 4 && whichPlayer == playerA)
-                     cout << endl << boardSize * subRow + subCol;
                   subTiles.push_back(board.getBoard()[boardSize * subRow + subCol]);
                }
             }
@@ -51,7 +46,7 @@ int hexAgentSubGraph1 (const Board &board, player whichPlayer)
             }
 
             // We now have a subGraph. Evaluate it
-            moveToAdd = hexAgentSubGraph1MinMax(*subGraph, whichPlayer, 0, moveList);
+            moveToAdd = hexAgentSubGraphMinMax(*subGraph, whichPlayer, 0, moveList);
 
             // Turn this location into a location for a board the next size up, if it was a good one
             if (moveToAdd != -1)
@@ -69,6 +64,8 @@ int hexAgentSubGraph1 (const Board &board, player whichPlayer)
                // Push onto move vector
                // cout << endl << "size " << subGraphSize << " currentCol: " << column << " move " << moveToAdd << " " << (subGraphSize + (subGraphSize == boardSize ? 0 : 1)) * tmpRow + tmpCol;
 
+
+               // What's this doing? (Maybe pushing the move onto the next size up subgraph?)
                if (subGraphSize < boardSize)
                {
                   moveList.push_back((subGraphSize + 1) * tmpRow + tmpCol);
@@ -96,9 +93,9 @@ int hexAgentSubGraph1 (const Board &board, player whichPlayer)
    return 0;
 }
 
-int hexAgentSubGraph1MinMax(Board board, player whichPlayer, int depth, vector<int> moveList)
+int hexAgentSubGraphMinMax(Board board, player whichPlayer, int depth, vector<int> moveList)
 {
-   int location, boardSize, value, minMax, bestMoveSoFar;
+   int location, boardSize, /*value,*/ minMax, bestMoveSoFar;
    vector<int> copyList, notOnList;
    Board copyBoard;
 
@@ -127,7 +124,7 @@ int hexAgentSubGraph1MinMax(Board board, player whichPlayer, int depth, vector<i
             copyBoard = board;
             copyBoard.makeMove(bestMoveSoFar, whichPlayer);
 
-            minMax = hexAgentSubGraph1MinMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1, copyList);
+            minMax = hexAgentSubGraphMinMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1, copyList);
 
             if (depth % 2 == 0)
             {
@@ -169,7 +166,7 @@ int hexAgentSubGraph1MinMax(Board board, player whichPlayer, int depth, vector<i
 
             copyBoard.makeMove(location, whichPlayer);
 
-            minMax = hexAgentSubGraph1MinMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1, moveList);
+            minMax = hexAgentSubGraphMinMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1, moveList);
 
             if (depth % 2 == 0)
             {
