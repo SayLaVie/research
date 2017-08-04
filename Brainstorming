@@ -1,0 +1,15 @@
+ ---Notes from meeting with LeGrand---
+Start with a simple agent
+   1 layer neural network
+Don't worry about a global 'best player'
+   Allow the genetic algorithm to move around
+   Trust that it consistently finds local optima
+Our meetings will be Fridays at 4pm - 5pm
+
+
+---Neural Network---
+I need a perceptron that takes in one input per hex on the board
+   The perceptron will output a value between (-n) and (n)
+   The greater the value returned, the better the board position is
+<Note> A single layer neural network will only be able to prioritize square locations
+   e.g. Hexes in the middle of the board are more desirable
