@@ -1,6 +1,20 @@
 #include "../src/hex.h"
 
-int hexAgentSubGraphMinMax(Board board, player whichPlayer, int depth, vector<int> moveList);
+/*
+   The idea behind this strategy is to break the board into all
+   sub-boards that are size 3, then to find the best moves for each
+   of those size-3 boards, and then to push those moves onto a 
+   priority-queue (or maybe just a regular vector, since there will
+   only be one best move in the end). Then, the board is broken down 
+   into all sub-boards that are size 4, the best moves of the size-3 
+   boards are used to determine the best moves for the size-4 boards, 
+   which replace the size-3 best moves. This continues, with the 
+   sub-boards growing in size, until the sub-board is the same size as 
+   the real board. Hopefully, the best moves of each sub-board will be 
+   the best move for any larger board.
+*/
+
+int hexAgentSubGraphMinMax(Board board, player whichPlayer, vector<int> moveList);
 
 int hexAgentSubGraph (const Board &board, player whichPlayer)
 {
@@ -32,7 +46,7 @@ int hexAgentSubGraph (const Board &board, player whichPlayer)
                }
             }
 
-            // Use vector of tiles to create subGraph
+            // Use vector of tiles to maintain states of subgraph tiles
             for (int i = 0; i < subGraphSize * subGraphSize; ++i)
             {
                mover = subTiles[i].getOwner();
@@ -46,7 +60,7 @@ int hexAgentSubGraph (const Board &board, player whichPlayer)
             }
 
             // We now have a subGraph. Evaluate it
-            moveToAdd = hexAgentSubGraphMinMax(*subGraph, whichPlayer, 0, moveList);
+            moveToAdd = hexAgentSubGraphMinMax(*subGraph, whichPlayer, moveList);
 
             // Turn this location into a location for a board the next size up, if it was a good one
             if (moveToAdd != -1)
@@ -65,7 +79,9 @@ int hexAgentSubGraph (const Board &board, player whichPlayer)
                // cout << endl << "size " << subGraphSize << " currentCol: " << column << " move " << moveToAdd << " " << (subGraphSize + (subGraphSize == boardSize ? 0 : 1)) * tmpRow + tmpCol;
 
 
-               // What's this doing? (Maybe pushing the move onto the next size up subgraph?)
+               // The following section looks wrong to me. The moves should be converted
+               // to be appropriate for the true board size, then converted back if the
+               // next board needs them.
                if (subGraphSize < boardSize)
                {
                   moveList.push_back((subGraphSize + 1) * tmpRow + tmpCol);
@@ -93,7 +109,34 @@ int hexAgentSubGraph (const Board &board, player whichPlayer)
    return 0;
 }
 
-int hexAgentSubGraphMinMax(Board board, player whichPlayer, int depth, vector<int> moveList)
+
+
+int hexAgentSubGraphMinMax(Board board, player whichPlayer, vector<int> moveList)
+{
+   /*
+      The board variable is a reference to the subGraph that was being used
+      when this minimax was called. moveList is a reference to the current list
+      of best-moves that have been determined by previous sub-graphs.
+         *NOTE*
+      Not all of these best-moves will be applicable for every sub-graph.
+      I will have to devise a way to sanitize potential moves that I play.
+      ~~
+   */
+
+
+   int location, boardSize, minMax;
+   Board copyBoard;
+
+   boardSize = board.getSize();
+
+
+}
+
+
+
+
+// I wasn't confident about the code below, so I began re-writing it above 
+int hexAgentSubGraphMinMaxOriginal(Board board, player whichPlayer, int depth, vector<int> moveList)o
 {
    int location, boardSize, /*value,*/ minMax, bestMoveSoFar;
    vector<int> copyList, notOnList;
