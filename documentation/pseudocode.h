@@ -15,3 +15,23 @@ public:
 	int minMax(Board board, player whichPlayer, int depth, int alpha, int beta); // same for everyone
 	int heuristic(Board board); // This function will use the weights passed in (neural net)
 }
+
+
+
+
+
+/*************************************************************************************************/
+
+main() {
+	while () {
+		geneticAlgorithm() // Determine weights for new players
+		Player a, b, c.....n // instantiate player classes with new weights
+
+		// Every player plays against one another
+		for each Player {
+			playHex(Player A, Player B);
+		}
+
+		playerRankings() // Some sort of ranking system to feed into genetic algorithm
+	}
+}
