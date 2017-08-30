@@ -133,5 +133,5 @@ int hexAgentTestMiniMax(Board board, player whichPlayer, int depth, int alpha, i
 
 int hexAgentTestHeuristic(Board board)
 {
-
+   return 0;
 }

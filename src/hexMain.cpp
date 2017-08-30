@@ -40,7 +40,7 @@ int main()
    }
 
    // plays the game with all of the available agents and prints the board of moves made by the agents
-   for (boardSize = 3; boardSize <= 4; boardSize += 1)
+   for (boardSize = 3; boardSize <= 6; boardSize += 1)
    {
       // loops throug the agent functions
       for (i = 0; i < numAgents; i += 1)

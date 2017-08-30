@@ -60,7 +60,7 @@ int hexAgentABSpiralMax(Board board, player whichPlayer, int alpha, int beta, in
    // Set to negative infinity
    utilityValue = -2;
 
-   if (depth > 1)
+   if (depth > 5)
    {
       return 0;
    }
