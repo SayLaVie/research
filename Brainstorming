@@ -24,7 +24,7 @@ Will the genetic algorithm be fundamentally the same for many layer networks?
 Create a class for each player. The Genetic algorithm can create an object and pass
 it the new weights that were determined from the evolution.
 Games can be played between players
-   -- This requires changed the layout of the code I already have.
+   -- This requires changes to the layout of the code I already have.
 
 
 
