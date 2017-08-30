@@ -20,8 +20,8 @@ Tile::Tile(int location, int size) // Constructor used during board creation
 Board::Board(int size) // Constructor using board size
 {
    this->size = size;
-   this->aTurnInc = 0;
-   this->bTurnInc = 0;
+   this->aTurn = 0;
+   this->bTurn = 0;
    for (int i = 0; i < size * size; ++i)
    {
       BoardLayout.push_back(Tile(i, size));
@@ -33,8 +33,8 @@ Board::Board(const Board &copy) // Copy constructor
    this->BoardLayout.clear();
 
    this->size = copy.getSize();
-   this->aTurnInc = copy.getATurn();
-   this->bTurnInc = copy.getBTurn();
+   this->aTurn = copy.getATurn();
+   this->bTurn = copy.getBTurn();
 
    this->BoardLayout = copy.getBoard();
 }
@@ -44,8 +44,8 @@ Board& Board::operator=(const Board &rhs) // Assignment operator
    this->BoardLayout.clear();
 
    this->size = rhs.getSize();
-   this->aTurnInc = rhs.getATurn();
-   this->bTurnInc = rhs.getBTurn();
+   this->aTurn = rhs.getATurn();
+   this->bTurn = rhs.getBTurn();
 
    this->BoardLayout = rhs.getBoard();
 

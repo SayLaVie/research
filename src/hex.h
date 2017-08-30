@@ -34,7 +34,7 @@ public:
    int getRow() {return row;}
    int getColumn() {return column;}
 
-   int getTurn() const{return turn;} // Turn is used for printBoard() -- it tells whech turn the tile was taken
+   int getTurn() const{return turn;} // Turn is used for printBoard() -- it tells which turn the tile was taken
    void setTurn(int newTurn) {turn = newTurn;}
 
    void setParent(int newParent) {parent = newParent;} // Parent's are used for Union-Find
@@ -45,7 +45,7 @@ public:
 class Board
 {
 private:
-   int size, aTurnInc, bTurnInc;
+   int size, aTurn, bTurn;
    vector<Tile> BoardLayout;
    void findNeighbors(int location);
    void Union(int x, int y);
@@ -57,13 +57,13 @@ public:
    Board(const Board &copy);
    void makeMove(int location, player mover); // Update the board with a player's move.
    bool isValidMove(int location) const;
-   bool isGameOver(); //Change name?
+   bool isGameOver();
    void printBoard() const;
    int getSize() const {return size;}
-   int getATurn() const {return aTurnInc;}
-   int getBTurn() const {return bTurnInc;}
-   void setATurn() {aTurnInc += 1;} //increment turn by one
-   void setBTurn() {bTurnInc += 1;} //increment turn by one
+   int getATurn() const {return aTurn;}
+   int getBTurn() const {return bTurn;}
+   void setATurn() {aTurn += 1;} //increment turn by one
+   void setBTurn() {bTurn += 1;} //increment turn by one
 
    vector<Tile> getBoard() const{return BoardLayout;} // A little ugly, but I needed to access the board for the copy constructor and assignment operator overload
 

@@ -12,9 +12,16 @@
    sub-boards growing in size, until the sub-board is the same size as 
    the real board. Hopefully, the best moves of each sub-board will be 
    the best move for any larger board.
+
+
+      ***NOTES***
+   Will have to come up with a default movelist to use for the initial
+   3x3's, or possibly tell the code to perform a true minimax if the
+   movelist is empty.
 */
 
-int hexAgentSubGraphMinMax(Board board, player whichPlayer, vector<int> moveList);
+int hexAgentSubGraphMinMax(Board board, player whichPlayer, int depth, vector<int> moveList);
+int hexAgentSubGraphMinMax(Board board, player whichPlayer, int depth);
 
 int hexAgentSubGraph (const Board &board, player whichPlayer)
 {
@@ -60,7 +67,13 @@ int hexAgentSubGraph (const Board &board, player whichPlayer)
             }
 
             // We now have a subGraph. Evaluate it
-            moveToAdd = hexAgentSubGraphMinMax(*subGraph, whichPlayer, moveList);
+            //    Will probably need to do some move sanitation here
+            moveToAdd = hexAgentSubGraphMinMax(*subGraph, whichPlayer, 0, moveList);
+
+            // Next, we should convert the moveToAdd to a real position on the full-size
+            // board. Then, when sending a moveList to a sub-board for evaluation, we
+            // can check to make sure that those positions are within the sub-board.
+            // ??Should I create a helper function for converting to/from??
 
             // Turn this location into a location for a board the next size up, if it was a good one
             if (moveToAdd != -1)
@@ -110,136 +123,66 @@ int hexAgentSubGraph (const Board &board, player whichPlayer)
 }
 
 
-
-int hexAgentSubGraphMinMax(Board board, player whichPlayer, vector<int> moveList)
+// This function is used to search for best moves on 3x3 size boards
+int hexAgentSubGraphMinMax(Board board, player whichPlayer, int depth, vector<int> moveList)
 {
-   /*
-      The board variable is a reference to the subGraph that was being used
-      when this minimax was called. moveList is a reference to the current list
-      of best-moves that have been determined by previous sub-graphs.
-         *NOTE*
-      Not all of these best-moves will be applicable for every sub-graph.
-      I will have to devise a way to sanitize potential moves that I play.
-      ~~
-   */
-
-
    int location, boardSize, minMax;
+   vector<int> emptyVector;
    Board copyBoard;
-
+   
    boardSize = board.getSize();
+   emptyVector.clear();
 
-
-}
-
-
-
-
-// I wasn't confident about the code below, so I began re-writing it above 
-int hexAgentSubGraphMinMaxOriginal(Board board, player whichPlayer, int depth, vector<int> moveList)o
-{
-   int location, boardSize, /*value,*/ minMax, bestMoveSoFar;
-   vector<int> copyList, notOnList;
-   Board copyBoard;
-
-   boardSize = board.getSize();
-
-   if (board.isGameOver())
-   {
-      if (depth % 2 == 0)
-      {
-         return -1;
-      }
-
-      return 1;
+   if (board.isGameOver()) {
+      return depth % 2 == 0 ? -1 : 1;
    }
 
-   // Try out the best moves from before
-   if (boardSize != 3)
-   {
-      while (!copyList.empty())
-      {
-         bestMoveSoFar = copyList.back();
-         copyList.pop_back();
-
-         if (board.isValidMove(bestMoveSoFar))
-         {
-            copyBoard = board;
-            copyBoard.makeMove(bestMoveSoFar, whichPlayer);
-
-            minMax = hexAgentSubGraphMinMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1, copyList);
-
-            if (depth % 2 == 0)
-            {
-               if (minMax == 1)
-               {
-                  if (depth == 0)
-                  {
-                     return bestMoveSoFar;
-                  }
-
-                  return 1;
-               }
-            }
-            else
-            {
-               if (minMax == -1)
-               {
-                  return -1;
-               }
-            }
-         }
-      }
-
-      if (depth == 0)
-      {
-         return -1;//bestMoveSoFar;
-      }
-
-      return minMax;
-   }
-
-   else
-   {
+   if (boardSize == 3) {
+      // Iterate through all possible moves. There are quicker searches which
+      // choose moves in a different order, but this will serve for now.
       for (location = 0; location < boardSize * boardSize; ++location)
       {
-         if (board.isValidMove(location))
-         {
+         if (board.isValidMove(location)) {
             copyBoard = board;
-
             copyBoard.makeMove(location, whichPlayer);
 
-            minMax = hexAgentSubGraphMinMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1, moveList);
+            // find the value of the current board
+            minMax = hexAgentSubGraphMinMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1);
 
-            if (depth % 2 == 0)
-            {
-               if (minMax == 1)
-               {
-                  if (depth == 0)
-                  {
-                     return location;
-                  }
+            // If we are on the initial level of recursion, and we get a 1 back, this is a best move
+            if (depth == 0 && minMax == 1)
+               return location;
 
-                  return 1;
-               }
-            }
-            else
-            {
-               if (minMax == -1)
-               {
-                  return -1;
-               }
-            }
+            // If depth % 2 == 0, we are looking for a maximum value
+            if (depth % 2 == 0 && minMax == 1)
+               return 1;
+
+            if (depth % 2 == 1 && minMax == -1)
+               return -1;
          }
       }
-
-      if (depth == 0)
-      {
-         return -1;//bestMoveSoFar;
-      }
-
-      return minMax;
    }
 
-   return -1;
+   else if (!moveList.empty()) {
+      while (!moveList.empty()) {
+         location = moveList.back();
+         moveList.pop_back();
+
+         copyBoard = board;
+         copyBoard.makeMove(location, whichPlayer);
+
+         // Find value of current board
+         minMax = hexAgentSubGraphMinMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1, emptyVector);
+      }
+   }
+
+   else {
+      minMax = 0;
+   }
+
+   // If we made it all the way through the loop without finding a best move, return
+   // the value for the last recursion search we performed. Since the value wasn't
+   // picked as a best move value, it will necessarily be a bad move value, which
+   // is appropriate.
+   return minMax;
 }
