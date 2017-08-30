@@ -7,11 +7,11 @@ class Player {
 private:
 	// These heuristic weights are determined via genetic algorithm before
 	// the instantiation of the player class.
-	vector<int> heuristicWeights; 
+	vector<int> heuristicWeights;
 
 public:
 	Player(vector<int> weights) {heuristicWeights = weights;}
-	int play(const Board &board, player whichPlayer); // this function will start the minimax off.
+	int play(const Board &board, player whichPlayer); // this function will start the minimax off and return the move to be played.
 	int minMax(Board board, player whichPlayer, int depth, int alpha, int beta); // same for everyone
 	int heuristic(Board board); // This function will use the weights passed in (neural net)
 }
@@ -35,3 +35,16 @@ main() {
 		playerRankings() // Some sort of ranking system to feed into genetic algorithm
 	}
 }
+
+
+/*************************************************************************************************/
+	Questions
+
+- How many players?
+
+- What size board?
+	+ Maybe 6 to start
+	+ University of Alberta solved all 8x8 openings (does this mean all games will be won?)
+	+ University of Alberta ultra-weakly solved 28/41 asymmetric 9x9 openings
+
+- What sort of output should we use?
