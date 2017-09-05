@@ -67,6 +67,7 @@ public:
 class hexGamePlayer
 {
 private:
+   // neuralNetWeights is a 3D vector. Indexes refer to absolute column position, row position for link origination, and row position for link destination
    vector<vector<int> > neuralNetWeights;
    double miniMax(Board board, player whichPlayer, int depth, int alpha, int beta);
    double neuralNetHeuristic();
