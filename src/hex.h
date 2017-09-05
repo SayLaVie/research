@@ -20,7 +20,7 @@ class Tile
 private:
    player owner;
    bool bitFlag;
-   int location, row, column, rank, parent, turn;
+   int location, row, column, rank, parent;
 
 public:
    Tile(int location, int size);
@@ -35,9 +35,6 @@ public:
    int getRow() {return row;}
    int getColumn() {return column;}
 
-   int getTurn() const{return turn;} // Turn is used for printBoard() -- it tells which turn the tile was taken
-   void setTurn(int newTurn) {turn = newTurn;}
-
    void setParent(int newParent) {parent = newParent;} // Parent's are used for Union-Find
    int getParent() {return parent;}
 };
@@ -46,7 +43,7 @@ public:
 class Board
 {
 private:
-   int size, aTurn, bTurn;
+   int size;
    vector<Tile> BoardLayout;
    void findNeighbors(int location);
    void Union(int x, int y);
@@ -59,12 +56,7 @@ public:
    void makeMove(int location, player mover); // Update the board with a player's move.
    bool isValidMove(int location) const;
    bool isGameOver();
-   void printBoard() const;
    int getSize() const {return size;}
-   int getATurn() const {return aTurn;}
-   int getBTurn() const {return bTurn;}
-   void setATurn() {aTurn += 1;} //increment turn by one
-   void setBTurn() {bTurn += 1;} //increment turn by one
 
    vector<Tile> getBoard() const{return BoardLayout;} // A little ugly, but I needed to access the board for the copy constructor and assignment operator overload
 
@@ -77,7 +69,7 @@ class hexGamePlayer
 private:
    vector<vector<int> > neuralNetWeights;
    double miniMax(Board board, player whichPlayer, int depth, int alpha, int beta);
-   double heuristic();
+   double neuralNetHeuristic();
 
 public:
    hexGamePlayer(vector<vector<int> > neuralNetWeights, const Board &board) {this->neuralNetWeights = neuralNetWeights;}
