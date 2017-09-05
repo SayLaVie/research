@@ -13,6 +13,7 @@
 using namespace std;
 
 enum player {playerA, playerB, none};
+const int maxDepth = 5;
 
 class Tile
 {
@@ -68,6 +69,19 @@ public:
    vector<Tile> getBoard() const{return BoardLayout;} // A little ugly, but I needed to access the board for the copy constructor and assignment operator overload
 
    Board& operator=(const Board &rhs); // Assignment operator
+};
+
+// Player class [is this only so that we can hide the weight data?]
+class hexGamePlayer
+{
+private:
+   vector<vector<int> > neuralNetWeights;
+   double miniMax(Board board, player whichPlayer, int depth, int alpha, int beta);
+   double heuristic();
+
+public:
+   hexGamePlayer(vector<vector<int> > neuralNetWeights, const Board &board) {this->neuralNetWeights = neuralNetWeights;}
+   int play(const Board &board, player whichPlayer);
 };
 
 #endif // #ifndef HEX_H
