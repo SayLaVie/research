@@ -66,4 +66,7 @@ Queensland Thesis
 Memoization might make our agent a beter player -- what is the goal, here?
    To make the best playing agent?
    For an agent to learn hex in a similar way to Blondie 24?
-   Solving all board states for a certain size hex board?
+   Solving all board states for a certain size hex board? (not with our current approach)
+
+Output could look like: pictoral representation of our population of hex players
+	- each player is represented by their hardness-scale rating
