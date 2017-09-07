@@ -8,7 +8,6 @@
 Tile::Tile(int location, int size) // Constructor used during board creation
 {
    owner = none;
-   turn = 0;
    rank = 0;
    parent = location;
    this->location = location;
@@ -20,8 +19,6 @@ Tile::Tile(int location, int size) // Constructor used during board creation
 Board::Board(int size) // Constructor using board size
 {
    this->size = size;
-   this->aTurn = 0;
-   this->bTurn = 0;
    for (int i = 0; i < size * size; ++i)
    {
       BoardLayout.push_back(Tile(i, size));
@@ -33,8 +30,6 @@ Board::Board(const Board &copy) // Copy constructor
    this->BoardLayout.clear();
 
    this->size = copy.getSize();
-   this->aTurn = copy.getATurn();
-   this->bTurn = copy.getBTurn();
 
    this->BoardLayout = copy.getBoard();
 }
@@ -44,8 +39,6 @@ Board& Board::operator=(const Board &rhs) // Assignment operator
    this->BoardLayout.clear();
 
    this->size = rhs.getSize();
-   this->aTurn = rhs.getATurn();
-   this->bTurn = rhs.getBTurn();
 
    this->BoardLayout = rhs.getBoard();
 
@@ -104,17 +97,6 @@ void Board::makeMove(int location, player mover) // Updates the owner of a tile,
    {
       locationTile->setOwner(mover);
 
-      //Set the turn for the tile
-      if(mover == playerA)
-      {
-          this->setATurn();
-          locationTile->setTurn(this->getATurn());
-      }
-      else if(mover == playerB)
-      {
-          this->setBTurn();
-          locationTile->setTurn(this->getBTurn());
-      }
       // Set the border flag for this tile
       locationTile->setFlag(locationTile->getOwner() == playerA ? column == 0 : row == 0);
 
@@ -265,48 +247,48 @@ bool Board::isGameOver() // Searches the border associated with a player and che
    return false;
 }
 
-void Board::printBoard() const // Prints the board out
-{
-   int column, hex, row, offset, move, width;
+// void Board::printBoard() const // Prints the board out
+// {
+//    int column, hex, row, offset, move, width;
 
-   width = (size - 1) * 3;
+//    width = (size - 1) * 3;
 
-   for (row = size - 1; row >= 0; --row)
-   {
-      cout << endl << setw(width) << "";
+//    for (row = size - 1; row >= 0; --row)
+//    {
+//       cout << endl << setw(width) << "";
 
-      for (column = 0; column < size; ++column)
-      {
-         hex = size * row + column;
+//       for (column = 0; column < size; ++column)
+//       {
+//          hex = size * row + column;
 
-         move = BoardLayout[hex].getTurn();
-         offset = 1;
+//          move = BoardLayout[hex].getTurn();
+//          offset = 1;
 
-         while (move / 10)
-         {
-            move /= 10;
-            ++offset;
-         }
+//          while (move / 10)
+//          {
+//             move /= 10;
+//             ++offset;
+//          }
 
-         if (BoardLayout[hex].getOwner() == playerA)
-         {
-            cout << setw(5 - offset) << right << "A" << BoardLayout[hex].getTurn();
-         }
-         else if (BoardLayout[hex].getOwner() == playerB)
-         {
-            cout << setw(5 - offset) << right << "B" << BoardLayout[hex].getTurn();
-         }
-         else
-         {
-            cout << setw(5) << right << "-";
-         }
-      }
+//          if (BoardLayout[hex].getOwner() == playerA)
+//          {
+//             cout << setw(5 - offset) << right << "A" << BoardLayout[hex].getTurn();
+//          }
+//          else if (BoardLayout[hex].getOwner() == playerB)
+//          {
+//             cout << setw(5 - offset) << right << "B" << BoardLayout[hex].getTurn();
+//          }
+//          else
+//          {
+//             cout << setw(5) << right << "-";
+//          }
+//       }
 
-      width -= 3;
+//       width -= 3;
 
-      cout << endl;
-   }
-}
+//       cout << endl;
+//    }
+// }
 
 
 // Functions that will be shared among the players
@@ -332,7 +314,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, int al
 
    if (depth > maxDepth)
    {
-      heuristicValue = heuristic();
+      heuristicValue = neuralNetHeuristic();
 
       return maximizer ? heuristicValue : -heuristicValue;
    }
@@ -403,8 +385,13 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, int al
 }
 
 
-// Neural net takes in vector of vectors of weights, returns a double between 0 and 1
+<<<<<<< HEAD
+// returns a double between 0 and 1
 double hexGamePlayer::heuristic()
+=======
+// Neural net takes in vector of vectors of weights, returns a double between 0 and 1
+double hexGamePlayer::neuralNetHeuristic()
+>>>>>>> 78c883c2e7b77f0b6cc95555851205e458d1f4ff
 {
    // This is where the neural net is implemented
 }

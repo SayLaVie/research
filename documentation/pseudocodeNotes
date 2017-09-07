@@ -38,6 +38,16 @@ main() {
 
 
 /*************************************************************************************************/
+   Notes on Published Papers that I've read
+
+Queensland Thesis
+   His approach is similar to ours. They are using an alpha-beta pruning minMax algorithm with a
+   depth limit and a heuristic to evaluate the board state at a given depth. However, he uses a
+   database of already played games to determine the winnability of a given board. Ours will use
+   a neural net to 'learn' how to play the game well.
+
+
+/*************************************************************************************************/
 	Questions
 
 - How many players?
@@ -48,3 +58,12 @@ main() {
 	+ University of Alberta ultra-weakly solved 28/41 asymmetric 9x9 openings
 
 - What sort of output should we use?
+
+
+/*************************************************************************************************/
+   Thoughts
+
+Memoization might make our agent a beter player -- what is the goal, here?
+   To make the best playing agent?
+   For an agent to learn hex in a similar way to Blondie 24?
+   Solving all board states for a certain size hex board?
