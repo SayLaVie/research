@@ -385,13 +385,8 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, int al
 }
 
 
-<<<<<<< HEAD
 // returns a double between 0 and 1
 double hexGamePlayer::heuristic()
-=======
+
 // Neural net takes in vector of vectors of weights, returns a double between 0 and 1
 double hexGamePlayer::neuralNetHeuristic()
->>>>>>> 78c883c2e7b77f0b6cc95555851205e458d1f4ff
-{
-   // This is where the neural net is implemented
-}
