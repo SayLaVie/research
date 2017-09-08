@@ -9,3 +9,6 @@ Repository for research credit
 	- neighborhood of hex players
 - implement genetic algorithm
 - devise hardness scale
+- Save/Resume function
+   - via command line arguments
+   - via user interaction during execution
