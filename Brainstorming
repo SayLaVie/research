@@ -51,3 +51,4 @@ Idea for grouping tiles together for evaluation:
    Dr. LeGrand mentioned feeding perceptrons the state of  a group of tiles (instead of individual tiles)
    to make the neural nets more flexible. Here's an idea:
       Look at a subgraph of size 3x3, and determine if it is winnable assuming two perfect players(mini-max)
+      The results of each of these sub-games will be an input into the neural net
