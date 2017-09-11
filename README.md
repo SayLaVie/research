@@ -12,3 +12,8 @@ Repository for research credit
 - Save/Resume function
    - via command line arguments
    - via user interaction during execution
+
+# To Do by 9/15/17
+- finish neuralNetHeuristic
+- get started on evolution code
+- create classes to keep track of organisms in the world

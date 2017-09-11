@@ -1,0 +1,5 @@
+This is a list of potential variables we can adjust throughout the research process.
+
+- depth limit
+- board size
+- method of board-state input (chunking)
