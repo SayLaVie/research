@@ -1,0 +1,47 @@
+ ---Notes from meeting with LeGrand---
+Start with a simple agent
+   1 layer neural network
+Don't worry about a global 'best player'
+   Allow the genetic algorithm to move around
+   Trust that it consistently finds local optima
+Our meetings will be Fridays at 4pm - 5pm
+
+
+---Neural Network---
+I need a perceptron that takes in one input per hex on the board
+   The perceptron will output a value between (-n) and (n)
+   The greater the value returned, the better the board position is
+<Note> A single layer neural network will only be able to prioritize square locations
+   e.g. Hexes in the middle of the board are more desirable
+
+
+
+---Thoughts---
+Will the genetic algorithm be fundamentally the same for many layer networks?
+
+
+---Plans---
+Create a class for each player. The Genetic algorithm can create an object and pass
+it the new weights that were determined from the evolution.
+Games can be played between players
+   -- This requires changes to the layout of the code I already have.
+
+
+
+Genetic Algorithm as Mother -- Top layer
+   Mother creates children who play with each other
+      (create instances of HexPlayer class which includes
+      preceptrons within them - all that's needed is a set of weights)
+   We're able to rank the children based on how they play
+      - Perhaps we will program a known 'good' player and use W/L statistics to compare
+   We breed them to get new children
+   etc...
+~ If I choose this method, I will have to re-write a lot of code. This may be the best option, though
+- I'll still need a benchmark agent to play against -- for size 3, we can have a perfect player
+How do I want to manage displaying results? Same as what we did for our project?
+
+
+Reference to hex-game code found on github
+   The way the set up their board is different from me
+      They use bitwise operators (| and &) to determine connectivity, somehow
+      They seem to have multiple boards, for each player maybe?
