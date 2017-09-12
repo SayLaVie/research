@@ -14,9 +14,12 @@ advisor: Dr. Rob LeGrand
 
 using namespace std;
 
-enum player {playerA, playerB, none};
-const int maxDepth = 5;
 // future global boardSize variable
+const static int maxDepth = 5;
+const static int boardSize = 7;
+
+enum player {playerA, playerB, none};
+
 
 class Tile
 {

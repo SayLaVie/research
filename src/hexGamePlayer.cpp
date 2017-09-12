@@ -102,7 +102,35 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, int al
 
 
 // Neural net takes in vector of vectors of weights, returns a double between 0 and 1
-double hexGamePlayer::neuralNetHeuristic()
+double hexGamePlayer::neuralNetHeuristic(Board board, player whichPlayer)
 {
-   //implement neural net here
+	int location, column, rowOrigination, rowDestination;
+	vector<int> boardState;
+	player thisOwner;
+
+	// First, extract the state of the current board
+	// We are using: -1 for opponent owned, 0 for empty, 1 for ours
+	for (location = 0; location < boardSize * boardSize; ++location)
+	{
+		thisOwner = board.getBoard()[location].getOwner();
+
+		if (thisOwner == none)
+			boardState.push_back(0);
+		else if (thisOwner == whichPlayer)
+			boardState.push_back(1);
+		else
+			boardState.push_back(-1);
+	}
+
+	// Now, feed the inputs from the board into our Neural Net
+	for (column = 0; column < neuralNetWeights.size(); ++column)
+	{
+		for (rowDestination = 0; rowDestination < neuralNetWeights[column].size(); ++rowDestination)
+		{
+			for (rowOrigination = 0; rowOrigination < neuralNetWeights[column][rowDestination].size(); ++rowOrigination)
+			{
+				
+			}
+		}
+	}
 }

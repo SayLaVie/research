@@ -13,14 +13,14 @@ advisor: Dr. Rob LeGrand
 class hexGamePlayer
 {
 private:
-   // neuralNetWeights is a 3D vector. Indexes refer to absolute column position, row position for link origination, and row position for link destination
+   // neuralNetWeights is a 3D vector. Of the form: neuralNetWeights[column][rowDestination][rowOrigination]
    vector<vector<vector<int> > > neuralNetWeights;
 
    double miniMax(Board board, player whichPlayer, int depth, int alpha, int beta);
-   double neuralNetHeuristic();
+   double neuralNetHeuristic(Board board, player whichPlayer);
 
 public:
-   hexGamePlayer(vector<vector<vector<int> > > neuralNetWeights, const Board &board) {this->neuralNetWeights = neuralNetWeights;}
+   hexGamePlayer(vector<vector<vector<int> > > neuralNetWeights) {this->neuralNetWeights = neuralNetWeights;}
    int play(const Board &board, player whichPlayer);
 }; 
 
