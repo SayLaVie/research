@@ -106,6 +106,8 @@ double hexGamePlayer::neuralNetHeuristic(Board board, player whichPlayer)
 {
 	int location, column, rowOrigination, rowDestination;
 	vector<int> boardState;
+	vector<double> inputVector;
+	double summation;
 	player thisOwner;
 
 	// First, extract the state of the current board
@@ -122,15 +124,35 @@ double hexGamePlayer::neuralNetHeuristic(Board board, player whichPlayer)
 			boardState.push_back(-1);
 	}
 
+/****************************
+This next section needs more thought
+****************************/
 	// Now, feed the inputs from the board into our Neural Net
 	for (column = 0; column < neuralNetWeights.size(); ++column)
 	{
 		for (rowDestination = 0; rowDestination < neuralNetWeights[column].size(); ++rowDestination)
 		{
+			summation = 0;
+
+			// The relationship between board state inputs and the first layer of the neural net should
+			// be consistent.
 			for (rowOrigination = 0; rowOrigination < neuralNetWeights[column][rowDestination].size(); ++rowOrigination)
 			{
-				
+				// If column is 0, then we are feeding in the board state inputs
+				if (column == 0)
+				{
+					summation += (boardState[rowOrigination] * neuralNetWeights[column][rowDestination][rowOrigination]);
+				}
+
+				// Otherwise, we are feeding in the inputs from previous summations
+				else
+				{
+					summation += (inputVector[rowOrigination] * neuralNetWeights[column][rowDestination][rowOrigination]);
+				}
 			}
+
+			// The summation becomes the input for the next column
+			inputVector.push_back(summation);
 		}
 	}
 }
