@@ -1,13 +1,14 @@
 /**********************
 Hex Research Project
-   
+
 author: Michael McCarver
 advisor: Dr. Rob LeGrand
 **********************/
 
 #include "hexGamePlayer.h"
 
- // Functions that will be shared among the players
+// This function starts off the minimax function with default values, and returns the integer location
+// of which move to play next
 int hexGamePlayer::play(const Board &board, player whichPlayer)
 {
    int moveToMake = 0;
@@ -17,6 +18,8 @@ int hexGamePlayer::play(const Board &board, player whichPlayer)
    return moveToMake;
 }
 
+// This is the recursive minimax function, with a depth limit (maxDepth set in the hex.h file).
+// If it finishes at level 0, will return the location of the best move found.
 double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, int alpha, int beta)
 {
    int boardSize, utilityValue, eval, location, tmpBestMove, heuristicValue;
@@ -30,7 +33,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, int al
 
    if (depth > maxDepth)
    {
-      heuristicValue = neuralNetHeuristic();
+      heuristicValue = neuralNetHeuristic(copyBoard, whichPlayer);
 
       return maximizer ? heuristicValue : -heuristicValue;
    }
@@ -124,9 +127,9 @@ double hexGamePlayer::neuralNetHeuristic(Board board, player whichPlayer)
 			boardState.push_back(-1);
 	}
 
-/****************************
+/************************************
 This next section needs more thought
-****************************/
+************************************/
 	// Now, feed the inputs from the board into our Neural Net
 	for (column = 0; column < neuralNetWeights.size(); ++column)
 	{
