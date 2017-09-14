@@ -31,7 +31,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, int al
    if (board.isGameOver())
       return maximizer ? -500 + depth : 500 - depth; // Will change these values to be less arbitrary
 
-   if (depth > maxDepth)
+   if (depth > MAX_DEPTH)
    {
       heuristicValue = neuralNetHeuristic(copyBoard, whichPlayer);
 
@@ -115,7 +115,7 @@ double hexGamePlayer::neuralNetHeuristic(Board board, player whichPlayer)
 
 	// First, extract the state of the current board
 	// We are using: -1 for opponent owned, 0 for empty, 1 for ours
-	for (location = 0; location < boardSize * boardSize; ++location)
+	for (location = 0; location < BOARDSIZE * BOARDSIZE; ++location)
 	{
 		thisOwner = board.getBoard()[location].getOwner();
 

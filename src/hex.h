@@ -15,8 +15,8 @@ advisor: Dr. Rob LeGrand
 using namespace std;
 
 // future global boardSize variable
-const static int maxDepth = 5;
-const static int boardSize = 7;
+const static int MAX_DEPTH = 5;
+const static int BOARDSIZE = 7;
 
 enum player {playerA, playerB, none};
 
