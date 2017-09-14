@@ -6,6 +6,7 @@ advisor: Dr. Rob LeGrand
 **********************/
 
 #include "hexGamePlayer.h"
+#include <cmath>
 
 // This function starts off the minimax function with default values, and returns the integer location
 // of which move to play next
@@ -154,7 +155,7 @@ double hexGamePlayer::neuralNetHeuristic(Board board, player whichPlayer)
 
 			// The summation becomes the input for the next column. The number of inputs for the
          // next column will match up with the row depth.
-			outputVector.push_back(summation);
+			outputVector.push_back(sigmoidFunction(summation));
 		}
 
       inputVector = outputVector;
@@ -162,6 +163,10 @@ double hexGamePlayer::neuralNetHeuristic(Board board, player whichPlayer)
    // The last input vector should have only one entry -- the final output of
    // the neural net.
 
-   // I need to implement the sigmoid function here
-   return inputVector[0];
+   return sigmoidFunction(inputVector[0]);
+}
+
+double hexGamePlayer::sigmoidFunction(double input)
+{
+   return 1 / (1 + exp(-input));
 }

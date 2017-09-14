@@ -1,6 +1,6 @@
 /**********************
 Hex Research Project
-   
+
 author: Michael McCarver
 advisor: Dr. Rob LeGrand
 **********************/

@@ -1,6 +1,6 @@
 /**********************
 Hex Research Project
-   
+
 author: Michael McCarver
 advisor: Dr. Rob LeGrand
 **********************/
@@ -18,10 +18,11 @@ private:
 
    double miniMax(Board board, player whichPlayer, int depth, int alpha, int beta);
    double neuralNetHeuristic(Board board, player whichPlayer);
+   double sigmoidFunction(double input);
 
 public:
    hexGamePlayer(vector<vector<vector<int> > > neuralNetWeights) {this->neuralNetWeights = neuralNetWeights;}
    int play(const Board &board, player whichPlayer);
-}; 
+};
 
 #endif
