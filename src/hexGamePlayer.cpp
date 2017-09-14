@@ -127,9 +127,6 @@ double hexGamePlayer::neuralNetHeuristic(Board board, player whichPlayer)
 			boardState.push_back(-1);
 	}
 
-/************************************
-This next section needs more thought
-************************************/
 	// Now, feed the inputs from the board into our Neural Net
 	for (column = 0; column < neuralNetWeights.size(); ++column)
 	{
@@ -155,9 +152,16 @@ This next section needs more thought
 				}
 			}
 
-			// The summation becomes the input for the next column
+			// The summation becomes the input for the next column. The number of inputs for the
+         // next column will match up with the row depth.
 			outputVector.push_back(summation);
 		}
+
+      inputVector = outputVector;
 	}
-   inputVector = outputVector;
+   // The last input vector should have only one entry -- the final output of
+   // the neural net.
+
+   // I need to implement the sigmoid function here
+   return inputVector[0];
 }
