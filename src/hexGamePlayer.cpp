@@ -8,6 +8,14 @@ advisor: Dr. Rob LeGrand
 #include "hexGamePlayer.h"
 #include <cmath>
 
+// Constructor takes a set of weights for the neural net heuristic
+hexGamePlayer::hexGamePlayer(vector<vector<vector<int> > > neuralNetWeights) 
+{
+	this->neuralNetWeights = neuralNetWeights;
+	this->gamesWon = 0;
+	this->movesMade = 0;
+}
+
 // This function starts off the minimax function with default values, and returns the integer location
 // of which move to play next
 int hexGamePlayer::play(const Board &board, player whichPlayer)

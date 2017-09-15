@@ -16,12 +16,19 @@ private:
    // neuralNetWeights is a 3D vector. Of the form: neuralNetWeights[column][rowDestination][rowOrigination]
    vector<vector<vector<int> > > neuralNetWeights;
 
+   // Private data about this players played games
+   int gamesWon, movesMade;
+
    double miniMax(Board board, player whichPlayer, int depth, int alpha, int beta);
    double neuralNetHeuristic(Board board, player whichPlayer);
    double sigmoidFunction(double input);
 
+   // Private data modifiers
+   void addGameWon() {gamesWon += 1;}
+   void addMove() {movesMade += 1;}
+
 public:
-   hexGamePlayer(vector<vector<vector<int> > > neuralNetWeights) {this->neuralNetWeights = neuralNetWeights;}
+   hexGamePlayer(vector<vector<vector<int> > > neuralNetWeights);
    int play(const Board &board, player whichPlayer);
 };
 
