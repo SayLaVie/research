@@ -13,3 +13,9 @@ void hexWorld::nextGeneration()
 
 	}
 }
+
+// return vector of neighboring hexPlayers
+vector<int> hexWorld::getNeighbors(int hexPlayerLocation)
+{
+
+}
