@@ -23,13 +23,13 @@ private:
    double neuralNetHeuristic(Board board, player whichPlayer);
    double sigmoidFunction(double input);
 
-   // Private data modifiers
-   void addGameWon() {gamesWon += 1;}
-   void addMove() {movesMade += 1;}
-
 public:
    hexGamePlayer(vector<vector<vector<int> > > neuralNetWeights);
    int play(const Board &board, player whichPlayer);
+
+   // Data modifiers
+   void addGameWon() {gamesWon += 1;}
+   void addMove() {movesMade += 1;}   
 };
 
 #endif
