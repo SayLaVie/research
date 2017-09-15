@@ -14,9 +14,10 @@ advisor: Dr. Rob LeGrand
 
 using namespace std;
 
-// future global boardSize variable
-const static int MAX_DEPTH = 5;
-const static int BOARDSIZE = 7;
+// Global variables
+const int MAX_DEPTH = 5;
+const int BOARD_SIZE = 7;
+const int NUM_PLAYERS = 16;
 
 enum player {playerA, playerB, none};
 

@@ -29,7 +29,7 @@ public:
 
    // Data modifiers
    void addGameWon() {gamesWon += 1;}
-   void addMove() {movesMade += 1;}   
+   void addMove() {movesMade += 1;}
 };
 
 #endif

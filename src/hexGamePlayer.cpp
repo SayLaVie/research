@@ -9,7 +9,7 @@ advisor: Dr. Rob LeGrand
 #include <cmath>
 
 // Constructor takes a set of weights for the neural net heuristic
-hexGamePlayer::hexGamePlayer(vector<vector<vector<int> > > neuralNetWeights) 
+hexGamePlayer::hexGamePlayer(vector<vector<vector<int> > > neuralNetWeights)
 {
 	this->neuralNetWeights = neuralNetWeights;
 	this->gamesWon = 0;
@@ -124,7 +124,7 @@ double hexGamePlayer::neuralNetHeuristic(Board board, player whichPlayer)
 
 	// First, extract the state of the current board
 	// We are using: -1 for opponent owned, 0 for empty, 1 for ours
-	for (location = 0; location < BOARDSIZE * BOARDSIZE; ++location)
+	for (location = 0; location < BOARD_SIZE * BOARD_SIZE; ++location)
 	{
 		thisOwner = board.getBoard()[location].getOwner();
 

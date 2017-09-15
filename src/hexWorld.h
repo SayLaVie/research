@@ -1,6 +1,6 @@
 /**************************
 This function creates and maintains a population of hexGamePlayers.
-We may have a private evolution function within this class to 
+We may have a private evolution function within this class to
 handle the evolution of new generations (or simply create a new world
 when needed). This class will probably need to maintain the neighbor
 relationships (used to determine which hexGamePlayers will play against
@@ -14,13 +14,16 @@ each other).
 
 class hexWorld
 {
-private:	
+private:
 	int numPlayers;
-	vector<hexGamePlayer> hexGamePlayers;
+
+	void geneticAlgorithm(); // Called by nextGeneration to determine weights for the new generation
 
 public:
+	vector<hexGamePlayer> hexGamePlayers;
+
 	hexWorld(int numPlayers){this->numPlayers = numPlayers;}
-	
+
 	// Some sort of void function that creates the next generation of players
 	void nextGeneration();
 
