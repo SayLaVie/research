@@ -1,10 +1,9 @@
-/*
-   Research: The Game of Hex
-   Student: Michael McCarver
-   Professor: Dr. Rob LeGrand
+/**********************
+Hex Research Project
 
-   This research project is centered around The Game of Hex.
-*/
+author: Michael McCarver
+advisor: Dr. Rob LeGrand
+**********************/
 
 #include "hexWorld.h"
 
@@ -12,8 +11,8 @@
 // or maybe just two players. If only two players, will return the
 // result of one particular game. If an entire world, nothing is
 // needed for return.
-void beginIteration(hexWorld &population);
-void playHex(hexGamePlayer &playerA, hexGamePlayer &playerB);
+void playHexGames(hexWorld &population);
+player playHexGame(hexGamePlayer playerA, hexGamePlayer playerB);
 
 int main(int argc, char *argv[])
 {
@@ -24,19 +23,20 @@ int main(int argc, char *argv[])
    hexWorld population(NUM_PLAYERS);
 
    // While we are playing (for now, while true)
-   while (1)
+   while (true)
    {
       // Find and set weights for the upcoming generation.
       population.nextGeneration();
 
       // Play all games amongst neighbors.
-      beginIteration(population);
+      playHexGames(population);
    }
 }
 
-void beginIteration(hexWorld &population)
+void playHexGames(hexWorld &population)
 {
    int playerLocation, currentNeighbor;
+   player gameWinner;
    vector<int> neighboringPlayers;
 
    for (playerLocation = 0; playerLocation < BOARD_SIZE * BOARD_SIZE; ++playerLocation)
@@ -46,13 +46,25 @@ void beginIteration(hexWorld &population)
       for (currentNeighbor = 0; currentNeighbor < neighboringPlayers.size(); ++currentNeighbor)
       {
          // Play two games, so that each player can play as both A and B.
-         playHex(population.hexGamePlayers[playerLocation], population.hexGamePlayers[currentNeighbor]);
-         playHex(population.hexGamePlayers[currentNeighbor], population.hexGamePlayers[playerLocation]);
+         gameWinner = playHexGame(population.getHexGamePlayer(playerLocation), population.getHexGamePlayer(currentNeighbor));
+
+         // Add appropriate wins
+         if (gameWinner == playerA)
+         {
+            population.getHexGamePlayer(playerLocation).addGameWon();
+         }
+         else
+         {
+            population.getHexGamePlayer(currentNeighbor).addGameWon();
+         }
       }
    }
 }
 
-void playHex(hexGamePlayer &hexPlayerA, hexGamePlayer &hexPlayerB)
+// Return the player that won the game
+// May change return value to a pair<player, int> if we want to keep track of
+// length of game
+player playHex(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
 {
    int playerMove, numberOfTurns;
    player currentPlayer;
@@ -83,8 +95,11 @@ void playHex(hexGamePlayer &hexPlayerA, hexGamePlayer &hexPlayerB)
       {
          board.makeMove(playerMove, currentPlayer);
       }
+
+      numberOfTurns += 1;
    }
 
    // Last player who played has won the game.
-   // We can keep track of data here.
+   // If numberOfTurns is odd, playerA won the game
+   return numberOfTurns % 2 == 1 ? playerA : playerB;
 }

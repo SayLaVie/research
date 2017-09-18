@@ -124,6 +124,7 @@ double hexGamePlayer::neuralNetHeuristic(Board board, player whichPlayer)
 
 	// First, extract the state of the current board
 	// We are using: -1 for opponent owned, 0 for empty, 1 for ours
+   // May split this into its own function later
 	for (location = 0; location < BOARD_SIZE * BOARD_SIZE; ++location)
 	{
 		thisOwner = board.getBoard()[location].getOwner();
@@ -168,10 +169,10 @@ double hexGamePlayer::neuralNetHeuristic(Board board, player whichPlayer)
 
       inputVector = outputVector;
 	}
+
    // The last input vector should have only one entry -- the final output of
    // the neural net.
-
-   return sigmoidFunction(inputVector[0]);
+   return inputVector[0];
 }
 
 double hexGamePlayer::sigmoidFunction(double input)

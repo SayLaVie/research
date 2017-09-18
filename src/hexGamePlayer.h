@@ -29,7 +29,9 @@ public:
 
    // Data modifiers
    void addGameWon() {gamesWon += 1;}
-   void addMove() {movesMade += 1;}
+
+   // Not currently keeping track of moves during games
+   void addMoves(int numMoves) {movesMade += numMoves;}
 };
 
 #endif
