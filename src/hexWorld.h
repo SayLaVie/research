@@ -26,6 +26,7 @@ private:
 	vector<hexGamePlayer> hexGamePlayers;
 
 	void geneticAlgorithm(); // Called by nextGeneration to determine weights for the new generation
+	double randomDouble();
 
 public:
 	hexWorld(int numPlayers){this->numPlayers = numPlayers;}

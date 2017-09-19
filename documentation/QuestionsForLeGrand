@@ -1,0 +1,6 @@
+- The internet tells me that using <cstdlib>'s random is not as 'random'
+as using c++11's <random> library. Should I care?
+
+- Does it matter that the random numbers follow a pattern?
+
+- Should the weights be values between 0 and 1?
