@@ -5,6 +5,15 @@ author: Michael McCarver
 advisor: Dr. Rob LeGrand
 **********************/
 
+
+/*************************************
+   NOTES
+After talking with Dr Legrand, the weights for the neural
+net should be doubles between -1 and 1, close to 0.
+I can use the <random> class, and maybe choose a distribution
+that clumps values closer to 1.
+*************************************/
+
 #include "hexWorld.h"
 #include <cstdlib>
 
