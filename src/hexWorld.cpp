@@ -34,7 +34,7 @@ void hexWorld::nextGeneration()
 	vector<vector<vector<double> > > netWeights;
 	vector<double> rowOriginationVector;
 	vector<vector<double> > rowDestinationVector;
-	int layer, rowDestination, rowOrigination, player, neighbor, gamesWonSum, fitnessChoice;
+	int layer, rowDestination, rowOrigination, player, neighbor, gamesWon, gamesWonSum, fitnessChoice;
 	double currentWeight;	
 	vector<hexGamePlayer> newHexGamePlayers;
 
@@ -140,8 +140,9 @@ void hexWorld::nextGeneration()
 							
 							for (neighbor = 0; neighbor < neighbors.size(); ++neighbor)
 							{
-								gamesWonSum += getHexGamePlayer(neighbor).getGamesWon();
-								neighborsGamesWon.push_back(getHexGamePlayer(neighbor).getGamesWon());
+								gamesWon = getHexGamePlayer(neighbor).getGamesWon();
+								gamesWonSum += gamesWon;
+								neighborsGamesWon.push_back(gamesWon);
 							}
 							// Use the discrete_distribution PRNG to choose a neighbor based on how many games
 							// they've won. Take that neighbors genes.
