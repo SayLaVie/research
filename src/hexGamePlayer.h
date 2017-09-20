@@ -29,9 +29,12 @@ public:
 
    // Data modifiers
    void addGameWon() {gamesWon += 1;}
+   int getGamesWon() {return gamesWon;}
 
    // Not currently keeping track of moves during games
    void addMoves(int numMoves) {movesMade += numMoves;}
+
+   double getWeight(int layer, int rowOrigination, int rowDestination);
 };
 
 #endif

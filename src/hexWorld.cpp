@@ -34,7 +34,8 @@ void hexWorld::nextGeneration()
 	vector<vector<vector<double> > > netWeights;
 	vector<double> rowOriginationVector;
 	vector<vector<double> > rowDestinationVector;
-	int layer, rowDestination, rowOrigination, player;
+	int layer, rowDestination, rowOrigination, player, neighbor, gamesWonSum;
+	double currentWeight;	
 	vector<hexGamePlayer> newHexGamePlayers;
 
 	// Default random engine to be used as a input for other generators
@@ -59,7 +60,6 @@ void hexWorld::nextGeneration()
 		// confined between 0 and 1. 3.5 is chosen (from cplusplus.com) as it seems
 		// to have a good distribution for our use. Flip a coin, and make negative accordingly.
 		exponential_distribution<double> weightGenerator(3.5);
-		double currentWeight;
 
 		for (player = 0; player < NUM_PLAYERS; ++player)
 		{
@@ -102,6 +102,7 @@ void hexWorld::nextGeneration()
 		for (player = 0; player < NUM_PLAYERS; ++player)
 		{
 			netWeights.clear();
+			neighbors = getNeighbors(player);
 
 			for (layer = 0; layer < netShape.size() - 1; ++layer)
 			{
@@ -114,6 +115,23 @@ void hexWorld::nextGeneration()
 					for (rowOrigination = 0; rowOrigination < netShape[layer]; ++rowOrigination)
 					{
 						// This is where the fitness decisions take place
+
+						// If coin toss says to keep weight
+						if (coinToss(seedGenerator))
+						{
+							currentWeight = getHexGamePlayer(player).getWeight(layer, rowDestination, rowOrigination);
+						}
+
+						else
+						{
+							// Add up total number of won games
+							gamesWonSum = 0;
+							
+							for (neighbor = 0; neighbor < neighbors.size(); ++neighbor)
+							{
+								gamesWonSum += getHexGamePlayer(neighbor).getGamesWon();
+							}
+						}
 					}
 				}
 			}

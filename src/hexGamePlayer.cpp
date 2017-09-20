@@ -179,3 +179,8 @@ double hexGamePlayer::sigmoidFunction(double input)
 {
    return 1 / (1 + exp(-input));
 }
+
+double hexGamePlayer::getWeight(int layer, int rowDestination, int rowOrigination)
+{
+   return neuralNetWeights[layer][rowDestination][rowOrigination];
+}
