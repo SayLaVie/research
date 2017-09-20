@@ -39,18 +39,17 @@ void hexWorld::nextGeneration()
 	vector<hexGamePlayer> newHexGamePlayers;
 
 /**********************************************************************************************
-											PRNG's
+	PRNG's
 **********************************************************************************************/											
 	// Default random engine to be used as a input for other generators
 	default_random_engine seedGenerator(time(NULL));
 
 	// Bernoulli_distribution is effectively a coin toss. Returns true or false.
-	// This distribution could also be used for mutation probability (set input accordingly)
 	bernoulli_distribution coinToss(0.5);
 
 	// Initiate exponential_distribution PRNG. As of now, output will not be
 	// confined between 0 and 1. 3.5 is chosen (from cplusplus.com) as it seems
-	// to have a good distribution for our use. Flip a coin to see if it needs to be negative.
+	// to have a good distribution for our use.
 	exponential_distribution<double> weightGenerator(3.5);
 
 	// discrete_distribution generator to choose neighbors probablistically based on the 
@@ -61,8 +60,8 @@ void hexWorld::nextGeneration()
 
 	// Push the depths of each layer into the netShape vector
 	// Not sure yet what our first network shape will be,
-	// setting it as <3, 2, 1> for now.
-	netShape.push_back(3);
+	// setting it as <BOARD_SIZE, 2, 1> for now.
+	netShape.push_back(BOARD_SIZE);
 	netShape.push_back(2);
 	netShape.push_back(1);
 
@@ -84,7 +83,7 @@ void hexWorld::nextGeneration()
 
 					for (rowOrigination = 0; rowOrigination < netShape[layer]; ++rowOrigination)
 					{
-						// Generate random weight
+						// Generate random weight. Flip a coin to see if it needs to be negative
 						currentWeight = weightGenerator(seedGenerator);
 						currentWeight *= (coinToss(seedGenerator) ? 1 : -1);
 
@@ -130,20 +129,21 @@ void hexWorld::nextGeneration()
 							currentWeight = getHexGamePlayer(player).getWeight(layer, rowDestination, rowOrigination);
 						}
 
-						// Else, choose current weight based on fitness function (probablistic)
+						// Else, choose current weight based on fitness function
 						else
 						{
-							// Add up total number of won games
 							neighborsGamesWon.clear();
 							fitnessChoice = 0;
 							
+							// Make a vector with each neighbor's numGamesWon
 							for (neighbor = 0; neighbor < neighbors.size(); ++neighbor)
 							{
 								gamesWon = getHexGamePlayer(neighbor).getGamesWon();
 								neighborsGamesWon.push_back(gamesWon);
 							}
+							
 							// Use the discrete_distribution PRNG to choose a neighbor based on how many games
-							// they've won. Take that neighbors genes.
+							// they've won. Take that neighbor's genes.
 							fitnessChoice = fitnessFunction(neighborsGamesWon.begin(), neighborsGamesWon.end());
 
 							currentWeight = getHexGamePlayer(neighbors[fitnessChoice]).getWeight(layer, rowDestination, rowOrigination);
