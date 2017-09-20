@@ -26,21 +26,22 @@ that clumps values closer to 1.
 // This function sets the weights for the neural net
 void hexWorld::nextGeneration()
 {
-	// netShape keeps track of the shape of the neuralNet.
+	// netShape keeps track of the shape of the neuralNet; neighbors is a vector of current neighbors
 	// netWeights is the actual set of weights
 	// rowOriginationVector is a helper vector for creating netWeights
 	// rowDestinationVector is also a helper vector
-	vector<int> netShape;
+	vector<int> netShape, neighbors;
 	vector<vector<vector<double> > > netWeights;
 	vector<double> rowOriginationVector;
 	vector<vector<double> > rowDestinationVector;
-
 	int layer, rowDestination, rowOrigination, player;
+	vector<hexGamePlayer> newHexGamePlayers;
 
 	// Default random engine to be used as a input for other generators
-	default_random_engine seed(time(NULL));
+	default_random_engine seedGenerator(time(NULL));
 
-	// Bernoulli_distribution is effectively a coin toss. Returns true or false
+	// Bernoulli_distribution is effectively a coin toss. Returns true or false.
+	// This distribution could also be used for mutation probability (set input accordingly)
 	bernoulli_distribution coinToss(0.5);
 
 
@@ -60,7 +61,7 @@ void hexWorld::nextGeneration()
 		exponential_distribution<double> weightGenerator(3.5);
 		double currentWeight;
 
-		for (int player = 0; player < NUM_PLAYERS; ++player)
+		for (player = 0; player < NUM_PLAYERS; ++player)
 		{
 			netWeights.clear();
 
@@ -76,8 +77,8 @@ void hexWorld::nextGeneration()
 					for (rowOrigination = 0; rowOrigination < netShape[layer]; ++rowOrigination)
 					{
 						// Generate random weight
-						currentWeight = weightGenerator(seed);
-						currentWeight *= (coinToss(seed) ? 1 : -1);
+						currentWeight = weightGenerator(seedGenerator);
+						currentWeight *= (coinToss(seedGenerator) ? 1 : -1);
 
 						// Add new weight to vector
 						rowOriginationVector.push_back(currentWeight);
@@ -96,7 +97,27 @@ void hexWorld::nextGeneration()
 	// Else, we use a genetic algorithm to determine new weights
 	else
 	{
+		newHexGamePlayers.clear();
 
+		for (player = 0; player < NUM_PLAYERS; ++player)
+		{
+			netWeights.clear();
+
+			for (layer = 0; layer < netShape.size() - 1; ++layer)
+			{
+				rowDestinationVector.clear();
+
+				for (rowDestination = 0; rowDestination < netShape[layer + 1]; ++rowDestination)
+				{
+					rowOriginationVector.clear();
+
+					for (rowOrigination = 0; rowOrigination < netShape[layer]; ++rowOrigination)
+					{
+						// This is where the fitness decisions take place
+					}
+				}
+			}
+		}
 	}
 }
 

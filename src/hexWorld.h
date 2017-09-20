@@ -26,7 +26,7 @@ private:
 	vector<hexGamePlayer> hexGamePlayers;
 
 	void geneticAlgorithm(); // Called by nextGeneration to determine weights for the new generation
-	double randomDouble();
+	void deletePopulation(){hexGamePlayers.clear();}
 
 public:
 	hexWorld(int numPlayers){this->numPlayers = numPlayers;}
@@ -39,6 +39,8 @@ public:
 	// Takes an int location as a parameter (which hexGamePlayer we are
 	// currently centered on). To be used by the playGame function.
 	vector<int> getNeighbors(int hexPlayerLocation);
+
+	int getNumPlayers(){return numPlayers;}
 
 	// Return a hexGamePlayer from vector hexGamePlayers
 	hexGamePlayer getHexGamePlayer(int playerLocation) {return hexGamePlayers[playerLocation];}

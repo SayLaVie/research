@@ -41,6 +41,7 @@ void playHexGames(hexWorld &population)
 
    for (playerLocation = 0; playerLocation < BOARD_SIZE * BOARD_SIZE; ++playerLocation)
    {
+      neighboringPlayers.clear();
       neighboringPlayers = population.getNeighbors(playerLocation);
 
       for (currentNeighbor = 0; currentNeighbor < neighboringPlayers.size(); ++currentNeighbor)
