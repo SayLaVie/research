@@ -11,7 +11,7 @@ advisor: Dr. Rob LeGrand
 After talking with Dr Legrand, the weights for the neural
 net should be doubles between -1 and 1, close to 0.
 I can use the <random> class, and maybe choose a distribution
-that clumps values closer to 1.
+that clumps values closer to 0.
 	- exponential_distribution
 	- geometric_distribution
 	- lognormal_distribution
@@ -35,12 +35,12 @@ void hexWorld::nextGeneration()
 	vector<double> rowOriginationVector;
 	vector<vector<double> > rowDestinationVector;
 	int layer, rowDestination, rowOrigination, player, neighbor, gamesWon, fitnessChoice;
-	double currentWeight;	
+	double currentWeight;
 	vector<hexGamePlayer> newHexGamePlayers;
 
 /**********************************************************************************************
 	PRNG's
-**********************************************************************************************/											
+**********************************************************************************************/
 	// Default random engine to be used as a input for other generators
 	default_random_engine seedGenerator(time(NULL));
 
@@ -52,7 +52,7 @@ void hexWorld::nextGeneration()
 	// to have a good distribution for our use.
 	exponential_distribution<double> weightGenerator(3.5);
 
-	// discrete_distribution generator to choose neighbors probablistically based on the 
+	// discrete_distribution generator to choose neighbors probablistically based on the
 	// number of games that they've won (our fitness function)
 	discrete_distribution fitnessFunction;
 /*********************************************************************************************/
@@ -100,7 +100,7 @@ void hexWorld::nextGeneration()
 			hexGamePlayers.push_back(hexGamePlayer(netWeights));
 		}
 	}
-	
+
 	// Else, we use a genetic algorithm to determine new weights
 	else
 	{
@@ -134,14 +134,14 @@ void hexWorld::nextGeneration()
 						{
 							neighborsGamesWon.clear();
 							fitnessChoice = 0;
-							
+
 							// Make a vector with each neighbor's numGamesWon
 							for (neighbor = 0; neighbor < neighbors.size(); ++neighbor)
 							{
 								gamesWon = getHexGamePlayer(neighbor).getGamesWon();
 								neighborsGamesWon.push_back(gamesWon);
 							}
-							
+
 							// Use the discrete_distribution PRNG to choose a neighbor based on how many games
 							// they've won. Take that neighbor's genes.
 							fitnessChoice = fitnessFunction(neighborsGamesWon.begin(), neighborsGamesWon.end());
