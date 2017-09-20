@@ -26,10 +26,13 @@ that clumps values closer to 0.
 // This function sets the weights for the neural net
 void hexWorld::nextGeneration()
 {
-	// netShape keeps track of the shape of the neuralNet; neighbors is a vector of current neighbors
-	// netWeights is the actual set of weights
-	// rowOriginationVector is a helper vector for creating netWeights
-	// rowDestinationVector is also a helper vector
+   /**
+	- netShape keeps track of the shape of the neuralNet
+   - neighbors is a vector of current neighbors
+	- netWeights is the actual set of weights
+	- rowOriginationVector is a helper vector for creating netWeights
+	- rowDestinationVector is also a helper vector
+   **/
 	vector<int> netShape, neighbors, neighborsGamesWon;
 	vector<vector<vector<double> > > netWeights;
 	vector<double> rowOriginationVector;
@@ -38,9 +41,9 @@ void hexWorld::nextGeneration()
 	double currentWeight;
 	vector<hexGamePlayer> newHexGamePlayers;
 
-/**********************************************************************************************
+/*****************************************************************************************
 	PRNG's
-**********************************************************************************************/
+*****************************************************************************************/
 	// Default random engine to be used as a input for other generators
 	default_random_engine seedGenerator(time(NULL));
 
@@ -57,10 +60,11 @@ void hexWorld::nextGeneration()
 	discrete_distribution fitnessFunction;
 /*********************************************************************************************/
 
-
-	// Push the depths of each layer into the netShape vector
-	// Not sure yet what our first network shape will be,
-	// setting it as <BOARD_SIZE, 2, 1> for now.
+   /**
+	Push the depths of each layer into the netShape vector
+	Not sure yet what our first network shape will be,
+	setting it as <BOARD_SIZE, 2, 1> for now.
+   **/
 	netShape.push_back(BOARD_SIZE);
 	netShape.push_back(2);
 	netShape.push_back(1);
