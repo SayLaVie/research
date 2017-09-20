@@ -30,20 +30,33 @@ void hexWorld::nextGeneration()
 	// netWeights is the actual set of weights
 	// rowOriginationVector is a helper vector for creating netWeights
 	// rowDestinationVector is also a helper vector
-	vector<int> netShape, neighbors;
+	vector<int> netShape, neighbors, neighborsGamesWon;
 	vector<vector<vector<double> > > netWeights;
 	vector<double> rowOriginationVector;
 	vector<vector<double> > rowDestinationVector;
-	int layer, rowDestination, rowOrigination, player, neighbor, gamesWonSum;
+	int layer, rowDestination, rowOrigination, player, neighbor, gamesWonSum, fitnessChoice;
 	double currentWeight;	
 	vector<hexGamePlayer> newHexGamePlayers;
 
+/**********************************************************************************************
+											PRNG's
+**********************************************************************************************/											
 	// Default random engine to be used as a input for other generators
 	default_random_engine seedGenerator(time(NULL));
 
 	// Bernoulli_distribution is effectively a coin toss. Returns true or false.
 	// This distribution could also be used for mutation probability (set input accordingly)
 	bernoulli_distribution coinToss(0.5);
+
+	// Initiate exponential_distribution PRNG. As of now, output will not be
+	// confined between 0 and 1. 3.5 is chosen (from cplusplus.com) as it seems
+	// to have a good distribution for our use. Flip a coin to see if it needs to be negative.
+	exponential_distribution<double> weightGenerator(3.5);
+
+	// discrete_distribution generator to choose neighbors probablistically based on the 
+	// number of games that they've won (our fitness function)
+	discrete_distribution fitnessFunction;
+/*********************************************************************************************/
 
 
 	// Push the depths of each layer into the netShape vector
@@ -56,11 +69,6 @@ void hexWorld::nextGeneration()
 	// Check if this is the first generation (start with randomized weights)
 	if (hexGamePlayers.size() == 0)
 	{
-		// Initiate exponential_distribution PRNG. As of now, output will not be
-		// confined between 0 and 1. 3.5 is chosen (from cplusplus.com) as it seems
-		// to have a good distribution for our use. Flip a coin, and make negative accordingly.
-		exponential_distribution<double> weightGenerator(3.5);
-
 		for (player = 0; player < NUM_PLAYERS; ++player)
 		{
 			netWeights.clear();
@@ -127,11 +135,19 @@ void hexWorld::nextGeneration()
 						{
 							// Add up total number of won games
 							gamesWonSum = 0;
+							neighborsGamesWon.clear();
+							fitnessChoice = 0;
 							
 							for (neighbor = 0; neighbor < neighbors.size(); ++neighbor)
 							{
 								gamesWonSum += getHexGamePlayer(neighbor).getGamesWon();
+								neighborsGamesWon.push_back(getHexGamePlayer(neighbor).getGamesWon());
 							}
+							// Use the discrete_distribution PRNG to choose a neighbor based on how many games
+							// they've won. Take that neighbors genes.
+							fitnessChoice = fitnessFunction(neighborsGamesWon.begin(), neighborsGamesWon.end());
+
+							currentWeight = getHexGamePlayer(neighbors[fitnessChoice]).getWeight(layer, rowDestination, rowOrigination);
 						}
 
 						rowOriginationVector.push_back(currentWeight);
