@@ -122,6 +122,7 @@ void hexWorld::nextGeneration()
 							currentWeight = getHexGamePlayer(player).getWeight(layer, rowDestination, rowOrigination);
 						}
 
+						// Else, choose current weight based on fitness function (probablistic)
 						else
 						{
 							// Add up total number of won games
@@ -132,10 +133,20 @@ void hexWorld::nextGeneration()
 								gamesWonSum += getHexGamePlayer(neighbor).getGamesWon();
 							}
 						}
+
+						rowOriginationVector.push_back(currentWeight);
 					}
+
+					rowDestinationVector.push_back(rowOriginationVector);
 				}
+
+				netWeights.push_back(rowDestinationVector);
 			}
+
+			newHexGamePlayers.push_back(netWeights);
 		}
+
+		hexGamePlayers = newHexGamePlayers;
 	}
 }
 
