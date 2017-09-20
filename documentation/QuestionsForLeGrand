@@ -4,3 +4,10 @@ as using c++11's <random> library. Should I care?
 - Does it matter that the random numbers follow a pattern?
 
 - Should the weights be values between 0 and 1?
+
+- Choosing the random distribution
+   I have currently chosen exponential_distribution, as it seems to weigh nicely towards 0 (with 3.5 as input)
+   Other distributions of note:
+      lognormal_distribution
+      fisher_f_distribution
+      piecewise_linear_distribution

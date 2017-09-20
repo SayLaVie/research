@@ -14,7 +14,7 @@ class hexGamePlayer
 {
 private:
    // neuralNetWeights is a 3D vector. Of the form: neuralNetWeights[column][rowDestination][rowOrigination]
-   vector<vector<vector<int> > > neuralNetWeights;
+   vector<vector<vector<double> > > neuralNetWeights;
 
    // Private data about this players played games
    int gamesWon, movesMade;
@@ -24,7 +24,7 @@ private:
    double sigmoidFunction(double input);
 
 public:
-   hexGamePlayer(vector<vector<vector<int> > > neuralNetWeights);
+   hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights);
    int play(const Board &board, player whichPlayer);
 
    // Data modifiers
