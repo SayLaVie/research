@@ -52,11 +52,11 @@ void playHexGames(hexWorld &population)
          // Add appropriate wins
          if (gameWinner == playerA)
          {
-            population.getHexGamePlayer(playerLocation).addGameWon();
+            population.addPlayerWin(playerLocation);
          }
          else
          {
-            population.getHexGamePlayer(currentNeighbor).addGameWon();
+            population.addPlayerWin(currentNeighbor);
          }
       }
    }

@@ -44,6 +44,7 @@ public:
 
 	// Return a hexGamePlayer from vector hexGamePlayers
 	hexGamePlayer getHexGamePlayer(int playerLocation) {return hexGamePlayers[playerLocation];}
+	void addPlayerWin(int playerLocation) {hexGamePlayers[playerLocation].addGameWon();}
 };
 
 #endif // #ifndef HEXWORLD_H
