@@ -37,14 +37,13 @@ void hexWorld::nextGeneration()
 	vector<vector<vector<double> > > netWeights;
 	vector<double> rowOriginationVector;
 	vector<vector<double> > rowDestinationVector;
-	int layer, rowDestination, rowOrigination, player, neighbor, gamesWon, fitnessChoice;
+	int layer, rowDestination, rowOrigination, player, neighbor, gamesWon, breederChoice;
 	double currentWeight;
 	vector<hexGamePlayer> newHexGamePlayers;
 
 /*****************************************************************************************
 	PRNG's
 *****************************************************************************************/
-	// Default random engine to be used as a input for other generators
 	default_random_engine seedGenerator(time(NULL));
 
 	// Bernoulli_distribution is effectively a coin toss. Returns true or false.
@@ -54,10 +53,6 @@ void hexWorld::nextGeneration()
 	// confined between 0 and 1. 3.5 is chosen (from cplusplus.com) as it seems
 	// to have a good distribution for our use.
 	exponential_distribution<double> weightGenerator(3.5);
-
-	// discrete_distribution generator to choose neighbors probablistically based on the
-	// number of games that they've won (our fitness function)
-	discrete_distribution fitnessFunction;
 /*********************************************************************************************/
 
    /**
@@ -137,7 +132,7 @@ void hexWorld::nextGeneration()
 						else
 						{
 							neighborsGamesWon.clear();
-							fitnessChoice = 0;
+							breederChoice = 0;
 
 							// Make a vector with each neighbor's numGamesWon
 							for (neighbor = 0; neighbor < neighbors.size(); ++neighbor)
@@ -146,11 +141,10 @@ void hexWorld::nextGeneration()
 								neighborsGamesWon.push_back(gamesWon);
 							}
 
-							// Use the discrete_distribution PRNG to choose a neighbor based on how many games
-							// they've won. Take that neighbor's genes.
-							fitnessChoice = fitnessFunction(neighborsGamesWon.begin(), neighborsGamesWon.end());
+							// Use the getBreeder function to determine whose genes to use
+							breederChoice = getBreeder(seedGenerator, neighborsGamesWon);
 
-							currentWeight = getHexGamePlayer(neighbors[fitnessChoice]).getWeight(layer, rowDestination, rowOrigination);
+							currentWeight = getHexGamePlayer(neighbors[breederChoice]).getWeight(layer, rowDestination, rowOrigination);
 						}
 
 						rowOriginationVector.push_back(currentWeight);
@@ -173,4 +167,13 @@ void hexWorld::nextGeneration()
 vector<int> hexWorld::getNeighbors(int hexPlayerLocation)
 {
 
+}
+
+int hexWorld::getBreeder(default_random_engine &seedGenerator, vector<int> probabilities)
+{
+	// discrete_distribution generator to choose neighbors probablistically based on the
+	// number of games that they've won (our fitness function)
+	discrete_distribution<int> breederGenerator(probabilities.begin(), probabilities.end());
+
+	return breederGenerator(seedGenerator);
 }

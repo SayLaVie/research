@@ -11,3 +11,5 @@ as using c++11's <random> library. Should I care?
       lognormal_distribution
       fisher_f_distribution
       piecewise_linear_distribution
+- When using the discrete_distribtution for breeding, should I use a vector? (to keep track of objects created, etc...)
+   - maybe write a function, so that each instance of the generator is destroyed after calling

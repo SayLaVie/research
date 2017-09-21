@@ -18,6 +18,7 @@ each other).
 #define HEXWORLD_H
 
 #include "hexGamePlayer.h"
+#include <random>
 
 class hexWorld
 {
@@ -45,6 +46,8 @@ public:
 	// Return a hexGamePlayer from vector hexGamePlayers
 	hexGamePlayer getHexGamePlayer(int playerLocation) {return hexGamePlayers[playerLocation];}
 	void addPlayerWin(int playerLocation) {hexGamePlayers[playerLocation].addGameWon();}
+
+	int getBreeder(default_random_engine &seedGenerator, vector<int> weights);
 };
 
 #endif // #ifndef HEXWORLD_H
