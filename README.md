@@ -8,3 +8,4 @@ Advisor: Dr. Rob LeGrand
 - Save/Resume function
    - via command line arguments
 - Seperate main function to test progress so far
+- Still need to code mutation in
