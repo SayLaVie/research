@@ -61,7 +61,7 @@ void playHexGames(hexWorld &population)
 // Return the player that won the game
 // May change return value to a pair<player, int> if we want to keep track of
 // length of game
-player playHex(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
+player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
 {
    int playerMove, numberOfTurns;
    player currentPlayer;
