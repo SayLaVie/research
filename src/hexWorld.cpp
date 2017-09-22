@@ -251,6 +251,10 @@ int hexWorld::getNeighborLocation(int playerLocation, int columnOffset, int rowO
 	return neighborLocation;
 }
 
+// This generator is seperated from the nextGeneration function because it needs a new
+// set of probabilities with each use. The probabilities of the discrete_distribution
+// are (as far as I could tell) immutable. So I create a new instance inside of this
+// function whenever it is needed.
 int hexWorld::getBreeder(default_random_engine &seedGenerator, vector<int> probabilities)
 {
 	// discrete_distribution generator to choose neighbors probablistically based on the
