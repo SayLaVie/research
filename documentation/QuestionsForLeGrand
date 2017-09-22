@@ -1,15 +1,15 @@
 - The internet tells me that using <cstdlib>'s random is not as 'random'
 as using c++11's <random> library. Should I care?
 
-- Does it matter that the random numbers follow a pattern?
-
-- Should the weights be values between 0 and 1?
-
 - Choosing the random distribution
    I have currently chosen exponential_distribution, as it seems to weigh nicely towards 0 (with 3.5 as input)
    Other distributions of note:
       lognormal_distribution
       fisher_f_distribution
       piecewise_linear_distribution
+
 - When using the discrete_distribtution for breeding, should I use a vector? (to keep track of objects created, etc...)
-   - maybe write a function, so that each instance of the generator is destroyed after calling
+  !- maybe write a function, so that each instance of the generator is destroyed after calling
+
+- Maybe I should create a class that keeps track of the info of each individual game
+   - Player who won, number of moves that each player took, etc...

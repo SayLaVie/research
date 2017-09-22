@@ -7,10 +7,6 @@ advisor: Dr. Rob LeGrand
 
 #include "hexWorld.h"
 
-// Function to play hex games. May take whole hexWorld as parameter,
-// or maybe just two players. If only two players, will return the
-// result of one particular game. If an entire world, nothing is
-// needed for return.
 void playHexGames(hexWorld &population);
 player playHexGame(hexGamePlayer playerA, hexGamePlayer playerB);
 
