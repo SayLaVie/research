@@ -6,5 +6,4 @@ Repository for research credit
 - devise hardness scale
 - Save/Resume function
    - via command line arguments
-   - via user interaction during execution
 - Seperate main function to test progress so far
