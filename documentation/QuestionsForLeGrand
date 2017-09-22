@@ -1,6 +1,3 @@
-- The internet tells me that using <cstdlib>'s random is not as 'random'
-as using c++11's <random> library. Should I care?
-
 - Choosing the random distribution
    I have currently chosen exponential_distribution, as it seems to weigh nicely towards 0 (with 3.5 as input)
    Other distributions of note:
@@ -13,3 +10,15 @@ as using c++11's <random> library. Should I care?
 
 - Maybe I should create a class that keeps track of the info of each individual game
    - Player who won, number of moves that each player took, etc...
+
+- (Future) I can make global variables externs, so that I can set them from command line
+
+- I need to make a main function that only tests the functions I've created
+
+- Const questions??
+
+- Currently, I'm seeding with seconds since epoch. Should I do milliseconds?
+
+- Github progress?
+
+- AI as a career: Do I need grad school?
