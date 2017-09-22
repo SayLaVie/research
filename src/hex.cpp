@@ -7,9 +7,11 @@ advisor: Dr. Rob LeGrand
 
 #include "hex.h"
 
-Tile::Tile(int location, int size) // Constructor used during board creation
+// Constructor used during board creation
+Tile::Tile(int location, int size)
 {
    owner = none;
+   turn = 0;
    rank = 0;
    parent = location;
    this->location = location;
@@ -18,7 +20,8 @@ Tile::Tile(int location, int size) // Constructor used during board creation
    bitFlag = false;
 }
 
-Board::Board(int size) // Constructor using board size
+// Constructor using board size
+Board::Board(int size)
 {
    this->size = size;
    for (int i = 0; i < size * size; ++i)
@@ -27,7 +30,8 @@ Board::Board(int size) // Constructor using board size
    }
 }
 
-Board::Board(const Board &copy) // Copy constructor
+// Copy constructor
+Board::Board(const Board &copy)
 {
    this->BoardLayout.clear();
 
@@ -36,7 +40,8 @@ Board::Board(const Board &copy) // Copy constructor
    this->BoardLayout = copy.getBoard();
 }
 
-Board& Board::operator=(const Board &rhs) // Assignment operator
+// Assignment operator
+Board& Board::operator=(const Board &rhs)
 {
    this->BoardLayout.clear();
 
@@ -87,7 +92,8 @@ int Board::FindSet(int x)
    return BoardLayout[x].getParent();
 }
 
-void Board::makeMove(int location, player mover) // Updates the owner of a tile, and calls findNeighbors to determine flag value
+// Updates the owner of a tile, and calls findNeighbors to determine flag value
+void Board::makeMove(int location, player mover)
 {
    Tile *locationTile = &(BoardLayout[location]);
    int row, column;
@@ -106,7 +112,8 @@ void Board::makeMove(int location, player mover) // Updates the owner of a tile,
    }
 }
 
-void Board::findNeighbors(int location) // Looks for neighbors. Calls Union-Find functions to set appropriate border-connection flag
+// Looks for neighbors. Calls Union-Find functions to set appropriate border-connection flag
+void Board::findNeighbors(int location)
 {
    Tile *locationTile = &(BoardLayout[location]), *neighborTile;
 
@@ -209,12 +216,14 @@ void Board::findNeighbors(int location) // Looks for neighbors. Calls Union-Find
    }
 }
 
-bool Board::isValidMove(int location) const // Checks if the hypothetical move is out-of-bounds, or if it is already owned by a player
+// Checks if the hypothetical move is out-of-bounds, or if it is already owned by a player
+bool Board::isValidMove(int location) const
 {
    return location >= 0 && location < size * size && BoardLayout[location].getOwner() == none;
 }
 
-bool Board::isGameOver() // Searches the border associated with a player and checks the flag's of those tiles to see if they are connected to the border on the opposite side
+// Searches the border associated with a player and checks the flag's of those tiles to see if they are connected to the border on the opposite side
+bool Board::isGameOver()
 {
    int column = size - 1, row = 0, location;
 
@@ -249,47 +258,47 @@ bool Board::isGameOver() // Searches the border associated with a player and che
    return false;
 }
 
-// void Board::printBoard() const // Prints the board out
-// {
-//    int column, hex, row, offset, move, width;
+void Board::printBoard() const // Prints the board out
+{
+   int column, hex, row, offset, move, width;
 
-//    width = (size - 1) * 3;
+   width = (size - 1) * 3;
 
-//    for (row = size - 1; row >= 0; --row)
-//    {
-//       cout << endl << setw(width) << "";
+   for (row = size - 1; row >= 0; --row)
+   {
+      cout << endl << setw(width) << "";
 
-//       for (column = 0; column < size; ++column)
-//       {
-//          hex = size * row + column;
+      for (column = 0; column < size; ++column)
+      {
+         hex = size * row + column;
 
-//          move = BoardLayout[hex].getTurn();
-//          offset = 1;
+         move = BoardLayout[hex].getTurn();
+         offset = 1;
 
-//          while (move / 10)
-//          {
-//             move /= 10;
-//             ++offset;
-//          }
+         while (move / 10)
+         {
+            move /= 10;
+            ++offset;
+         }
 
-//          if (BoardLayout[hex].getOwner() == playerA)
-//          {
-//             cout << setw(5 - offset) << right << "A" << BoardLayout[hex].getTurn();
-//          }
-//          else if (BoardLayout[hex].getOwner() == playerB)
-//          {
-//             cout << setw(5 - offset) << right << "B" << BoardLayout[hex].getTurn();
-//          }
-//          else
-//          {
-//             cout << setw(5) << right << "-";
-//          }
-//       }
+         if (BoardLayout[hex].getOwner() == playerA)
+         {
+            cout << setw(5 - offset) << right << "A" << BoardLayout[hex].getTurn();
+         }
+         else if (BoardLayout[hex].getOwner() == playerB)
+         {
+            cout << setw(5 - offset) << right << "B" << BoardLayout[hex].getTurn();
+         }
+         else
+         {
+            cout << setw(5) << right << "-";
+         }
+      }
 
-//       width -= 3;
+      width -= 3;
 
-//       cout << endl;
-//    }
-// }
+      cout << endl;
+   }
+}
 
 

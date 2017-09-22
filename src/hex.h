@@ -30,7 +30,7 @@ class Tile
 private:
    player owner;
    bool bitFlag;
-   int location, row, column, rank, parent;
+   int location, row, column, rank, parent, turn;
 
 public:
    Tile(int location, int size);
@@ -41,6 +41,9 @@ public:
    void setFlag(bool newFlag) {bitFlag = newFlag;}
    int getRank() {return rank;} // This is for Union-Find
    void incrementRank() {rank = rank + 1;}
+
+   int getTurn() const{return turn;} // Turn is used for printBoard() -- it tells whech turn the tile was taken
+   void setTurn(int newTurn) {turn = newTurn;}
 
    int getRow() {return row;}
    int getColumn() {return column;}
@@ -67,6 +70,7 @@ public:
    bool isValidMove(int location) const;
    bool isGameOver();
    int getSize() const {return size;}
+   void printBoard() const;
 
    vector<Tile> getBoard() const{return BoardLayout;} // A little ugly, but I needed to access the board for the copy constructor and assignment operator overload
 
