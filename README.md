@@ -1,5 +1,6 @@
 # Research on The Game of Hex
 advisor: Dr. Rob LeGrand
+
 author: Michael McCarver
 
 ## To Do
