@@ -1,7 +1,7 @@
 # Research on The Game of Hex
-author: Michael McCarver
+Author: Michael McCarver
 
-advisor: Dr. Rob LeGrand
+Advisor: Dr. Rob LeGrand
 ## To Do
 - maybe create new directory to contain different net topologies (specific maps could be chosen at compilation, or at beginning 	of execution via stdin prompt)
 - devise hardness scale
