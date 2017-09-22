@@ -21,7 +21,6 @@ that clumps values closer to 0.
 
 #include "hexWorld.h"
 #include <ctime>
-#include <random>
 
 // This function sets the weights for the neural net
 void hexWorld::nextGeneration()
@@ -29,9 +28,9 @@ void hexWorld::nextGeneration()
    /**
 	- netShape keeps track of the shape of the neuralNet
    - neighbors is a vector of current neighbors
-	- netWeights is the actual set of weights
+	- netWeights is the actual set of weights for each player
 	- rowOriginationVector is a helper vector for creating netWeights
-	- rowDestinationVector is also a helper vector
+	- rowDestinationVector is also a helper vector for creating netWeights
    **/
 	vector<int> netShape, neighbors, neighborsGamesWon;
 	vector<vector<vector<double> > > netWeights;
@@ -163,21 +162,93 @@ void hexWorld::nextGeneration()
 	}
 }
 
-// return vector of neighboring hexPlayers.
+// return vector of neighboring hexPlayers. Will check left, left-up, right, right-down, up, down
 vector<int> hexWorld::getNeighbors(int hexPlayerLocation)
 {
-   int playerRow, playerColumn, numPlayersDimension;
+	int neighborLocation;
    vector<int> neighbors;
 
-   numPlayersDimension = sqrt(NUM_PLAYERS);
-   playerRow = hexPlayerLocation / numPlayersDimension;
-   playerColumn = hexPlayerLocation % numPlayersDimension;
+   // Find left position, add to vector
+   neighborLocation = getNeighborLocation(hexPlayerLocation, -1, 0);
+   neighbors.push_back(neighborLocation);
 
-   /**
-   Will check left, left-up, right, right-down, up, down
-   **/
+   // Find left-up postion, add to vector
+   neighborLocation = getNeighborLocation(hexPlayerLocation, -1, 1);
+   neighbors.push_back(neighborLocation);
+
+   // Find right position, add to vector
+   neighborLocation = getNeighborLocation(hexPlayerLocation, 1, 0);
+   neighbors.push_back(neighborLocation);
+
+   // Find right-down position, add to vector
+   neighborLocation = getNeighborLocation(hexPlayerLocation, 1, -1);
+   neighbors.push_back(neighborLocation);
+
+   // Find up position, add to vector
+   neighborLocation = getNeighborLocation(hexPlayerLocation, 0, 1);
+   neighbors.push_back(neighborLocation);
+
+   // Find down position, add to vector
+   neighborLocation = getNeighborLocation(hexPlayerLocation, 0, -1);
+   neighbors.push_back(neighborLocation);
 
    return neighbors;
+}
+
+// Find the integer location for indicated player. Make adjustments to row/column
+// if offsets move location off of the map.
+int hexWorld::getNeighborLocation(int playerLocation, int columnOffset, int rowOffset)
+{
+	int neighborLocation, neighborColumn, neighborRow, playerColumn, playerRow, numPlayersDimension;
+
+	numPlayersDimension = sqrt(NUM_PLAYERS);
+	playerColumn = playerLocation % numPlayersDimension;
+	playerRow = playerLocation / numPlayersDimension;
+
+	neighborColumn = playerColumn + columnOffset;
+	neighborRow = playerRow + rowOffset;
+
+	if (neighborColumn < 0)
+	{
+		neighborColumn += numPlayersDimension;
+	}
+	else if (neighborColumn >= numPlayersDimension)
+	{
+		neighborColumn -= numPlayersDimension;
+	}
+
+	if (neighborRow < 0)
+	{
+		neighborRow += numPlayersDimension;
+
+		// Need to move halfway across board for the new offset
+		if (neighborColumn + numPlayersDimension / 2 < numPlayersDimension)
+		{
+			neighborColumn += numPlayersDimension / 2;
+		}
+		else
+		{
+			neighborColumn -= numPlayersDimension / 2;
+		}
+	}
+	else if (neighborRow >= numPlayersDimension)
+	{
+		neighborRow -= numPlayersDimension;
+
+		// Need to move halfway across board for the new offset
+		if (neighborColumn + numPlayersDimension / 2 < numPlayersDimension)
+		{
+			neighborColumn += numPlayersDimension / 2;
+		}
+		else
+		{
+			neighborColumn -= numPlayersDimension / 2;
+		}		
+	}
+
+	neighborLocation = numPlayersDimension * neighborRow + neighborColumn;
+
+	return neighborLocation;
 }
 
 int hexWorld::getBreeder(default_random_engine &seedGenerator, vector<int> probabilities)

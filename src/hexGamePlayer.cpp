@@ -9,7 +9,7 @@ advisor: Dr. Rob LeGrand
 #include <cmath>
 
 // Constructor takes a set of weights for the neural net heuristic
-hexGamePlayer::hexGamePlayer(vector<vector<vector<int> > > neuralNetWeights)
+hexGamePlayer::hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights)
 {
 	this->neuralNetWeights = neuralNetWeights;
 	this->gamesWon = 0;

@@ -14,7 +14,10 @@ advisor: Dr. Rob LeGrand
 
 using namespace std;
 
-// Global variables
+/**
+Global variables
+NUM_PLAYERS needs to be an even square
+**/
 const int MAX_DEPTH = 5;
 const int BOARD_SIZE = 7;
 const int NUM_PLAYERS = 16;

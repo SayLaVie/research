@@ -38,8 +38,9 @@ public:
 
 	// Function to return a vector of all neighboring hexGamePlayers.
 	// Takes an int location as a parameter (which hexGamePlayer we are
-	// currently centered on). To be used by the playGame function.
+	// currently centered on).
 	vector<int> getNeighbors(int hexPlayerLocation);
+	int getNeighborLocation(int playerLocation, int columnOffset, int rowOffset);
 
 	int getNumPlayers(){return numPlayers;}
 
@@ -47,7 +48,7 @@ public:
 	hexGamePlayer getHexGamePlayer(int playerLocation) {return hexGamePlayers[playerLocation];}
 	void addPlayerWin(int playerLocation) {hexGamePlayers[playerLocation].addGameWon();}
 
-	int getBreeder(default_random_engine &seedGenerator, vector<int> weights);
+	int getBreeder(default_random_engine &seedGenerator, vector<int> probabilities);
 };
 
 #endif // #ifndef HEXWORLD_H
