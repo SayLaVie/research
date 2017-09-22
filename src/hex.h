@@ -37,18 +37,22 @@ public:
    player getOwner() const{return owner;}
    void setOwner(player takenBy) {owner = takenBy;}
 
-   bool getFlag() const{return bitFlag;} // The flag is whether or not the square is attached to the border
+   // The flag is whether or not the square is attached to the border
+   bool getFlag() const{return bitFlag;}
    void setFlag(bool newFlag) {bitFlag = newFlag;}
-   int getRank() {return rank;} // This is for Union-Find
+   // This is for Union-Find
+   int getRank() {return rank;}
    void incrementRank() {rank = rank + 1;}
 
-   int getTurn() const{return turn;} // Turn is used for printBoard() -- it tells whech turn the tile was taken
+   // Turn is used for printBoard() -- it tells whech turn the tile was taken
+   int getTurn() const{return turn;}
    void setTurn(int newTurn) {turn = newTurn;}
 
    int getRow() {return row;}
    int getColumn() {return column;}
 
-   void setParent(int newParent) {parent = newParent;} // Parent's are used for Union-Find
+   // Parent's are used for Union-Find
+   void setParent(int newParent) {parent = newParent;}
    int getParent() {return parent;}
 };
 
@@ -66,15 +70,15 @@ private:
 public:
    Board(int size = 0);
    Board(const Board &copy);
-   void makeMove(int location, player mover); // Update the board with a player's move.
+   void makeMove(int location, player mover);
    bool isValidMove(int location) const;
    bool isGameOver();
    int getSize() const {return size;}
    void printBoard() const;
 
-   vector<Tile> getBoard() const{return BoardLayout;} // A little ugly, but I needed to access the board for the copy constructor and assignment operator overload
+   vector<Tile> getBoard() const{return BoardLayout;}
 
-   Board& operator=(const Board &rhs); // Assignment operator
+   Board& operator=(const Board &rhs);
 };
 
 #endif // #ifndef HEX_H
