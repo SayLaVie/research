@@ -9,6 +9,7 @@ advisor: Dr. Rob LeGrand
 #define HEXGAMEPLAYER_H
 
 #include "hex.h"
+#include <cmath>
 
 class hexGamePlayer
 {

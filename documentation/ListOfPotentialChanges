@@ -6,3 +6,4 @@ This is a list of potential variables we can adjust throughout the research proc
 - method of board-state input (chunking, etc...)
 - distribution model (randomizers)
 - evolution (how to pass on genes)
+- shape of hex world

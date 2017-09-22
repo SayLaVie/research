@@ -163,10 +163,21 @@ void hexWorld::nextGeneration()
 	}
 }
 
-// return vector of neighboring hexPlayers
+// return vector of neighboring hexPlayers.
 vector<int> hexWorld::getNeighbors(int hexPlayerLocation)
 {
+   int playerRow, playerColumn, numPlayersDimension;
+   vector<int> neighbors;
 
+   numPlayersDimension = sqrt(NUM_PLAYERS);
+   playerRow = hexPlayerLocation / numPlayersDimension;
+   playerColumn = hexPlayerLocation % numPlayersDimension;
+
+   /**
+   Will check left, left-up, right, right-down, up, down
+   **/
+
+   return neighbors;
 }
 
 int hexWorld::getBreeder(default_random_engine &seedGenerator, vector<int> probabilities)
