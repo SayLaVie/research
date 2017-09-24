@@ -23,8 +23,8 @@ Advisor: Dr. Rob LeGrand
 	- (Change getNeighbor's method of wrapping around)
 - Plan out how to print information out during execution
 - Save progress of genetic evolution at certain intervals
-- Seed Generator should only be created one time
-	- private static member variable
+- (Seed Generator should only be created one time)
+	- (private static member variable)
 
 ### Notes/Reminders
 - maybe create new directory to contain different net topologies (specific maps could be chosen at compilation, or at beginning 	of execution via stdin prompt)
