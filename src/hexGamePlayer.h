@@ -21,7 +21,7 @@ private:
    int gamesWon, movesMade;
 
    double miniMax(Board board, player whichPlayer, int depth, int alpha, int beta);
-   double neuralNetHeuristic(Board board, player whichPlayer);
+   double neuralNetHeuristic(const Board board, player whichPlayer);
    double sigmoidFunction(double input);
 
 public:

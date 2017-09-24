@@ -10,8 +10,8 @@ advisor: Dr. Rob LeGrand
 // Constructor used during board creation
 Tile::Tile(int location, int size)
 {
-   owner = none;
-   turn = 0;
+   owner = static_cast<player>(2);
+   turnTaken = 0;
    rank = 0;
    parent = location;
    this->location = location;
@@ -24,6 +24,8 @@ Tile::Tile(int location, int size)
 Board::Board(int size)
 {
    this->size = size;
+   turnCounter = 0;
+
    for (int i = 0; i < size * size; ++i)
    {
       BoardLayout.push_back(Tile(i, size));
@@ -104,6 +106,10 @@ void Board::makeMove(int location, player mover)
    if (isValidMove(location))
    {
       locationTile->setOwner(mover);
+
+      locationTile->setTurnTaken(turnCounter / 2);
+
+      turnCounter += 1;
 
       // Set the border flag for this tile
       locationTile->setFlag(locationTile->getOwner() == playerA ? column == 0 : row == 0);
@@ -272,7 +278,7 @@ void Board::printBoard() const // Prints the board out
       {
          hex = size * row + column;
 
-         move = BoardLayout[hex].getTurn();
+         move = BoardLayout[hex].getTurnTaken();
          offset = 1;
 
          while (move / 10)
@@ -283,11 +289,11 @@ void Board::printBoard() const // Prints the board out
 
          if (BoardLayout[hex].getOwner() == playerA)
          {
-            cout << setw(5 - offset) << right << "A" << BoardLayout[hex].getTurn();
+            cout << setw(5 - offset) << right << "A" << BoardLayout[hex].getTurnTaken();
          }
          else if (BoardLayout[hex].getOwner() == playerB)
          {
-            cout << setw(5 - offset) << right << "B" << BoardLayout[hex].getTurn();
+            cout << setw(5 - offset) << right << "B" << BoardLayout[hex].getTurnTaken();
          }
          else
          {

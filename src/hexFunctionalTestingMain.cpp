@@ -81,11 +81,14 @@ player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
 
    numberOfTurns = 0;
 
-   cout << "\t\t\t\tEntering playHexGame" << endl;
-   cout << "tst";
+   cout << "Turns passed: ";
+
    while (!board.isGameOver())
    {
-      cout << numberOfTurns;
+      if (numberOfTurns % 5 == 0)
+      {
+         cout << numberOfTurns << " ";
+      }
 
       currentPlayer = static_cast<player>(numberOfTurns % 2);
 
@@ -111,6 +114,9 @@ player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
 
       numberOfTurns += 1;
    }
+
+   cout << "\t\t\t\tLeaving playHexGame" << endl;
+   board.printBoard();
 
    // Last player who played has won the game.
    // If numberOfTurns is odd, playerA won the game

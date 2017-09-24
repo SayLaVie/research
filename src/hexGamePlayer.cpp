@@ -42,7 +42,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, int al
 
    if (depth > MAX_DEPTH)
    {
-      heuristicValue = neuralNetHeuristic(copyBoard, whichPlayer);
+      heuristicValue = neuralNetHeuristic(board, whichPlayer);
 
       return maximizer ? heuristicValue : -heuristicValue;
    }
@@ -114,7 +114,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, int al
 
 
 // Neural net takes in vector of vectors of weights, returns a double between 0 and 1
-double hexGamePlayer::neuralNetHeuristic(Board board, player whichPlayer)
+double hexGamePlayer::neuralNetHeuristic(const Board board, player whichPlayer)
 {
 	int location, column, rowOrigination, rowDestination;
 	vector<int> boardState;
@@ -127,7 +127,9 @@ double hexGamePlayer::neuralNetHeuristic(Board board, player whichPlayer)
    // May split this into its own function later
 	for (location = 0; location < BOARD_SIZE * BOARD_SIZE; ++location)
 	{
-		thisOwner = board.getBoard()[location].getOwner();
+      // cout << location << endl;
+		// thisOwner = playerA;
+      thisOwner = board.getBoard()[location].getOwner();
 
 		if (thisOwner == none)
 			boardState.push_back(0);

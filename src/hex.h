@@ -30,7 +30,7 @@ class Tile
 private:
    player owner;
    bool bitFlag;
-   int location, row, column, rank, parent, turn;
+   int location, row, column, rank, parent, turnTaken;
 
 public:
    Tile(int location, int size);
@@ -45,8 +45,8 @@ public:
    void incrementRank() {rank = rank + 1;}
 
    // Turn is used for printBoard() -- it tells whech turn the tile was taken
-   int getTurn() const{return turn;}
-   void setTurn(int newTurn) {turn = newTurn;}
+   int getTurnTaken() const{return turnTaken;}
+   void setTurnTaken(int turnTaken) {this->turnTaken = turnTaken;}
 
    int getRow() {return row;}
    int getColumn() {return column;}
@@ -60,7 +60,7 @@ public:
 class Board
 {
 private:
-   int size;
+   int size, turnCounter;
    vector<Tile> BoardLayout;
    void findNeighbors(int location);
    void Union(int x, int y);
@@ -77,6 +77,7 @@ public:
    void printBoard() const;
 
    vector<Tile> getBoard() const{return BoardLayout;}
+   Tile getTile(int location){return BoardLayout[location];}
 
    Board& operator=(const Board &rhs);
 };
