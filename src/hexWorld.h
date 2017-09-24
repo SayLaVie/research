@@ -20,6 +20,13 @@ each other).
 #include "hexGamePlayer.h"
 #include <random>
 
+/**
+Global seed generator
+I ran into trouble declaring it as const. It's possible that the generator could
+be re-seeded
+**/
+default_random_engine seedGenerator(time(NULL));
+
 class hexWorld
 {
 private:

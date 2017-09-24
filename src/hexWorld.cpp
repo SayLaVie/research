@@ -40,20 +40,8 @@ void hexWorld::nextGeneration()
 	double currentWeight;
 	vector<hexGamePlayer> newHexGamePlayers;
 
-/*****************************************************************************************
-	PRNG's
-*****************************************************************************************/
-	default_random_engine seedGenerator(time(NULL));
-
 	// Bernoulli_distribution is effectively a coin toss. Returns true or false.
 	bernoulli_distribution coinToss(0.5);
-
-	// Initiate exponential_distribution PRNG. As of now, output will not be
-	// confined between 0 and 1. 3.5 is chosen (from cplusplus.com) as it seems
-	// to have a good distribution for our use.
-	//exponential_distribution<double> weightGenerator(3.5);
-
-/*********************************************************************************************/
 
    /**
 	Push the depths of each layer into the netShape vector
