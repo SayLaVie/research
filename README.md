@@ -1,10 +1,11 @@
 # Research on The Game of Hex
+/*research description goes here*/
+
 Author: Michael McCarver
-
 Advisor: Dr. Rob LeGrand
----
+***
 
-## To Do for Next Meeting
+### To Do for Next Meeting
 - Write multiple mains:
 	- Main for testing
 	- Main for genetic evolution
@@ -23,7 +24,7 @@ Advisor: Dr. Rob LeGrand
 - Plan out how to print information out during execution
 - Save progress of genetic evolution at certain intervals
 
-## Notes/Reminders
+### Notes/Reminders
 - maybe create new directory to contain different net topologies (specific maps could be chosen at compilation, or at beginning 	of execution via stdin prompt)
 - devise hardness scale
 - Save/Resume function
