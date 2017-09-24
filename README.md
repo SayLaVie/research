@@ -1,10 +1,8 @@
 # Research on The Game of Hex
-/*research description goes here*/
-
 Author: Michael McCarver
-
 Advisor: Dr. Rob LeGrand
 
+/*research description goes here*/
 ***
 
 ### To Do for Next Meeting
