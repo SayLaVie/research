@@ -1,5 +1,5 @@
 # Research on The Game of Hex
-Author: Michael McCarver
+Author: Michael McCarver<br />
 Advisor: Dr. Rob LeGrand
 
 /*research description goes here*/
