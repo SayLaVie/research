@@ -220,30 +220,10 @@ int hexWorld::getNeighborLocation(int playerLocation, int columnOffset, int rowO
 	if (neighborRow < 0)
 	{
 		neighborRow += numPlayersDimension;
-
-		// Need to move halfway across board for the new offset
-		if (neighborColumn + numPlayersDimension / 2 < numPlayersDimension)
-		{
-			neighborColumn += numPlayersDimension / 2;
-		}
-		else
-		{
-			neighborColumn -= numPlayersDimension / 2;
-		}
 	}
 	else if (neighborRow >= numPlayersDimension)
 	{
 		neighborRow -= numPlayersDimension;
-
-		// Need to move halfway across board for the new offset
-		if (neighborColumn + numPlayersDimension / 2 < numPlayersDimension)
-		{
-			neighborColumn += numPlayersDimension / 2;
-		}
-		else
-		{
-			neighborColumn -= numPlayersDimension / 2;
-		}		
 	}
 
 	neighborLocation = numPlayersDimension * neighborRow + neighborColumn;
