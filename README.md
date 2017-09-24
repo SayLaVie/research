@@ -4,7 +4,6 @@
 Author: Michael McCarver
 Advisor: Dr. Rob LeGrand
 ***
-***
 
 ### To Do for Next Meeting
 - Write multiple mains:
