@@ -5,7 +5,7 @@ Advisor: Dr. Rob LeGrand
 /*research description goes here*/
 ***
 
-### To Do for Next Meeting
+### To Do for Next Meeting (parentheticals indicate completed tasks)
 - Write multiple mains:
 	- Main for testing
 	- Main for genetic evolution
@@ -19,8 +19,8 @@ Advisor: Dr. Rob LeGrand
 		- This allows the neural net to find different importance in whether we own a tile or opponent owns a tile
 - Go through code and ensure consistent use of keywords
 	- e.g. 'layer' vs 'column'
-- Change the geometric structure of the hexWorld
-	- Change getNeighbor's method of wrapping around
+- (Change the geometric structure of the hexWorld)
+	- (Change getNeighbor's method of wrapping around)
 - Plan out how to print information out during execution
 - Save progress of genetic evolution at certain intervals
 
