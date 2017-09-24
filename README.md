@@ -2,7 +2,6 @@
 /*research description goes here*/
 
 Author: Michael McCarver
-
 Advisor: Dr. Rob LeGrand
 ***
 
@@ -30,3 +29,4 @@ Advisor: Dr. Rob LeGrand
 - devise hardness scale
 - Save/Resume function
    - via command line arguments
+
