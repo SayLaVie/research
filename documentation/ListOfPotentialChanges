@@ -5,11 +5,11 @@ This is a list of potential variables we can adjust throughout the research proc
 - size of population
 - shape of neural net
 - method of board-state input (chunking, etc...)
-- distribution model (randomizers)
+- distribution model (which RNG's to use)
 - evolution (how to pass on genes)
 - shape of hex world
-- how rare evolution is
-   - How much should it vary by?
-- How rare is mutation
+- How rare mutation is
    - How much does mutation vary?
 - Is the coin toss biased?
+- Information to be considered in the fitness function
+   - numMovesMade during game
