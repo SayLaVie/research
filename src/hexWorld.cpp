@@ -51,7 +51,8 @@ void hexWorld::nextGeneration()
 	// Initiate exponential_distribution PRNG. As of now, output will not be
 	// confined between 0 and 1. 3.5 is chosen (from cplusplus.com) as it seems
 	// to have a good distribution for our use.
-	exponential_distribution<double> weightGenerator(3.5);
+	//exponential_distribution<double> weightGenerator(3.5);
+
 /*********************************************************************************************/
 
    /**
@@ -81,9 +82,8 @@ void hexWorld::nextGeneration()
 
 					for (rowOrigination = 0; rowOrigination < netShape[layer]; ++rowOrigination)
 					{
-						// Generate random weight. Flip a coin to see if it needs to be negative
-						currentWeight = weightGenerator(seedGenerator);
-						currentWeight *= (coinToss(seedGenerator) ? 1 : -1);
+						// Generate random weight. 
+						currentWeight = generateWeight(seedGenerator, 0.0);
 
 						// Add new weight to vector
 						rowOriginationVector.push_back(currentWeight);
@@ -117,10 +117,9 @@ void hexWorld::nextGeneration()
 				{
 					rowOriginationVector.clear();
 
+					// This is where the breeding takes place
 					for (rowOrigination = 0; rowOrigination < netShape[layer]; ++rowOrigination)
 					{
-						// This is where the fitness decisions take place
-
 						// If coin toss says to keep weight
 						if (coinToss(seedGenerator))
 						{
@@ -145,6 +144,9 @@ void hexWorld::nextGeneration()
 
 							currentWeight = getHexGamePlayer(neighbors[breederChoice]).getWeight(layer, rowDestination, rowOrigination);
 						}
+
+						// Mutate currentWeight according to normal distribution centered on currentWeight
+						currentWeight = generateWeight(seedGenerator, currentWeight);
 
 						rowOriginationVector.push_back(currentWeight);
 					}
@@ -242,4 +244,15 @@ int hexWorld::getBreeder(default_random_engine &seedGenerator, vector<int> proba
 	discrete_distribution<int> breederGenerator(probabilities.begin(), probabilities.end());
 
 	return breederGenerator(seedGenerator);
+}
+
+double hexWorld::generateWeight(default_random_engine &seedGenerator, double mean)
+{
+	// Normal distribution to be used when:
+	// 	- initalizing weights (distribution centered around 0)
+	//		- mutating existing weights (distribution centered around original weight)
+	// For now, we'll allow the standard deviation to default to 1.0
+	normal_distribution<double> weightGenerator(mean);
+
+	return weightGenerator(seedGenerator);
 }

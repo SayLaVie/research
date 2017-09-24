@@ -1,9 +1,4 @@
-- Choosing the random distribution
-   I have currently chosen exponential_distribution, as it seems to weigh nicely towards 0 (with 3.5 as input)
-   Other distributions of note:
-      lognormal_distribution
-      fisher_f_distribution
-      piecewise_linear_distribution
+- What is a good standard deviation for the normal distribution?
 
 - Maybe I should create a class that keeps track of the info of each individual game
    - Player who won, number of moves that each player took, etc...

@@ -9,7 +9,7 @@ This is a list of potential variables we can adjust throughout the research proc
 - evolution (how to pass on genes)
 - shape of hex world
 - How rare mutation is
-   - How much does mutation vary?
+   - How much does mutation vary? (standard deviation)
 - Is the coin toss biased?
 - Information to be considered in the fitness function
    - numMovesMade during game

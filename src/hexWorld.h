@@ -50,6 +50,7 @@ public:
 	void addPlayerWin(int playerLocation) {hexGamePlayers[playerLocation].addGameWon();}
 
 	int getBreeder(default_random_engine &seedGenerator, vector<int> probabilities);
+	double generateWeight(default_random_engine &seedGenerator, double mean);
 };
 
 #endif // #ifndef HEXWORLD_H

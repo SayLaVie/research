@@ -12,8 +12,8 @@ Advisor: Dr. Rob LeGrand
 	- Main for playing two evolved agents against one another
 	- Main for playing human vs agent
 - Write Makefile
-- Change the way we are handling evolution/mutation
-	- Mutation always occurs, but according to a normal distribution centered on the original gene-weight
+- (Change the way we are handling evolution/mutation)
+	- (Mutation always occurs, but according to a normal distribution centered on the original gene-weight)
 - Consider changing the way we evaluate board state
 	- Use two values; one is 0/1 depending on whether we own the tile, the other is 0/1 whether the opponent owns the tile
 		- This allows the neural net to find different importance in whether we own a tile or opponent owns a tile
