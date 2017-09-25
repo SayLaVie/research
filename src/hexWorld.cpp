@@ -46,9 +46,9 @@ void hexWorld::nextGeneration()
    /**
 	Push the depths of each layer into the netShape vector
 	Not sure yet what our first network shape will be,
-	setting it as <BOARD_SIZE, 2, 1> for now.
+	setting it as <BOARD_SIZE * BOARD_SIZE, 2, 1> for now.
    **/
-	netShape.push_back(BOARD_SIZE);
+	netShape.push_back(BOARD_SIZE * BOARD_SIZE);
 	netShape.push_back(2);
 	netShape.push_back(1);
 

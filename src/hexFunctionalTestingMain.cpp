@@ -18,20 +18,21 @@ int main(int argc, char *argv[])
    hexWorld population(NUM_PLAYERS);
 
    // While we are playing (for now, while true)
-   for (int iteration = 0; iteration < 100; ++iteration)
-   {
-      cout << "Entering iteration " << iteration << endl;
+   // for (int iteration = 0; iteration < 100; ++iteration)
+   // {
+   //    cout << "Entering iteration " << iteration << endl;
 
-      // Find and set weights for the upcoming generation.
-      population.nextGeneration();
+   //    // Find and set weights for the upcoming generation.
+   //    population.nextGeneration();
 
-      cout << "\tNext generation created" << endl;
+   //    cout << "\tNext generation created" << endl;
 
-      // Play all games amongst neighbors.
-      playHexGames(population);
+   //    // Play all games amongst neighbors.
+   //    playHexGames(population);
 
-      cout << "Games played. Leaving iteration " << iteration << endl;
-   }
+   //    cout << "Games played. Leaving iteration " << iteration << endl;
+   // }
+   population.nextGeneration();
 }
 
 void playHexGames(hexWorld &population)
