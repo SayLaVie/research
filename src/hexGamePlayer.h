@@ -20,7 +20,7 @@ private:
    // Private data about this players played games
    int gamesWon, movesMade;
 
-   double miniMax(Board board, player whichPlayer, int depth, int alpha, int beta);
+   double miniMax(Board board, player whichPlayer, int depth, double alpha, double beta);
    double neuralNetHeuristic(const Board board, player whichPlayer);
    double sigmoidFunction(double input);
 

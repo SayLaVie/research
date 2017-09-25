@@ -10,7 +10,7 @@ advisor: Dr. Rob LeGrand
 // Constructor used during board creation
 Tile::Tile(int location, int size)
 {
-   owner = static_cast<player>(2);
+   owner = none;
    turnTaken = 0;
    rank = 0;
    parent = location;
@@ -58,8 +58,8 @@ Board& Board::operator=(const Board &rhs)
 void Board::Union(int x, int y)
 {
    Link(FindSet(x), FindSet(y));
-   FindSet(x);
-   FindSet(y);
+   // FindSet(x);
+   // FindSet(y);
 }
 
 void Board::Link(int x, int y)
@@ -124,7 +124,7 @@ void Board::findNeighbors(int location)
    Tile *locationTile = &(BoardLayout[location]), *neighborTile;
 
    int row, column, neighbor;
-   bool left, right, up, down;
+   bool left, right, up, down, originalFlag;
    player mover;
 
    mover = BoardLayout[location].getOwner();
@@ -136,52 +136,71 @@ void Board::findNeighbors(int location)
    up = row + 1 < size;
    down = row - 1 >= 0;
 
-   // Start looking left and upper-left
-   if (left)
+   do
    {
-      // Check directly left
-      neighbor = size * row + (column - 1);
-      neighborTile = &(BoardLayout[neighbor]);
+      originalFlag = locationTile->getFlag();
 
-      //Check if we own that tile
-      if (neighborTile->getOwner() == mover)
+      // Start looking left and upper-left
+      if (left)
       {
-         // A neighbor hex has the same owner, so merge this new tile into that set
-         Union(location, neighbor);
-      }
-
-      // Check upper-left
-      if (up)
-      {
-         neighbor = size * (row + 1) + (column - 1);
+         // Check directly left
+         neighbor = size * row + (column - 1);
          neighborTile = &(BoardLayout[neighbor]);
 
+         //Check if we own that tile
          if (neighborTile->getOwner() == mover)
          {
             // A neighbor hex has the same owner, so merge this new tile into that set
             Union(location, neighbor);
          }
-      }
-   }
 
-   // Check tiles to the right
-   if (right)
-   {
-      // Check directly right
-      neighbor = size * row + (column + 1);
-      neighborTile = &(BoardLayout[neighbor]);
+         // Check upper-left
+         if (up)
+         {
+            neighbor = size * (row + 1) + (column - 1);
+            neighborTile = &(BoardLayout[neighbor]);
 
-      // Check if we own that tile
-      if (neighborTile->getOwner() == mover)
-      {
-         // A neighbor hex has the same owner, so merge this new tile into that set
-         Union(location, neighbor);
+            if (neighborTile->getOwner() == mover)
+            {
+               // A neighbor hex has the same owner, so merge this new tile into that set
+               Union(location, neighbor);
+            }
+         }
       }
 
-      // Check lower-right
-      if (down)
+      // Check tiles to the right
+      if (right)
       {
-         neighbor = size * (row - 1) + (column + 1);
+         // Check directly right
+         neighbor = size * row + (column + 1);
+         neighborTile = &(BoardLayout[neighbor]);
+
+         // Check if we own that tile
+         if (neighborTile->getOwner() == mover)
+         {
+            // A neighbor hex has the same owner, so merge this new tile into that set
+            Union(location, neighbor);
+         }
+
+         // Check lower-right
+         if (down)
+         {
+            neighbor = size * (row - 1) + (column + 1);
+            neighborTile = &(BoardLayout[neighbor]);
+
+            // Check if we own that tile
+            if (neighborTile->getOwner() == mover)
+            {
+               // A neighbor hex has the same owner, so merge this new tile into that set
+               Union(location, neighbor);
+            }
+         }
+      }
+
+      // Check tile above
+      if (up)
+      {
+         neighbor = size * (row + 1) + column;
          neighborTile = &(BoardLayout[neighbor]);
 
          // Check if we own that tile
@@ -191,35 +210,21 @@ void Board::findNeighbors(int location)
             Union(location, neighbor);
          }
       }
-   }
 
-   // Check tile above
-   if (up)
-   {
-      neighbor = size * (row + 1) + column;
-      neighborTile = &(BoardLayout[neighbor]);
-
-      // Check if we own that tile
-      if (neighborTile->getOwner() == mover)
+      // Check tile below
+      if (down)
       {
-         // A neighbor hex has the same owner, so merge this new tile into that set
-         Union(location, neighbor);
-      }
-   }
+         neighbor = size * (row - 1) + column;
+         neighborTile = &(BoardLayout[neighbor]);
 
-   // Check tile below
-   if (down)
-   {
-      neighbor = size * (row - 1) + column;
-      neighborTile = &(BoardLayout[neighbor]);
-
-      // Check if we own that tile
-      if (neighborTile->getOwner() == mover)
-      {
-         // A neighbor hex has the same owner, so merge this new tile into that set
-         Union(location, neighbor);
+         // Check if we own that tile
+         if (neighborTile->getOwner() == mover)
+         {
+            // A neighbor hex has the same owner, so merge this new tile into that set
+            Union(location, neighbor);
+         }
       }
-   }
+   } while (originalFlag != locationTile->getFlag());
 }
 
 // Checks if the hypothetical move is out-of-bounds, or if it is already owned by a player
@@ -238,7 +243,7 @@ bool Board::isGameOver()
    {
       location = size * row + column;
 
-      if (BoardLayout[location].getOwner() == playerA && BoardLayout[BoardLayout[location].getParent()].getFlag() == true)
+      if (BoardLayout[location].getOwner() == playerA && BoardLayout[FindSet(location)].getFlag() == true)
       {
          return true;
       }
@@ -253,7 +258,7 @@ bool Board::isGameOver()
    {
       location = size * row + column;
 
-      if (BoardLayout[location].getOwner() == playerB && BoardLayout[BoardLayout[location].getParent()].getFlag() == true)
+      if (BoardLayout[location].getOwner() == playerB && BoardLayout[FindSet(location)].getFlag() == true)
       {
          return true;
       }

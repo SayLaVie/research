@@ -20,25 +20,44 @@ hexGamePlayer::hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights)
 // of which move to play next
 int hexGamePlayer::play(const Board &board, player whichPlayer)
 {
-   int moveToMake = 0;
+   int moveToMake, location;
 
-   moveToMake = miniMax(board, whichPlayer, 0, -10000, 10000); // May change these infinities
+   moveToMake = miniMax(board, whichPlayer, 0, -2.0, 2.0);
+
+   if (board.isValidMove(moveToMake))
+   {
+      return moveToMake;
+   }
+
+   // If no good move was found, simply choose the next available move
+   for (location = 0; location < BOARD_SIZE * BOARD_SIZE; location += 1)
+   {
+      if (board.isValidMove(location))
+      {
+         return location;
+      }
+   }
 
    return moveToMake;
 }
 
 // This is the recursive minimax function, with a depth limit (maxDepth set in the hex.h file).
 // If it finishes at level 0, will return the location of the best move found.
-double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, int alpha, int beta)
+double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double alpha, double beta)
 {
-   int boardSize, utilityValue, eval, location, tmpBestMove, heuristicValue;
+   int location, tmpBestMove;
+   double utilityValue, eval, heuristicValue;
    bool maximizer;
    Board copyBoard;
 
    maximizer = depth % 2 == 0;
 
    if (board.isGameOver())
-      return maximizer ? -500 + depth : 500 - depth; // Will change these values to be less arbitrary
+   {
+      // return maximizer ? -500 + depth : 500 - depth; // Will change these values to be less arbitrary
+      // For now, only returning -1 : 1
+      return maximizer ? -1 : 1;
+   }
 
    if (depth > MAX_DEPTH)
    {
@@ -47,11 +66,10 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, int al
       return maximizer ? heuristicValue : -heuristicValue;
    }
 
-   boardSize = board.getSize(); // With a set boardsize, we may not need this
-   utilityValue = maximizer ? -10000 : 10000; // will change these infinities
+   utilityValue = maximizer ? -2.0 : 2.0;
    tmpBestMove = -1; // invalid default move
 
-   for (location = 0; location < boardSize * boardSize; ++location) // May change the way we iterate through valid moves
+   for (location = 0; location < BOARD_SIZE * BOARD_SIZE; ++location) // May change the way we iterate through valid moves
    {
       if (board.isValidMove(location))
       {

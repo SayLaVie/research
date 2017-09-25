@@ -47,11 +47,12 @@ void playHexGames(hexWorld &population)
       neighboringPlayers.clear();
       neighboringPlayers = population.getNeighbors(playerLocation);
 
-      cout << "\t\tPlayer " << playerLocation << endl;
+      cout << "\t\tPlayer " << playerLocation << ": ";
 
       for (currentNeighbor = 0; currentNeighbor < neighboringPlayers.size(); ++currentNeighbor)
       {
-         cout << "\t\t\tPlayer " << playerLocation << " vs Player " << neighboringPlayers[currentNeighbor] << endl;
+         // cout << "\t\t\tPlayer " << playerLocation << " vs Player " << neighboringPlayers[currentNeighbor] << endl;
+
          // Play two games, so that each player can play as both A and B.
          gameWinner = playHexGame(population.getHexGamePlayer(playerLocation), population.getHexGamePlayer(neighboringPlayers[currentNeighbor]));
 
@@ -59,12 +60,22 @@ void playHexGames(hexWorld &population)
          if (gameWinner == playerA)
          {
             population.addPlayerWin(playerLocation);
+            cout << "+ ";
          }
          else
          {
             population.addPlayerWin(currentNeighbor);
+            cout << "- ";
          }
       }
+
+      cout << endl;
+   }
+
+   for (playerLocation = 0; playerLocation < BOARD_SIZE * BOARD_SIZE; playerLocation += 1)
+   {
+      cout << "Player " << playerLocation << " won " << population.getHexGamePlayer(playerLocation).getGamesWon()
+            << " total games." << endl;
    }
 
    cout << "\tLeaving playHexGames" << endl << endl;
@@ -75,21 +86,14 @@ void playHexGames(hexWorld &population)
 // length of game
 player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
 {
-   int playerMove, numberOfTurns;
+   int playerMove, numberOfTurns, tmp;
    player currentPlayer;
    Board board(BOARD_SIZE);
 
    numberOfTurns = 0;
 
-   cout << "Turns passed: ";
-
    while (!board.isGameOver())
    {
-      if (numberOfTurns % 5 == 0)
-      {
-         cout << numberOfTurns << " ";
-      }
-
       currentPlayer = static_cast<player>(numberOfTurns % 2);
 
       if (currentPlayer == playerA)
@@ -101,11 +105,27 @@ player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
          playerMove = hexPlayerB.play(board, playerB);
       }
 
-      // Make sure move is valid
       if (!board.isValidMove(playerMove))
       {
-         // Output some sort of message??
-         // Or just keep track of how many bad moves?
+         cout << "INVALID MOVE: " << playerMove << endl;
+         board.printBoard();
+         while (true)
+         {
+            cin >> tmp;
+            if (tmp == -1)
+            {
+               board.printBoard();
+            }
+            else if (tmp == -2)
+            {
+               return playerB;
+            }
+            else
+            {
+               cout << "Parent: " << board.getBoard()[tmp].getParent() << " Flag: " << board.getBoard()[tmp].getFlag()<< endl;
+            }
+         }
+
       }
       else
       {
@@ -114,9 +134,6 @@ player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
 
       numberOfTurns += 1;
    }
-
-   cout << "\t\t\t\tLeaving playHexGame" << endl;
-   board.printBoard();
 
    // Last player who played has won the game.
    // If numberOfTurns is odd, playerA won the game
