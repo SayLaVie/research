@@ -38,15 +38,17 @@ int main(int argc, char *argv[])
       playHexGames(population, fout);
 
       t = clock() - t;
-      fout << endl << "\tIt took " << ((float)t / CLOCKS_PER_SEC / 60) << " minutes for this iteration" << endl << endl;   
+      fout << endl << "\tIt took " << ((float)t / CLOCKS_PER_SEC / 60) << " minutes for this iteration" << endl << endl; 
+      fout.flush();  
 
-      for (int playerLocation = 0; playerLocation < NUM_PLAYERS; playerLocation += 1)
+      for (int playerLocation = 0; playerLocation < population.getNumPlayers(); playerLocation += 1)
       {
          fout << "Player " << playerLocation << " won " << population.getHexGamePlayer(playerLocation).getGamesWon()
                << " total games." << endl;
       }   
       
-      fout << "~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
+      fout << endl << "~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
+      fout.flush();
 
       population.nextGeneration();
    }
@@ -60,7 +62,7 @@ void playHexGames(hexWorld &population, ofstream &fout)
    player gameWinner;
    vector<int> neighboringPlayers;
 
-  for (playerLocation = 0; playerLocation < BOARD_SIZE * BOARD_SIZE; ++playerLocation)
+  for (playerLocation = 0; playerLocation < NUM_PLAYERS; ++playerLocation)
    {
       neighboringPlayers.clear();
       neighboringPlayers = population.getNeighbors(playerLocation);
@@ -69,12 +71,8 @@ void playHexGames(hexWorld &population, ofstream &fout)
 
       for (currentNeighbor = 0; currentNeighbor < neighboringPlayers.size(); ++currentNeighbor)
       {
-         // cout << "\t\t\tPlayer " << playerLocation << " vs Player " << neighboringPlayers[currentNeighbor] << endl;
-
-         // t = clock();
-         // Play two games, so that each player can play as both A and B.
          gameWinner = playHexGame(population.getHexGamePlayer(playerLocation), population.getHexGamePlayer(neighboringPlayers[currentNeighbor]));
-         // cout << "It took " << ((float)(clock() - t) / CLOCKS_PER_SEC) << " seconds to play this game" << endl;
+
          // Add appropriate wins
          if (gameWinner == playerA)
          {
@@ -86,10 +84,12 @@ void playHexGames(hexWorld &population, ofstream &fout)
             population.addPlayerWin(currentNeighbor);
             fout << "- ";
          }
-      }
-   }
 
-   // cout << "\tLeaving playHexGames" << endl << endl;
+         fout.flush();
+      }
+
+      fout << endl;
+   }
 }
 
 // Return the player that won the game
