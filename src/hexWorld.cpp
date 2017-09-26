@@ -20,7 +20,7 @@ that clumps values closer to 0.
 *************************************/
 
 #include "hexWorld.h"
-#include <ctime>
+#include <fstream>
 
 // This function sets the weights for the neural net
 void hexWorld::nextGeneration()
@@ -49,7 +49,8 @@ void hexWorld::nextGeneration()
 	setting it as <BOARD_SIZE * BOARD_SIZE, 2, 1> for now.
    **/
 	netShape.push_back(BOARD_SIZE * BOARD_SIZE);
-	netShape.push_back(2);
+	netShape.push_back(10);
+	netShape.push_back(5);
 	netShape.push_back(1);
 
 	// Check if this is the first generation (start with randomized weights)

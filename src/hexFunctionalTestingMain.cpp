@@ -6,80 +6,90 @@ advisor: Dr. Rob LeGrand
 **********************/
 
 #include "hexWorld.h"
+#include <fstream>
 
-void playHexGames(hexWorld &population);
+void playHexGames(hexWorld &population, ofstream &fout);
 player playHexGame(hexGamePlayer playerA, hexGamePlayer playerB);
 
 int main(int argc, char *argv[])
 {
-   // Some sort of command-line argument sanitation will go here
+   clock_t t;
+   ofstream fout;
+
+   fout.open("results.out");
+
+   fout << "Timing to see what it looks like to run 5 iterations" << endl;
+   fout << "\tPlayers: 16\t\tNetShape: 25/10/5/1\t\tDepth: 4" << endl << endl;
 
    // Create an instance of hexWorld
    hexWorld population(NUM_PLAYERS);
 
    // While we are playing (for now, while true)
-   // for (int iteration = 0; iteration < 100; ++iteration)
-   // {
-   //    cout << "Entering iteration " << iteration << endl;
 
-   //    // Find and set weights for the upcoming generation.
-   //    population.nextGeneration();
+   for (int iteration = 0; iteration < 5; iteration += 1)
+   {
+      fout << "Iteration: " << iteration << endl;
 
-   //    cout << "\tNext generation created" << endl;
+      // Find and set weights for the upcoming generation.
+      population.nextGeneration();
 
-   //    // Play all games amongst neighbors.
-   //    playHexGames(population);
+      t = clock();
+      // Play all games amongst neighbors.
+      playHexGames(population, fout);
 
-   //    cout << "Games played. Leaving iteration " << iteration << endl;
-   // }
-   population.nextGeneration();
+      t = clock() - t;
+      fout << endl << "\tIt took " << ((float)t / CLOCKS_PER_SEC / 60) << " minutes for this iteration" << endl << endl;   
+
+      for (int playerLocation = 0; playerLocation < NUM_PLAYERS; playerLocation += 1)
+      {
+         fout << "Player " << playerLocation << " won " << population.getHexGamePlayer(playerLocation).getGamesWon()
+               << " total games." << endl;
+      }   
+      
+      fout << "~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
+
+      population.nextGeneration();
+   }
+
+   fout.close();      
 }
 
-void playHexGames(hexWorld &population)
+void playHexGames(hexWorld &population, ofstream &fout)
 {
    int playerLocation, currentNeighbor;
    player gameWinner;
    vector<int> neighboringPlayers;
 
-   cout << endl << "\tEntering playHexGames" << endl;
-
-   for (playerLocation = 0; playerLocation < BOARD_SIZE * BOARD_SIZE; ++playerLocation)
+  for (playerLocation = 0; playerLocation < BOARD_SIZE * BOARD_SIZE; ++playerLocation)
    {
       neighboringPlayers.clear();
       neighboringPlayers = population.getNeighbors(playerLocation);
 
-      cout << "\t\tPlayer " << playerLocation << ": ";
+      fout << "\tPlayer " << playerLocation << ": ";
 
       for (currentNeighbor = 0; currentNeighbor < neighboringPlayers.size(); ++currentNeighbor)
       {
          // cout << "\t\t\tPlayer " << playerLocation << " vs Player " << neighboringPlayers[currentNeighbor] << endl;
 
+         // t = clock();
          // Play two games, so that each player can play as both A and B.
          gameWinner = playHexGame(population.getHexGamePlayer(playerLocation), population.getHexGamePlayer(neighboringPlayers[currentNeighbor]));
-
+         // cout << "It took " << ((float)(clock() - t) / CLOCKS_PER_SEC) << " seconds to play this game" << endl;
          // Add appropriate wins
          if (gameWinner == playerA)
          {
             population.addPlayerWin(playerLocation);
-            cout << "+ ";
+            fout << "+ ";
          }
          else
          {
             population.addPlayerWin(currentNeighbor);
-            cout << "- ";
+            fout << "- ";
          }
       }
-
-      cout << endl;
    }
 
-   for (playerLocation = 0; playerLocation < BOARD_SIZE * BOARD_SIZE; playerLocation += 1)
-   {
-      cout << "Player " << playerLocation << " won " << population.getHexGamePlayer(playerLocation).getGamesWon()
-            << " total games." << endl;
-   }
-
-   cout << "\tLeaving playHexGames" << endl << endl;
+   // cout << "\tLeaving playHexGames" << endl << endl;
 }
 
 // Return the player that won the game

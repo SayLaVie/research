@@ -19,6 +19,7 @@ each other).
 
 #include "hexGamePlayer.h"
 #include <random>
+#include <ctime>
 
 /**
 Global seed generator
