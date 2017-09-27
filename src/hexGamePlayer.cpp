@@ -145,8 +145,6 @@ double hexGamePlayer::neuralNetHeuristic(const Board board, player whichPlayer)
    // May split this into its own function later
 	for (location = 0; location < BOARD_SIZE * BOARD_SIZE; ++location)
 	{
-      // cout << location << endl;
-		// thisOwner = playerA;
       thisOwner = board.getBoard()[location].getOwner();
 
 		if (thisOwner == none)

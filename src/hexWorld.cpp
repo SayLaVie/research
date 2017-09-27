@@ -20,7 +20,6 @@ that clumps values closer to 0.
 *************************************/
 
 #include "hexWorld.h"
-#include <fstream>
 
 // This function sets the weights for the neural net
 void hexWorld::nextGeneration()
@@ -34,19 +33,19 @@ void hexWorld::nextGeneration()
    **/
 	vector<int> netShape, neighbors, neighborsGamesWon;
 	vector<vector<vector<double> > > netWeights;
-	vector<double> rowOriginationVector;
 	vector<vector<double> > rowDestinationVector;
-	int layer, rowDestination, rowOrigination, player, neighbor, gamesWon, breederChoice;
+	vector<double> rowOriginationVector;
 	double currentWeight;
+	int layer, rowDestination, rowOrigination, player, neighbor, gamesWon, breederChoice;
 	vector<hexGamePlayer> newHexGamePlayers;
 
 	// Bernoulli_distribution is effectively a coin toss. Returns true or false.
 	bernoulli_distribution coinToss(0.5);
 
    /**
-	Push the depths of each layer into the netShape vector
-	Not sure yet what our first network shape will be,
-	setting it as <BOARD_SIZE * BOARD_SIZE, 2, 1> for now.
+	Push the depths of each layer into the netShape vector.
+	Not sure yet what our first network shape will be;
+	Setting arbitrary values for now.
    **/
 	netShape.push_back(BOARD_SIZE * BOARD_SIZE);
 	netShape.push_back(10);
