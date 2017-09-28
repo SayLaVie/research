@@ -45,7 +45,8 @@ void hexWorld::nextGeneration()
    /**
 	Push the depths of each layer into the netShape vector.
 	Not sure yet what our first network shape will be;
-	Setting arbitrary values for now.
+	Setting arbitrary values for now. Origination vectors will always
+   have size + 1 because of the bias weights.
    **/
 	netShape.push_back(BOARD_SIZE * BOARD_SIZE);
 	netShape.push_back(10);
@@ -68,9 +69,13 @@ void hexWorld::nextGeneration()
 				{
 					rowOriginationVector.clear();
 
+               // Push_back bias weight
+               currentWeight = generateWeight(seedGenerator, 0.0);
+               rowOriginationVector.push_back(currentWeight);
+
 					for (rowOrigination = 0; rowOrigination < netShape[layer]; ++rowOrigination)
 					{
-						// Generate random weight. 
+						// Generate random weight.
 						currentWeight = generateWeight(seedGenerator, 0.0);
 
 						// Add new weight to vector
@@ -105,8 +110,9 @@ void hexWorld::nextGeneration()
 				{
 					rowOriginationVector.clear();
 
-					// This is where the breeding takes place
-					for (rowOrigination = 0; rowOrigination < netShape[layer]; ++rowOrigination)
+					// This is where the breeding takes place. Loop conditional is netShape[layer] + 1
+               // because there is a bais weight in every rowOriginationVector.
+					for (rowOrigination = 0; rowOrigination < netShape[layer] + 1; ++rowOrigination)
 					{
 						// If coin toss says to keep weight
 						if (coinToss(seedGenerator))
