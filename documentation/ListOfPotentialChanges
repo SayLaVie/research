@@ -1,0 +1,16 @@
+This is a list of potential variables we can adjust throughout the research process.
+
+- depth limit
+- board size
+- size of population
+- shape of neural net
+- method of board-state input (chunking, etc...)
+- distribution model (randomizers)
+- evolution (how to pass on genes)
+- shape of hex world
+- how rare evolution is
+   - How much should it vary by?
+- How rare is mutation
+   - How much does mutation vary?
+- Is the coin toss biased?
+- Information to keep track of during games
