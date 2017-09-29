@@ -73,7 +73,8 @@ void hexWorld::nextGeneration()
                currentWeight = generateWeight(seedGenerator, 0.0);
                rowOriginationVector.push_back(currentWeight);
 
-					for (rowOrigination = 0; rowOrigination < netShape[layer]; ++rowOrigination)
+               // Start at 1 because of the bias weight
+					for (rowOrigination = 1; rowOrigination < netShape[layer] + 1; ++rowOrigination)
 					{
 						// Generate random weight.
 						currentWeight = generateWeight(seedGenerator, 0.0);

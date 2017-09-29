@@ -124,6 +124,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
 
    if (depth == 0)
    {
+      cout << "Player" << (whichPlayer == playerA ? "A" : "B") << " Evaluation: " << eval << endl;
       return tmpBestMove;
    }
 
@@ -158,27 +159,31 @@ double hexGamePlayer::neuralNetHeuristic(const Board board, player whichPlayer)
 	// Now, feed the inputs from the board into our Neural Net
 	for (layer = 0; layer < neuralNetWeights.size(); ++layer)
 	{
+      // cout << endl << endl << endl << "Layer: " << layer << endl << endl << endl;
+      outputVector.clear();
+
 		for (rowDestination = 0; rowDestination < neuralNetWeights[layer].size(); ++rowDestination)
 		{
 			summation = 0;
-         outputVector.clear();
 
 			// The bias weight will always be the first element of the vector.
-         summation += neuralNetWeights[layer][rowDestination][rowOrigination];
+         summation += neuralNetWeights[layer][rowDestination][0];
 
          // The rowOrigination needs to be offset by 1, because of the bias weight.
-			for (rowOrigination = 1; rowOrigination < neuralNetWeights[layer][rowDestination].size() + 1; ++rowOrigination)
+			for (rowOrigination = 1; rowOrigination < neuralNetWeights[layer][rowDestination].size(); ++rowOrigination)
 			{
 				// If layer is 0, then we are feeding in the board state inputs
 				if (layer == 0)
 				{
-					summation += (boardState[rowOrigination] * neuralNetWeights[layer][rowDestination][rowOrigination]);
+               // Minus 1 to counteract the bias weight offset
+					summation += (boardState[rowOrigination - 1] * neuralNetWeights[layer][rowDestination][rowOrigination]);
 				}
 
 				// Otherwise, we are feeding in the inputs from previous summations
 				else
 				{
-					summation += (inputVector[rowOrigination] * neuralNetWeights[layer][rowDestination][rowOrigination]);
+               // Minus 1 to counteract the bias weight offset
+					summation += (inputVector[rowOrigination - 1] * neuralNetWeights[layer][rowDestination][rowOrigination]);
 				}
 			}
 
@@ -203,4 +208,22 @@ double hexGamePlayer::sigmoidFunction(double input)
 double hexGamePlayer::getWeight(int layer, int rowDestination, int rowOrigination)
 {
    return neuralNetWeights[layer][rowDestination][rowOrigination];
+}
+
+// Right now, this prints out to stdout in a human(ish)-readable form.
+// Eventually, this will take an ofstream& parameter and print weights
+// out to a file in a machine-readable form.
+void hexGamePlayer::printWeights()
+{
+   for (int layer = 0; layer < neuralNetWeights.size(); layer += 1)
+   {
+      for (int rowDestination = 0; rowDestination < neuralNetWeights[layer].size(); rowDestination += 1)
+      {
+         for (int rowOrigination = 0; rowOrigination < neuralNetWeights[layer][rowDestination].size(); rowOrigination += 1)
+         {
+            cout << "(" << rowOrigination << ": " << neuralNetWeights[layer][rowDestination][rowOrigination] << ")  ";
+         }
+         cout << endl << endl;         
+      }
+   }
 }
