@@ -134,7 +134,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
 // Neural net takes in vector of vectors of weights, returns a double between 0 and 1
 double hexGamePlayer::neuralNetHeuristic(const Board board, player whichPlayer)
 {
-	int location, column, rowOrigination, rowDestination;
+	int location, layer, rowOrigination, rowDestination;
 	vector<int> boardState;
 	vector<double> inputVector, outputVector;
 	double summation;
@@ -156,32 +156,34 @@ double hexGamePlayer::neuralNetHeuristic(const Board board, player whichPlayer)
 	}
 
 	// Now, feed the inputs from the board into our Neural Net
-	for (column = 0; column < neuralNetWeights.size(); ++column)
+	for (layer = 0; layer < neuralNetWeights.size(); ++layer)
 	{
-		for (rowDestination = 0; rowDestination < neuralNetWeights[column].size(); ++rowDestination)
+		for (rowDestination = 0; rowDestination < neuralNetWeights[layer].size(); ++rowDestination)
 		{
 			summation = 0;
          outputVector.clear();
 
-			// The relationship between board state inputs and the first layer of the neural net should
-			// be consistent.
-			for (rowOrigination = 0; rowOrigination < neuralNetWeights[column][rowDestination].size(); ++rowOrigination)
+			// The bias weight will always be the first element of the vector.
+         summation += neuralNetWeights[layer][rowDestination][rowOrigination];
+
+         // The rowOrigination needs to be offset by 1, because of the bias weight.
+			for (rowOrigination = 1; rowOrigination < neuralNetWeights[layer][rowDestination].size() + 1; ++rowOrigination)
 			{
-				// If column is 0, then we are feeding in the board state inputs
-				if (column == 0)
+				// If layer is 0, then we are feeding in the board state inputs
+				if (layer == 0)
 				{
-					summation += (boardState[rowOrigination] * neuralNetWeights[column][rowDestination][rowOrigination]);
+					summation += (boardState[rowOrigination] * neuralNetWeights[layer][rowDestination][rowOrigination]);
 				}
 
 				// Otherwise, we are feeding in the inputs from previous summations
 				else
 				{
-					summation += (inputVector[rowOrigination] * neuralNetWeights[column][rowDestination][rowOrigination]);
+					summation += (inputVector[rowOrigination] * neuralNetWeights[layer][rowDestination][rowOrigination]);
 				}
 			}
 
-			// The summation becomes the input for the next column. The number of inputs for the
-         // next column will match up with the row depth.
+			// The summation becomes the input for the next layer. The number of inputs for the
+         // next layer will match up with the row depth.
 			outputVector.push_back(sigmoidFunction(summation));
 		}
 
