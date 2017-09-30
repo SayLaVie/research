@@ -71,7 +71,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
 
    for (location = 0; location < BOARD_SIZE * BOARD_SIZE; ++location) // May change the way we iterate through valid moves
    {
-      if (board.isValidMove(location))
+      if (ard.isValidMove(location))
       {
          copyBoard = board;
          copyBoard.makeMove(location, whichPlayer);
@@ -223,7 +223,7 @@ void hexGamePlayer::printWeights()
          {
             cout << "(" << rowOrigination << ": " << neuralNetWeights[layer][rowDestination][rowOrigination] << ")  ";
          }
-         cout << endl << endl;         
+         cout << endl << endl;
       }
    }
 }
