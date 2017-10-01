@@ -22,12 +22,13 @@ private:
 
    double miniMax(Board board, player whichPlayer, int depth, double alpha, double beta);
    // double neuralNetHeuristic(const Board board, player whichPlayer);
+   double neuralNetHeuristic(const Board board, player whichPlayer);
    double sigmoidFunction(double input);
 
 public:
    hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights);
    int play(const Board &board, player whichPlayer);
-   double neuralNetHeuristic(const Board board, player whichPlayer);
+
    // Data modifiers
    void addGameWon() {gamesWon += 1;}
    int getGamesWon() {return gamesWon;}

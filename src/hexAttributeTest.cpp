@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
       // Play all games amongst neighbors.
       // playHexGames(population);
       playHexGame(population.getHexGamePlayer(0), population.getHexGamePlayer(1));
-      
+
    // }
 }
 

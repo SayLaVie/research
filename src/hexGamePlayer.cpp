@@ -71,7 +71,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
 
    for (location = 0; location < BOARD_SIZE * BOARD_SIZE; ++location) // May change the way we iterate through valid moves
    {
-      if (ard.isValidMove(location))
+      if (board.isValidMove(location))
       {
          copyBoard = board;
          copyBoard.makeMove(location, whichPlayer);
