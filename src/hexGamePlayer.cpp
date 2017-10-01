@@ -22,7 +22,7 @@ int hexGamePlayer::play(const Board &board, player whichPlayer)
 {
    int moveToMake, location;
 
-   moveToMake = miniMax(board, whichPlayer, 0, -2.0, 2.0);
+   moveToMake = miniMax(board, whichPlayer, 0, -MAX_DEPTH + 1, MAX_DEPTH + 1);
 
    if (board.isValidMove(moveToMake))
    {
@@ -56,7 +56,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
    {
       // return maximizer ? -500 + depth : 500 - depth; // Will change these values to be less arbitrary
       // For now, only returning -1 : 1
-      return maximizer ? -1 : 1;
+      return maximizer ? -1 - (double)(MAX_DEPTH / depth) : 1 + (double)(MAX_DEPTH / depth);
    }
 
    if (depth > MAX_DEPTH)
@@ -66,7 +66,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
       return maximizer ? heuristicValue : -heuristicValue;
    }
 
-   utilityValue = maximizer ? -2.0 : 2.0;
+   utilityValue = maximizer ? -MAX_DEPTH - 1 : MAX_DEPTH + 1;
    tmpBestMove = -1; // invalid default move
 
    for (location = 0; location < BOARD_SIZE * BOARD_SIZE; ++location) // May change the way we iterate through valid moves
@@ -91,6 +91,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
             {
                if (depth == 0)
                {
+                  cout << "Player" << (whichPlayer == playerA ? "A" : "B") << " Evaluation: " << eval << endl;
                   return tmpBestMove;
                }
                return utilityValue;

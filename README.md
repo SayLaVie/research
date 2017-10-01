@@ -7,6 +7,7 @@ Advisor: Dr. Rob LeGrand
 
 ### To Do for Next Meeting (parentheticals indicate completed tasks)
 - Translate boards accross diagonal
+- Incentivize fast winning
 - Change initial standard deviation
 - Simplify shape of neural network
 	- Single node

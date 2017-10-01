@@ -13,6 +13,8 @@ player playHexGame(hexGamePlayer playerA, hexGamePlayer playerB);
 
 int main(int argc, char *argv[])
 {
+   clock_t t;
+
    cout << "Taking a closer look at the particulars of what the functions are doing." << endl;
    cout << "\tPlayers: 16\t\tNetShape: 25/10/5/1\t\tDepth: 4" << endl << endl;
 
@@ -30,9 +32,15 @@ int main(int argc, char *argv[])
 
       cout << endl << endl;
 
+      t = clock();
+
       // Play all games amongst neighbors.
       // playHexGames(population);
       playHexGame(population.getHexGamePlayer(0), population.getHexGamePlayer(1));
+
+      t = clock() - t;
+
+      cout << "This match took " << (float)t / CLOCKS_PER_SEC << " seconds\n";
 
    // }
 }
