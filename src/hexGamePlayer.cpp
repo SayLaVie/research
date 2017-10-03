@@ -125,7 +125,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
 
    if (depth == 0)
    {
-      cout << "Player" << (whichPlayer == playerA ? "A" : "B") << " Evaluation: " << eval << endl;
+      cout << "Player" << (whichPlayer == playerA ? "A" : "B") << " Evaluation: " << utilityValue << endl;
       return tmpBestMove;
    }
 
@@ -227,4 +227,24 @@ void hexGamePlayer::printWeights()
          cout << endl << endl;
       }
    }
+}
+
+Board hexGamePlayer::translateBoard(Board board)
+{
+   vector<Tile> newBoard;
+   int startingTile, jumpingTile, size;
+
+   size = board.getSize();
+
+   // Go through all of the Tiles on the bottom row, and jump to each row above, adding
+   // each Tile we hit to a new Board vector. This should translate the Board.
+   for (startingTile = 0; startingTile < size; startingTile += 1)
+   {
+      for (jumpingTile = startingTile; jumpingTile < size * size; jumpingTile += size)
+      {
+         newBoard.push_back(board.getTile(jumpingTile));
+      }
+   }
+
+   return Board(newBoard);
 }

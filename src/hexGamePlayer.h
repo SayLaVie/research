@@ -24,6 +24,7 @@ private:
    // double neuralNetHeuristic(const Board board, player whichPlayer);
    double neuralNetHeuristic(const Board board, player whichPlayer);
    double sigmoidFunction(double input);
+   Board translateBoard(Board board);
 
 public:
    hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights);

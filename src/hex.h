@@ -70,6 +70,7 @@ private:
 public:
    Board(int size = 0);
    Board(const Board &copy);
+   Board(vector<Tile> BoardLayout);
    void makeMove(int location, player mover);
    bool isValidMove(int location) const;
    bool isGameOver();

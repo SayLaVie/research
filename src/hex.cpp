@@ -37,9 +37,18 @@ Board::Board(const Board &copy)
 {
    this->BoardLayout.clear();
 
-   this->size = copy.getSize();
-
    this->BoardLayout = copy.getBoard();
+
+   this->size = copy.getSize();   
+}
+
+Board::Board(vector<Tile> BoardLayout)
+{
+   this->BoardLayout.clear();
+
+   this->BoardLayout = BoardLayout;
+
+   this->size = BoardLayout.size();   
 }
 
 // Assignment operator
