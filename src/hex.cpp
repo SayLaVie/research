@@ -284,9 +284,17 @@ void Board::printBoard() const // Prints the board out
 
    width = (size - 1) * 3;
 
+   cout << endl << setw(width + 5) << "";
+
+   for (column = 0; column < size; ++column)
+   {
+      cout << setw(3) << right << "*" << (char)(65 + column) << "*";
+   }
+   cout << endl;
+
    for (row = size - 1; row >= 0; --row)
    {
-      cout << endl << setw(width) << "";
+      cout << endl << setw(width) << "*" << row << "*";
 
       for (column = 0; column < size; ++column)
       {
@@ -315,9 +323,17 @@ void Board::printBoard() const // Prints the board out
          }
       }
 
+      cout << setw(5) << right << "*" << row << "*" << endl;
+
       width -= 3;
 
-      cout << endl;
+      // cout << endl;
+   }
+
+   cout << endl << setw(1) << "";
+   for (column = 0; column < size; ++column)
+   {
+      cout << setw(3) << right << "*" << (char)(65 + column) << "*";
    }
 }
 
