@@ -50,7 +50,7 @@ void hexWorld::nextGeneration()
    **/
 	netShape.push_back(BOARD_SIZE * BOARD_SIZE);
 	netShape.push_back(10);
-	netShape.push_back(5);
+	// netShape.push_back(5);
 	netShape.push_back(1);
 
 	// Check if this is the first generation (start with randomized weights)

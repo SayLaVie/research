@@ -28,7 +28,8 @@ int main(int argc, char *argv[])
       // Find and set weights for the upcoming generation.
       population.nextGeneration();
 
-      population.getHexGamePlayer(0).printWeights();
+      // Next line no longer works -- needs ofstream parameter
+      // population.getHexGamePlayer(0).printWeights();
 
       cout << endl << endl;
 

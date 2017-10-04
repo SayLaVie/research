@@ -10,6 +10,7 @@ advisor: Dr. Rob LeGrand
 
 #include "hex.h"
 #include <cmath>
+#include <fstream>
 
 class hexGamePlayer
 {
@@ -37,7 +38,7 @@ public:
    void addMoves(int numMoves) {movesMade += numMoves;}
 
    double getWeight(int layer, int rowOrigination, int rowDestination);
-   void printWeights();
+   void printWeights(ofstream &fout);
 };
 
 #endif

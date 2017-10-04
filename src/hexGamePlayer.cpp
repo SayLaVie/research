@@ -244,20 +244,29 @@ double hexGamePlayer::getWeight(int layer, int rowDestination, int rowOriginatio
    return neuralNetWeights[layer][rowDestination][rowOrigination];
 }
 
-// Right now, this prints out to stdout in a human(ish)-readable form.
-// Eventually, this will take an ofstream& parameter and print weights
-// out to a file in a machine-readable form.
-void hexGamePlayer::printWeights()
+/*
+Prints out weights to a file (stream provided by fout) for machine to read in the future.
+'&' symbol indicates that a new layer of weights is about to begin
+'$' symbol indicates that the following inputs will be double values (a single origination node's weights)
+'%' symbol indicates end of players weights
+*/
+void hexGamePlayer::printWeights(ofstream &fout)
 {
    for (int layer = 0; layer < neuralNetWeights.size(); layer += 1)
    {
+      fout << '&' << endl;
+
       for (int rowDestination = 0; rowDestination < neuralNetWeights[layer].size(); rowDestination += 1)
       {
+         fout << "$ ";
+
          for (int rowOrigination = 0; rowOrigination < neuralNetWeights[layer][rowDestination].size(); rowOrigination += 1)
          {
-            cout << "(" << rowOrigination << ": " << neuralNetWeights[layer][rowDestination][rowOrigination] << ")  ";
+            fout << neuralNetWeights[layer][rowDestination][rowOrigination] << ',';
          }
-         cout << endl << endl;
+
+         fout << endl;
       }
    }
+   fout << '%';
 }

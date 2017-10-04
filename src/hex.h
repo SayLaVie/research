@@ -19,7 +19,7 @@ Global variables
 NUM_PLAYERS needs to be an even square
 **/
 const int MAX_DEPTH = 3;
-const int BOARD_SIZE = 5;
+const int BOARD_SIZE = 3;
 const int NUM_PLAYERS = 16;
 
 enum player {playerA, playerB, none};
