@@ -136,26 +136,59 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
 // Neural net takes in vector of vectors of weights, returns a double between 0 and 1
 double hexGamePlayer::neuralNetHeuristic(const Board board, player whichPlayer)
 {
-	int location, layer, rowOrigination, rowDestination;
+	int location, jump, layer, rowOrigination, rowDestination;
 	vector<int> boardState;
 	vector<double> inputVector, outputVector;
 	double summation;
 	player thisOwner;
 
-	// First, extract the state of the current board
-	// We are using: -1 for opponent owned, 0 for empty, 1 for ours
-   // May split this into its own function later
-	for (location = 0; location < BOARD_SIZE * BOARD_SIZE; ++location)
-	{
-      thisOwner = board.getBoard()[location].getOwner();
+   // The board needs to look differently depending on which player we are
+   if (whichPlayer == playerA)
+   {
 
-		if (thisOwner == none)
-			boardState.push_back(0);
-		else if (thisOwner == whichPlayer)
-			boardState.push_back(1);
-		else
-			boardState.push_back(-1);
-	}
+   	// First, extract the state of the current board
+   	// We are using: -1 for opponent owned, 0 for empty, 1 for ours
+      // May split this into its own function later
+   	for (location = 0; location < BOARD_SIZE * BOARD_SIZE; location += 1)
+   	{
+         thisOwner = board.getBoard()[location].getOwner();
+
+   		if (thisOwner == none)
+   		{
+            boardState.push_back(0);
+         }	
+   		else if (thisOwner == whichPlayer)
+         {
+   			boardState.push_back(1);
+         }
+   		else
+         {
+   			boardState.push_back(-1);
+         }
+   	}
+   }
+   else
+   {
+      // Jump through each column before moving on to next row
+      for (location = 0; location < BOARD_SIZE; location += 1)
+      {
+         for (jump = location; jump < BOARD_SIZE * BOARD_SIZE; jump += BOARD_SIZE)
+         {
+            thisOwner = board.getBoard()[jump].getOwner();
+
+            if (thisOwner == none)
+            {
+               boardState.push_back(0);
+            } else if (thisOwner == whichPlayer)
+            {
+               boardState.push_back(1);
+            } else
+            {
+               boardState.push_back(-1);
+            }
+         }
+      }
+   }
 
 	// Now, feed the inputs from the board into our Neural Net
 	for (layer = 0; layer < neuralNetWeights.size(); ++layer)
@@ -227,24 +260,4 @@ void hexGamePlayer::printWeights()
          cout << endl << endl;
       }
    }
-}
-
-Board hexGamePlayer::translateBoard(Board board)
-{
-   vector<Tile> newBoard;
-   int startingTile, jumpingTile, size;
-
-   size = board.getSize();
-
-   // Go through all of the Tiles on the bottom row, and jump to each row above, adding
-   // each Tile we hit to a new Board vector. This should translate the Board.
-   for (startingTile = 0; startingTile < size; startingTile += 1)
-   {
-      for (jumpingTile = startingTile; jumpingTile < size * size; jumpingTile += size)
-      {
-         newBoard.push_back(board.getTile(jumpingTile));
-      }
-   }
-
-   return Board(newBoard);
 }
