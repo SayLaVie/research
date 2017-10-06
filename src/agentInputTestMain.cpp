@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
 	}
 }
 
+// Takes ifstream and parses nerualNetWeights 3-D vector from file.
 vector<vector<vector<double> > > neuralNetFileParser(ifstream &fin)
 {
 	char symbol;

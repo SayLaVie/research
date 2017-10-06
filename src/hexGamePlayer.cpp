@@ -91,7 +91,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
             {
                if (depth == 0)
                {
-                  cout << "Player" << (whichPlayer == playerA ? "A" : "B") << " Evaluation: " << eval << endl;
+                  cout << "Player" << (whichPlayer == playerA ? "A" : "B") << " Evaluation: " << utilityValue << endl;
                   return tmpBestMove;
                }
                return utilityValue;

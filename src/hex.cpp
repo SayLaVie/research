@@ -284,7 +284,7 @@ void Board::printBoard() const // Prints the board out
 
    width = (size - 1) * 3;
 
-   cout << endl << setw(width + 5) << "";
+   cout << endl << setw(width + BOARD_SIZE) << "";
 
    for (column = 0; column < size; ++column)
    {

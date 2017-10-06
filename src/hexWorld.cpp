@@ -49,7 +49,8 @@ void hexWorld::nextGeneration()
    have size + 1 because of the bias weights.
    **/
 	netShape.push_back(BOARD_SIZE * BOARD_SIZE);
-	netShape.push_back(10);
+	// netShape.push_back(BOARD_SIZE);
+	// netShape.push_back(10);
 	// netShape.push_back(5);
 	netShape.push_back(1);
 
