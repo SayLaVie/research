@@ -40,7 +40,12 @@ private:
 	int getNeighborLocation(int playerLocation, int columnOffset, int rowOffset);
 
 public:
-	hexWorld(int numPlayers){this->numPlayers = numPlayers;}
+	hexWorld(int numPlayers = NUM_PLAYERS){this->numPlayers = numPlayers;}
+	hexWorld(vector<hexGamePlayer> hexGamePlayers)
+	{
+		this->numPlayers = hexGamePlayers.size();
+		this->hexGamePlayers = hexGamePlayers;
+	};
 
 	// Some sort of void function that creates the next generation of players.
 	// If this is the first iteration (no existing players), create hexGamePlayers
@@ -55,10 +60,14 @@ public:
 
 	// Return a hexGamePlayer from vector hexGamePlayers
 	hexGamePlayer getHexGamePlayer(int playerLocation) {return hexGamePlayers[playerLocation];}
+	vector<hexGamePlayer> getHexGamePlayers() {return hexGamePlayers;}
+	
 	void addPlayerWin(int playerLocation) {hexGamePlayers[playerLocation].addGameWon();}
 
 	int getBreeder(default_random_engine &seedGenerator, vector<int> probabilities);
 	double generateWeight(default_random_engine &seedGenerator, double mean);
+
+	hexWorld& operator=(hexWorld &rhs);
 };
 
 #endif // #ifndef HEXWORLD_H

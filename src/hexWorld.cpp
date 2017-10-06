@@ -252,3 +252,12 @@ double hexWorld::generateWeight(default_random_engine &seedGenerator, double mea
 
 	return weightGenerator(seedGenerator);
 }
+
+hexWorld& hexWorld::operator=(hexWorld &rhs)
+{
+	this->hexGamePlayers.clear();
+	this->hexGamePlayers = rhs.getHexGamePlayers();
+	this->numPlayers = rhs.getNumPlayers();
+
+	return *this;
+}
