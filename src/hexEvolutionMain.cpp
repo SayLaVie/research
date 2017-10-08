@@ -5,29 +5,32 @@ Author: Michael McCarver
 Advisor: Dr. Rob LeGrand
 */
 
-#include "hexWorld.h"
+#include "hexHelperFunctions.h"
 #include <cstdlib>
-
-void printUsage(int exitCode);
-bool isNumeric(string input);
-void playHexGames(hexWorld &population, ofstream &fout);
-player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB);
+#include <sys/stat.h>
 
 int main(int argc, char *argv[])
 {
 	time_t now;
+	struct tm * currentDT;
 	ifstream fin;
 	ofstream foutResults, foutSave;
 	int saveAfterNIterations, arg, iteration, numberOfIterations;
-	string argument, resumeFile, outputFile, currentDT, saveFileName;
+	string argument, resumeFile, outputFile, experimentName, iterationDirectory, saveFile;
+	char experimentTime[40], resultsTime[30];
 	vector<hexGamePlayer> resumePlayers;
 	hexWorld population;
 
+	// Default values
 	numberOfIterations = 10;
 	saveAfterNIterations = 10;
 	outputFile = "results/results.out";
 
-	if (argc > 7)
+
+	/*
+		Command line sanitation
+	*/
+	if (argc > 9)
 	{
 		printUsage(1);
 	}
@@ -36,11 +39,13 @@ int main(int argc, char *argv[])
 	{
 		argument = argv[arg];
 
+		// Display command line options
 		if (argument == "-h" || argument == "--help")
 		{
 			printUsage(0);
 		}
 
+		// Frequency with which to save generation states
 		if (argument == "-f" || argument == "--frequency")
 		{
 			if (arg + 1 >= argc)
@@ -60,6 +65,7 @@ int main(int argc, char *argv[])
 			saveAfterNIterations = atoi(argv[arg]);
 		}
 
+		// Existing file of hexWorld data to begin evolution with
 		else if (argument == "-r" || argument == "--resume")
 		{
 			// Next argument should be the file name of hexWorld data to resume with.
@@ -71,6 +77,8 @@ int main(int argc, char *argv[])
 			arg += 1;
 			resumeFile = argv[arg];
 		}
+
+		// Total number of iterations to run.
 		else if (argument == "-i" || argument == "--iterations")
 		{
 			if (arg + 1 >= argc)
@@ -89,6 +97,8 @@ int main(int argc, char *argv[])
 
 			numberOfIterations = atoi(argv[arg]);
 		}
+
+		// Name of results file to output to
 		else if (argument == "-o" || argument == "--output")
 		{
 			if (arg + 1 >= argc)
@@ -99,6 +109,7 @@ int main(int argc, char *argv[])
 			arg += 1;
 			outputFile = argv[arg];
 		}
+
 		else
 		{
 			cerr << "Invalid option." << endl;
@@ -106,6 +117,10 @@ int main(int argc, char *argv[])
 		}
 	}
 
+
+	/*
+		Read input from resume file
+	*/
 	if (!resumeFile.empty())
 	{
 		fin.open(resumeFile);
@@ -117,13 +132,24 @@ int main(int argc, char *argv[])
 		}
 
 		// Function call here to read input from resumeFile and store into resumePlayers vector
-		// Verify that number of players found matches NUM_PLAYERS
+		resumePlayers = entirePopulationFileParser(fin);
+
+		// Verify that number of players found matches NUM_PLAYERS		
+		if (resumePlayers.size() != NUM_PLAYERS)
+		{
+			cerr << "Input file contains incorrect number of players" << endl;
+			printUsage(1);
+		}
+
 		hexWorld population(resumePlayers);
 
 		fin.close();
 	}
 
-	// Open file for results output
+
+	/*
+		Open output file for results
+	*/
 	foutResults.open(outputFile);
 
 	if (!foutResults.is_open())
@@ -132,118 +158,54 @@ int main(int argc, char *argv[])
 		printUsage(1);
 	}
 
-	// Run through all iterations
+
+	/*
+		Create directories for saving experiment data
+	*/
+	now = time(0);
+	currentDT = localtime(&now);
+	strftime(experimentTime, 40, "data/experiment_%a_%b%d_%G_%T", currentDT);
+	experimentName += experimentTime;
+	// experimentName = "data/experiment_" + currentDT;
+	mkdir(experimentName.c_str(), ACCESSPERMS);
+
+
+	/*
+		Run through all iterations
+	*/
 	for (iteration = 0; iteration < numberOfIterations; iteration += 1)
 	{
 		now = time(0);
-		currentDT = ctime(&now);
+		currentDT = localtime(&now);
+		strftime(resultsTime, 30, "%a_%b%d_%G_%T", currentDT);
 
-		foutResults << "Iteration " << iteration << " beginning at " << currentDT << endl;
+		foutResults << "Iteration " << iteration << " beginning at " << resultsTime << endl;
 
 		population.nextGeneration();
 
 		playHexGames(population, foutResults);
 
-		if (iteration == saveAfterNIterations - 1)
+		if ((iteration + 1) % saveAfterNIterations == 0)
 		{
-			now = time(0);
-			saveFileName = ctime(&now) + iteration;
-			foutSave.open(saveFileName);
+			// Make directory for current iteration
+			iterationDirectory = experimentName + "/iteration" + to_string(iteration);
+			mkdir(iterationDirectory.c_str(), ACCESSPERMS);
+
+			// Save file for current hexWorld data
+			saveFile = iterationDirectory + "/population.data";
+
+			foutSave.open(saveFile);
 
 			if (!foutSave.is_open())
 			{
-				cerr << "Could not save hexWorld data to file " << saveFileName << endl;
+				cerr << "Could not save hexWorld data to file " << saveFile << endl;
 				exit(1);
 			}
 
 			// Function here to save hexWorld data
+			printCurrentGenerationToFile(population, foutSave);
 		}
 	}
 
 	foutResults.close();
-}
-
-void printUsage(int exitCode)
-{
-		cerr << "Usage: hexEvolution <option(s)" << endl;
-		cerr << "Options:" << endl;
-		cerr << "\t-f,--frequency\t\tSpecify how frequently hexWorld data should be saved (default: after every 10 iterations)" << endl;
-		cerr << "\t-h,--help\t\tShow this message" << endl;
-		cerr << "\t-i,--iterations\t\tSpecify number of iterations to run (default: 10)" << endl;
-		cerr << "\t-o,--output\t\tSpecify full or relative path of the file name to output results to (default: results/results.out)" << endl;
-		cerr << "\t-r,--resume\t\tSpecify the full or relative path of the file name containing hexWorld data" << endl;
-		
-		exit(exitCode);
-}
-
-bool isNumeric(string input)
-{
-	for (int character = 0; character < input.length(); character += 1)
-	{
-		if (!isdigit(input[character]))
-		{
-			return false;
-		}
-	}
-
-	return true;
-}
-
-void playHexGames(hexWorld &population, ofstream &fout)
-{
-	int playerLocation, currentNeighbor;
-	player gameWinner;
-	vector<int> neighboringPlayers;
-
-	for (playerLocation = 0; playerLocation < population.getNumPlayers(); playerLocation += 1)
-	{
-		neighboringPlayers.clear();
-		neighboringPlayers = population.getNeighbors(playerLocation);
-
-		for (currentNeighbor = 0; currentNeighbor < neighboringPlayers.size(); currentNeighbor += 1)
-		{
-			gameWinner = playHexGame(population.getHexGamePlayer(playerLocation), population.getHexGamePlayer(neighboringPlayers[currentNeighbor]));
-		}
-
-		if (gameWinner == playerA)
-		{
-			population.addPlayerWin(playerLocation);
-		}
-		else
-		{
-			population.addPlayerWin(currentNeighbor);
-		}
-	}
-}
-
-player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
-{
-	int playerMove, numberOfTurns;
-	player currentPlayer;
-	Board board(BOARD_SIZE);
-
-	numberOfTurns = 0;
-
-	while (!board.isGameOver())
-	{
-		currentPlayer = static_cast<player>(numberOfTurns % 2);
-
-		if (currentPlayer == playerA)
-		{
-			playerMove = hexPlayerA.play(board, playerA);
-		}
-		else
-		{
-			playerMove = hexPlayerB.play(board, playerB);
-		}
-
-		// Put an 'if not valid move' conditional here
-
-		board.makeMove(playerMove, currentPlayer);
-
-		numberOfTurns += 1;
-	}
-
-	// The most recent value of currentPlayer is the player who won
-	return currentPlayer;
 }
