@@ -14,4 +14,4 @@ src/build/%.o: src/%.cpp
 	$(CXX) $(CXX_FLAGS) -MMD -c $< -o $@
 
 clean:
-	rm $(ALL_OBJECTS) $(DEP) hexEvolution
+	rm $(ALL_OBJECTS) $(DEP) hexEvolution 

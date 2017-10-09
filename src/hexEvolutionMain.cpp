@@ -143,10 +143,13 @@ int main(int argc, char *argv[])
 
 		hexWorld population(resumePlayers);
 
+		// This next section used to make sure file input/output worked correctly
+		/*
 		ofstream ftest;
 		ftest.open("fileParserTest.out");
 		printCurrentGenerationToFile(population, ftest);
 		ftest.close();
+		*/
 
 		fin.close();
 	}

@@ -94,7 +94,7 @@ player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
 }
 
 // Takes ifstream and parses nerualNetWeights 3-D vector from file.
-vector<vector<vector<double> > > singleeuralNetFileParser(ifstream &fin)
+vector<vector<vector<double> > > singleNeuralNetFileParser(ifstream &fin)
 {
 	double weight;
 	string parserGuide, line, token, delim;
@@ -144,6 +144,11 @@ vector<vector<vector<double> > > singleeuralNetFileParser(ifstream &fin)
 		{
 			// Ignore numGamesWon (the next input)
 			fin >> parserGuide;
+		}
+		else if (parserGuide == "//")
+		{
+			// Ignore the rest of the line
+			getline(fin, line);
 		}
 		else
 		{
@@ -220,10 +225,15 @@ vector<hexGamePlayer> entirePopulationFileParser(ifstream &fin)
 			vectorOfInputNodes.clear();
 			vectorOfLayers.clear();
 		}
+		// Comment symbol ignores the rest of the line
+		else if (parserGuide == "//")
+		{
+			getline(fin, line);
+		}
 		// Invalid syntax in file
 		else
 		{
-			cout << "Invalid symbol found in file" << endl;
+			cout << "Invalid symbol found in file: " << parserGuide << endl;
 			exit(0);
 		}
 	}
@@ -237,7 +247,7 @@ void printCurrentGenerationToFile(hexWorld population, ofstream &fout)
 
 	for (player = 0; player < population.getNumPlayers(); player += 1)
 	{
-		fout << "Player" << player << endl;
+		fout << "// Player" << player << endl;
 
 		population.getHexGamePlayer(player).printWeights(fout);
 	}
