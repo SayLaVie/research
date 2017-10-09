@@ -80,9 +80,7 @@ player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
 
 		numberOfTurns += 1;
 	}
-	board.printBoard();
-	cout << endl << endl;
-	cout.flush();
+
 	// The most recent value of currentPlayer is the player who won
 	return currentPlayer;
 }
