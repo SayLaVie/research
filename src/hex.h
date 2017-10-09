@@ -16,11 +16,11 @@ using namespace std;
 
 /**
 Global variables
-NUM_PLAYERS needs to be an even square
 **/
 const int MAX_DEPTH = 3;
 const int BOARD_SIZE = 5;
 const int NUM_PLAYERS = 100;
+const vector<int> netShape = {BOARD_SIZE * BOARD_SIZE, 1};
 
 enum player {playerA, playerB, none};
 

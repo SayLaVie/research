@@ -134,22 +134,25 @@ int main(int argc, char *argv[])
 		// Function call here to read input from resumeFile and store into resumePlayers vector
 		resumePlayers = entirePopulationFileParser(fin);
 
-		// Verify that number of players found matches NUM_PLAYERS		
+		// Verify that number of players found matches NUM_PLAYERS
 		if (resumePlayers.size() != NUM_PLAYERS)
 		{
 			cerr << "Input file contains incorrect number of players" << endl;
 			printUsage(1);
 		}
 
-		hexWorld population(resumePlayers);
+		// File input sanitation
+		for (int layer = 0; layer < netShape.size() - 1; layer += 1)
+		{
+			if (resumePlayers[0].getNet()[layer][0].size() != (netShape[layer] + 1))
+			{
+				cerr << "Incompatible neural network size/shape in input file:" << endl;
+				// cerr << resumePlayers[0].getNet()[layer][0].size() << " " << netShape[layer] + 1 << endl;
+				printUsage(1);
+			}
+		}
 
-		// This next section used to make sure file input/output worked correctly
-		/*
-		ofstream ftest;
-		ftest.open("fileParserTest.out");
-		printCurrentGenerationToFile(population, ftest);
-		ftest.close();
-		*/
+		hexWorld population(resumePlayers);
 
 		fin.close();
 	}
@@ -174,7 +177,6 @@ int main(int argc, char *argv[])
 	currentDT = localtime(&now);
 	strftime(experimentTime, 40, "data/experiment_%a_%b%d_%G_%T", currentDT);
 	experimentName += experimentTime;
-	// experimentName = "data/experiment_" + currentDT;
 	mkdir(experimentName.c_str(), ACCESSPERMS);
 
 

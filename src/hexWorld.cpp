@@ -31,7 +31,7 @@ void hexWorld::nextGeneration()
 	- rowOriginationVector is a helper vector for creating netWeights
 	- rowDestinationVector is also a helper vector for creating netWeights
    **/
-	vector<int> netShape, neighbors, neighborsGamesWon;
+	vector<int> neighbors, neighborsGamesWon;
 	vector<vector<vector<double> > > netWeights;
 	vector<vector<double> > rowDestinationVector;
 	vector<double> rowOriginationVector;
@@ -42,31 +42,20 @@ void hexWorld::nextGeneration()
 	// Bernoulli_distribution is effectively a coin toss. Returns true or false.
 	bernoulli_distribution coinToss(0.5);
 
-   /**
-	Push the depths of each layer into the netShape vector.
-	Not sure yet what our first network shape will be;
-	Setting arbitrary values for now. Origination vectors will always
-   have size + 1 because of the bias weights.
-   **/
-	netShape.push_back(BOARD_SIZE * BOARD_SIZE);
-	// netShape.push_back(BOARD_SIZE);
-	// netShape.push_back(10);
-	// netShape.push_back(5);
-	netShape.push_back(1);
 
 	// Check if this is the first generation (start with randomized weights)
 	if (hexGamePlayers.size() == 0)
 	{
-		for (player = 0; player < NUM_PLAYERS; ++player)
+		for (player = 0; player < NUM_PLAYERS; player += 1)
 		{
 			netWeights.clear();
 
 			// Create the vector of weights for the new players
-			for (layer = 0; layer < netShape.size() - 1; ++layer)
+			for (layer = 0; layer < netShape.size() - 1; layer += 1)
 			{
 				rowDestinationVector.clear();
 
-				for (rowDestination = 0; rowDestination < netShape[layer + 1]; ++rowDestination)
+				for (rowDestination = 0; rowDestination < netShape[layer + 1]; rowDestination += 1)
 				{
 					rowOriginationVector.clear();
 
@@ -75,7 +64,7 @@ void hexWorld::nextGeneration()
                rowOriginationVector.push_back(currentWeight);
 
                // Start at 1 because of the bias weight
-					for (rowOrigination = 1; rowOrigination < netShape[layer] + 1; ++rowOrigination)
+					for (rowOrigination = 1; rowOrigination < netShape[layer] + 1; rowOrigination += 1)
 					{
 						// Generate random weight.
 						currentWeight = generateWeight(seedGenerator, 0.0);
@@ -99,22 +88,22 @@ void hexWorld::nextGeneration()
 	{
 		newHexGamePlayers.clear();
 
-		for (player = 0; player < NUM_PLAYERS; ++player)
+		for (player = 0; player < NUM_PLAYERS; player += 1)
 		{
 			netWeights.clear();
 			neighbors = getNeighbors(player);
 
-			for (layer = 0; layer < netShape.size() - 1; ++layer)
+			for (layer = 0; layer < netShape.size() - 1; layer += 1)
 			{
 				rowDestinationVector.clear();
 
-				for (rowDestination = 0; rowDestination < netShape[layer + 1]; ++rowDestination)
+				for (rowDestination = 0; rowDestination < netShape[layer + 1]; rowDestination += 1)
 				{
 					rowOriginationVector.clear();
 
 					// This is where the breeding takes place. Loop conditional is netShape[layer] + 1
                // because there is a bais weight in every rowOriginationVector.
-					for (rowOrigination = 0; rowOrigination < netShape[layer] + 1; ++rowOrigination)
+					for (rowOrigination = 0; rowOrigination < netShape[layer] + 1; rowOrigination += 1)
 					{
 						// If coin toss says to keep weight
 						if (coinToss(seedGenerator))
