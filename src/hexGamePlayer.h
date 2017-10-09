@@ -28,6 +28,7 @@ private:
 
 public:
    hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights);
+   hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights, int numGamesWon);   
    int play(const Board &board, player whichPlayer);
 
    // Data modifiers

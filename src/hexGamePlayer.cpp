@@ -16,6 +16,13 @@ hexGamePlayer::hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights)
 	this->movesMade = 0;
 }
 
+hexGamePlayer::hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights, int numGamesWon)
+{
+   this->neuralNetWeights = neuralNetWeights;
+   this->gamesWon = numGamesWon;
+   this->movesMade = 0;
+}
+
 // This function starts off the minimax function with default values, and returns the integer location
 // of which move to play next
 int hexGamePlayer::play(const Board &board, player whichPlayer)
@@ -246,12 +253,16 @@ double hexGamePlayer::getWeight(int layer, int rowDestination, int rowOriginatio
 
 /*
 Prints out weights to a file (stream provided by fout) for machine to read in the future.
-"layer" guide indicates that a new layer of weights is about to begin
-"node" guide indicates that the following inputs will be double values (a single origination node's weights)
-"endPlayer" symbol indicates end of players weights
+"stat" symbol guide indicates the next input is numGamesWon
+"layer" symbol guide indicates that a new layer of weights is about to begin
+"node" symbol guide indicates that the following inputs will be double values (a single origination node's weights)
+"endPlayer" symbol guide indicates end of players weights
+"//" symbol guide indicates that the line is a comment
 */
 void hexGamePlayer::printWeights(ofstream &fout)
 {
+   fout << "stat " << gamesWon << endl;
+   
    for (int layer = 0; layer < neuralNetWeights.size(); layer += 1)
    {
       fout << "\tlayer" << endl;

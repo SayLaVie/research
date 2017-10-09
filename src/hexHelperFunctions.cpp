@@ -80,7 +80,9 @@ player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
 
 		numberOfTurns += 1;
 	}
-
+	board.printBoard();
+	cout << endl << endl;
+	cout.flush();
 	// The most recent value of currentPlayer is the player who won
 	return currentPlayer;
 }
@@ -132,6 +134,11 @@ vector<vector<vector<double> > > singleeuralNetFileParser(ifstream &fin)
 
 			vectorOfInputNodes.push_back(singleInputNodeVector);
 		}
+		else if (parserGuide == "stat")
+		{
+			// Ignore numGamesWon (the next input)
+			fin >> parserGuide;
+		}
 		else
 		{
 			cout << "Invalid symbol found in file" << endl;
@@ -144,6 +151,7 @@ vector<vector<vector<double> > > singleeuralNetFileParser(ifstream &fin)
 
 vector<hexGamePlayer> entirePopulationFileParser(ifstream &fin)
 {
+	int numGamesWon;
 	double weight;
 	string parserGuide, line, token, delim;
 	size_t pos;
@@ -157,7 +165,13 @@ vector<hexGamePlayer> entirePopulationFileParser(ifstream &fin)
 
 	while (fin >> parserGuide)
 	{
-		if (parserGuide == "layer")
+		// numGamesWon stat for hexGamePlayer
+		if (parserGuide == "stat")
+		{
+			fin >> numGamesWon;
+		}
+		// Beginning of a new layer
+		else if (parserGuide == "layer")
 		{
 			if (vectorOfInputNodes.size() == 0)
 			{
@@ -171,6 +185,7 @@ vector<hexGamePlayer> entirePopulationFileParser(ifstream &fin)
 				vectorOfInputNodes.clear();
 			}
 		}
+		// Following line content is a vector of weights (one single node)
 		else if (parserGuide == "node")
 		{
 			// The rest of the line should be double values seperated by commas
@@ -190,14 +205,16 @@ vector<hexGamePlayer> entirePopulationFileParser(ifstream &fin)
 
 			vectorOfInputNodes.push_back(singleInputNodeVector);
 		}
+		// End of a single player's input
 		else if (parserGuide == "endPlayer")
 		{
 			vectorOfLayers.push_back(vectorOfInputNodes);
-			hexGamePlayers.push_back(vectorOfLayers);
+			hexGamePlayers.push_back(hexGamePlayer(vectorOfLayers, numGamesWon));
 
 			vectorOfInputNodes.clear();
 			vectorOfLayers.clear();
 		}
+		// Invalid syntax in file
 		else
 		{
 			cout << "Invalid symbol found in file" << endl;
@@ -214,6 +231,8 @@ void printCurrentGenerationToFile(hexWorld population, ofstream &fout)
 
 	for (player = 0; player < population.getNumPlayers(); player += 1)
 	{
+		fout << "Player" << player << endl;
+
 		population.getHexGamePlayer(player).printWeights(fout);
 	}
 }

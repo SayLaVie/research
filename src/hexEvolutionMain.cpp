@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 	struct tm * currentDT;
 	ifstream fin;
 	ofstream foutResults, foutSave;
-	int saveAfterNIterations, arg, iteration, numberOfIterations;
+	int player, saveAfterNIterations, arg, iteration, numberOfIterations;
 	string argument, resumeFile, outputFile, experimentName, iterationDirectory, saveFile;
 	char experimentTime[40], resultsTime[30];
 	vector<hexGamePlayer> resumePlayers;
@@ -143,6 +143,11 @@ int main(int argc, char *argv[])
 
 		hexWorld population(resumePlayers);
 
+		ofstream ftest;
+		ftest.open("fileParserTest.out");
+		printCurrentGenerationToFile(population, ftest);
+		ftest.close();
+
 		fin.close();
 	}
 
@@ -204,7 +209,16 @@ int main(int argc, char *argv[])
 
 			// Function here to save hexWorld data
 			printCurrentGenerationToFile(population, foutSave);
+
+			foutSave.close();
 		}
+
+		// Print out some game stats
+		for (player = 0; player < population.getNumPlayers(); player += 1)
+		{
+			foutResults << "\tPlayer" << player << " games won: " << population.getHexGamePlayer(player).getGamesWon() << endl;
+		}
+		foutResults << endl;
 	}
 
 	foutResults.close();
