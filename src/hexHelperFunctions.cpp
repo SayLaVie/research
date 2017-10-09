@@ -37,18 +37,26 @@ void playHexGames(hexWorld &population, ofstream &fout)
 		neighboringPlayers.clear();
 		neighboringPlayers = population.getNeighbors(playerLocation);
 
+		/**
+		Testing Area
+		**/
+		fout << "\tPlayer" << playerLocation << " vs:" << endl;
+
 		for (currentNeighbor = 0; currentNeighbor < neighboringPlayers.size(); currentNeighbor += 1)
 		{
+			fout << "\t\t" << neighboringPlayers[currentNeighbor] << ": ";
 			gameWinner = playHexGame(population.getHexGamePlayer(playerLocation), population.getHexGamePlayer(neighboringPlayers[currentNeighbor]));
-		}
 
-		if (gameWinner == playerA)
-		{
-			population.addPlayerWin(playerLocation);
-		}
-		else
-		{
-			population.addPlayerWin(currentNeighbor);
+			if (gameWinner == playerA)
+			{
+				fout << "Win" << endl;
+				population.addPlayerWin(playerLocation);
+			}
+			else
+			{
+				fout << "Loss" << endl;
+				population.addPlayerWin(neighboringPlayers[currentNeighbor]);
+			}
 		}
 	}
 }

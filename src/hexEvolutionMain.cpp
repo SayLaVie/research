@@ -214,6 +214,7 @@ int main(int argc, char *argv[])
 		}
 
 		// Print out some game stats
+		foutResults << endl << "Stats for iteration" << iteration << endl;
 		for (player = 0; player < population.getNumPlayers(); player += 1)
 		{
 			foutResults << "\tPlayer" << player << " games won: " << population.getHexGamePlayer(player).getGamesWon() << endl;
