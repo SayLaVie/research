@@ -1,7 +1,9 @@
 #include "hexHelperFunctions.h"
 
-void printUsage(int exitCode)
+void printUsage(int exitCode, string callerMain)
 {
+	if (callerMain == "hexEvolution")
+	{
 		cerr << "Usage: hexEvolution <option(s)>" << endl;
 		cerr << "Options:" << endl;
 		cerr << "\t-f,--frequency\t\tSpecify how frequently hexWorld data should be saved (default: after every 10 iterations)" << endl;
@@ -11,6 +13,17 @@ void printUsage(int exitCode)
 		cerr << "\t-r,--resume\t\tSpecify the full or relative path of the file name containing hexWorld data (usually found in data/ subdirectories)" << endl;
 		
 		exit(exitCode);
+	}
+
+	else if (callerMain == "hexHumanVsBot")
+	{
+		cerr << "Usage: hexHumanVsBot <option>" << endl;
+		cerr << "Options:" << endl;
+		cerr << "\t-h,--help\t\tShow this message" << endl;
+		cerr << "\t-p,--player\t\tSpecify the relative or full path name of a file that contains the data for a hexPlayer" << endl;
+
+		exit(exitCode);
+	}
 }
 
 bool isNumeric(string input)

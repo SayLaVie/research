@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 	*/
 	if (argc > 9)
 	{
-		printUsage(1);
+		printUsage(1, "hexEvolution");
 	}
 
 	for (arg = 1; arg < argc; arg += 1)
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 		// Display command line options
 		if (argument == "-h" || argument == "--help")
 		{
-			printUsage(0);
+			printUsage(0, "hexEvolution");
 		}
 
 		// Frequency with which to save generation states
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 			if (arg + 1 >= argc)
 			{
 				cerr << "frequency option requires one argument" << endl;
-				printUsage(1);
+				printUsage(1, "hexEvolution");
 			}
 
 			arg += 1;
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 			if (!isNumeric(argv[arg]) || atoi(argv[arg]) <= 0)
 			{
 				cerr << "frequency option takes integer values greater than 0 only" << endl;
-				printUsage(1);
+				printUsage(1, "hexEvolution");
 			}
 
 			saveAfterNIterations = atoi(argv[arg]);
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
 			if (arg + 1 >= argc)
 			{
 				cerr << "resume option requires one argument" << endl;
-				printUsage(1);
+				printUsage(1, "hexEvolution");
 			}
 			arg += 1;
 			resumeFile = argv[arg];
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
 			if (arg + 1 >= argc)
 			{
 				cerr << "iterations option requires one argument" << endl;
-				printUsage(1);
+				printUsage(1, "hexEvolution");
 			}
 
 			arg += 1;
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
 			if (!isNumeric(argv[arg]) || atoi(argv[arg]) <= 0)
 			{
 				cerr << "iteration option takes integer values greater than 0 only" << endl;
-				printUsage(1);
+				printUsage(1, "hexEvolution");
 			}
 
 			numberOfIterations = atoi(argv[arg]);
@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
 			if (arg + 1 >= argc)
 			{
 				cerr << "ouput option requires one argument" << endl;
-				printUsage(1);
+				printUsage(1, "hexEvolution");
 			}
 			arg += 1;
 			outputFile = argv[arg];
@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
 		else
 		{
 			cerr << "Invalid option." << endl;
-			printUsage(1);
+			printUsage(1, "hexEvolution");
 		}
 	}
 
@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
 		if (!fin.is_open())
 		{
 			cerr << "Unable to open file " << resumeFile << endl;
-			printUsage(1);
+			printUsage(1, "hexEvolution");
 		}
 
 		// Function call here to read input from resumeFile and store into resumePlayers vector
@@ -138,7 +138,7 @@ int main(int argc, char *argv[])
 		if (resumePlayers.size() != NUM_PLAYERS)
 		{
 			cerr << "Input file contains incorrect number of players" << endl;
-			printUsage(1);
+			printUsage(1, "hexEvolution");
 		}
 
 		// File input sanitation
@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
 			{
 				cerr << "Incompatible neural network size/shape in input file:" << endl;
 				// cerr << resumePlayers[0].getNet()[layer][0].size() << " " << netShape[layer] + 1 << endl;
-				printUsage(1);
+				printUsage(1, "hexEvolution");
 			}
 		}
 
@@ -166,7 +166,7 @@ int main(int argc, char *argv[])
 	if (!foutResults.is_open())
 	{
 		cerr << "Unable to open file " << outputFile << endl;
-		printUsage(1);
+		printUsage(1, "hexEvolution");
 	}
 
 
@@ -196,7 +196,14 @@ int main(int argc, char *argv[])
 		if ((iteration + 1) % saveAfterNIterations == 0)
 		{
 			// Only print out results as often as iterations are printed out
-			foutResults << "Iteration " << iteration << " beginning at " << resultsTime << endl;
+			foutResults << endl << "Stats for iteration" << iteration << endl;
+
+			for (player = 0; player < population.getNumPlayers(); player += 1)
+			{
+				foutResults << "\tPlayer" << player << " games won: " << population.getHexGamePlayer(player).getGamesWon() << endl;
+			}
+			foutResults << endl;
+
 
 			// Make directory for current iteration
 			iterationDirectory = experimentName + "/iteration" + to_string(iteration);
@@ -218,14 +225,6 @@ int main(int argc, char *argv[])
 
 			foutSave.close();
 		}
-
-		// Print out some game stats
-		foutResults << endl << "Stats for iteration" << iteration << endl;
-		for (player = 0; player < population.getNumPlayers(); player += 1)
-		{
-			foutResults << "\tPlayer" << player << " games won: " << population.getHexGamePlayer(player).getGamesWon() << endl;
-		}
-		foutResults << endl;
 	}
 
 	foutResults.close();

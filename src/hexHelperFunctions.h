@@ -3,7 +3,7 @@
 #ifndef HEXHELPERFUNCTIONS_H
 #define HEXHELPERFUNCTIONS_H
 
-void printUsage(int exitCode);
+void printUsage(int exitCode, string callerMain);
 bool isNumeric(string input);
 
 void playHexGames(hexWorld &population, ofstream &fout);
