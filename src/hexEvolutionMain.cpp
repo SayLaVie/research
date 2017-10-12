@@ -189,14 +189,15 @@ int main(int argc, char *argv[])
 		currentDT = localtime(&now);
 		strftime(resultsTime, 30, "%a_%b%d_%G_%T", currentDT);
 
-		foutResults << "Iteration " << iteration << " beginning at " << resultsTime << endl;
-
 		population.nextGeneration();
 
 		playHexGames(population, foutResults);
 
 		if ((iteration + 1) % saveAfterNIterations == 0)
 		{
+			// Only print out results as often as iterations are printed out
+			foutResults << "Iteration " << iteration << " beginning at " << resultsTime << endl;
+
 			// Make directory for current iteration
 			iterationDirectory = experimentName + "/iteration" + to_string(iteration);
 			mkdir(iterationDirectory.c_str(), ACCESSPERMS);
