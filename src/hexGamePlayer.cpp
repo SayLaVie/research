@@ -53,7 +53,7 @@ int hexGamePlayer::play(const Board &board, player whichPlayer)
 // If it finishes at level 0, will return the location of the best move found.
 double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double alpha, double beta)
 {
-   int location, tmpBestMove;
+   int location, tmpBestMove, column, row, jump;
    double utilityValue, eval, heuristicValue;
    bool maximizer;
    Board copyBoard;
@@ -77,7 +77,288 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
    utilityValue = maximizer ? -MAX_DEPTH - 1 : MAX_DEPTH + 1;
    tmpBestMove = -1; // invalid default move
 
-   for (location = 0; location < BOARD_SIZE * BOARD_SIZE; location += 1)
+
+   // Begin looking for moves in middle of board, going side to side
+   if (whichPlayer == playerA)
+   {
+      column = 0;
+      row = BOARD_SIZE / 2 - ((BOARD_SIZE + 1) % 2);
+      jump = 1;
+
+      // Move left to right across board
+      while (row >= 0 && row < BOARD_SIZE)
+      {
+         while (column < BOARD_SIZE)
+         {
+            location = BOARD_SIZE * row + column;
+
+            if (board.isValidMove(location))
+            {
+               copyBoard = board;
+               copyBoard.makeMove(location, whichPlayer);
+
+               eval = miniMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1, alpha, beta);
+
+               if (maximizer)
+               {
+                  if (utilityValue < eval)
+                  {
+                     utilityValue = eval;
+
+                     tmpBestMove = location;
+                  }
+
+                  if (utilityValue >= beta)
+                  {
+                     if (depth == 0)
+                     {
+                        // cout << "Player" << (whichPlayer == playerA ? "A" : "B") << " Evaluation: " << utilityValue << endl;
+                        return tmpBestMove;
+                     }
+                     return utilityValue;
+                  }
+
+                  if (alpha < utilityValue)
+                  {
+                     alpha = utilityValue;
+                  }
+               }
+
+               else
+               {
+                  if (utilityValue > eval)
+                  {
+                     utilityValue = eval;
+                  }
+
+                  if (utilityValue <= alpha)
+                  {
+                     return utilityValue;
+                  }
+
+                  if (beta > utilityValue)
+                  {
+                     beta = utilityValue;
+                  }
+               }
+            }
+
+            column += 1;
+         }
+
+         // Jump to a row above and fix column value
+         row += jump;
+         jump += 1;
+         column -= 1;
+
+         if (row >= 0 && row < BOARD_SIZE)
+         {
+            // Move right to left across board
+            while (column >= 0)
+            {
+               location = BOARD_SIZE * row + column;
+
+               if (board.isValidMove(location))
+               {
+                  copyBoard = board;
+                  copyBoard.makeMove(location, whichPlayer);
+
+                  eval = miniMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1, alpha, beta);
+
+                  if (maximizer)
+                  {
+                     if (utilityValue < eval)
+                     {
+                        utilityValue = eval;
+
+                        tmpBestMove = location;
+                     }
+
+                     if (utilityValue >= beta)
+                     {
+                        if (depth == 0)
+                        {
+                           // cout << "Player" << (whichPlayer == playerA ? "A" : "B") << " Evaluation: " << utilityValue << endl;
+                           return tmpBestMove;
+                        }
+                        return utilityValue;
+                     }
+
+                     if (alpha < utilityValue)
+                     {
+                        alpha = utilityValue;
+                     }
+                  }
+
+                  else
+                  {
+                     if (utilityValue > eval)
+                     {
+                        utilityValue = eval;
+                     }
+
+                     if (utilityValue <= alpha)
+                     {
+                        return utilityValue;
+                     }
+
+                     if (beta > utilityValue)
+                     {
+                        beta = utilityValue;
+                     }
+                  }
+               }
+
+               column -= 1;     
+            }
+         }
+
+         // Jump to a row below and fix column value
+         row -= jump;
+         jump += 1;
+         column += 1;
+      }
+   }
+   // Start in middle of board connecting top to bottom
+   else
+   {
+      column = BOARD_SIZE / 2 - ((BOARD_SIZE + 1) / 2);
+      row = 0;
+      jump = 1;
+
+      // Move bottom to top across board
+      while (column >= 0 && column < BOARD_SIZE)
+      {
+         while (row < BOARD_SIZE)
+         {
+            location = BOARD_SIZE * row + column;
+
+            if (board.isValidMove(location))
+            {
+               copyBoard = board;
+               copyBoard.makeMove(location, whichPlayer);
+
+               eval = miniMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1, alpha, beta);
+
+               if (maximizer)
+               {
+                  if (utilityValue < eval)
+                  {
+                     utilityValue = eval;
+
+                     tmpBestMove = location;
+                  }
+
+                  if (utilityValue >= beta)
+                  {
+                     if (depth == 0)
+                     {
+                        // cout << "Player" << (whichPlayer == playerA ? "A" : "B") << " Evaluation: " << utilityValue << endl;
+                        return tmpBestMove;
+                     }
+                     return utilityValue;
+                  }
+
+                  if (alpha < utilityValue)
+                  {
+                     alpha = utilityValue;
+                  }
+               }
+
+               else
+               {
+                  if (utilityValue > eval)
+                  {
+                     utilityValue = eval;
+                  }
+
+                  if (utilityValue <= alpha)
+                  {
+                     return utilityValue;
+                  }
+
+                  if (beta > utilityValue)
+                  {
+                     beta = utilityValue;
+                  }
+               }
+            }
+            row += 1;      
+         }
+
+         // Jump and fix
+         column += jump;
+         jump += 1;
+         row -= 1;
+
+         if (column >= 0 && column < BOARD_SIZE)
+         {
+            // Move top to bottom across board
+            while (row >= 0)
+            {
+               location = BOARD_SIZE * row + column;
+
+               if (board.isValidMove(location))
+               {
+                  copyBoard = board;
+                  copyBoard.makeMove(location, whichPlayer);
+
+                  eval = miniMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1, alpha, beta);
+
+                  if (maximizer)
+                  {
+                     if (utilityValue < eval)
+                     {
+                        utilityValue = eval;
+
+                        tmpBestMove = location;
+                     }
+
+                     if (utilityValue >= beta)
+                     {
+                        if (depth == 0)
+                        {
+                           // cout << "Player" << (whichPlayer == playerA ? "A" : "B") << " Evaluation: " << utilityValue << endl;
+                           return tmpBestMove;
+                        }
+                        return utilityValue;
+                     }
+
+                     if (alpha < utilityValue)
+                     {
+                        alpha = utilityValue;
+                     }
+                  }
+
+                  else
+                  {
+                     if (utilityValue > eval)
+                     {
+                        utilityValue = eval;
+                     }
+
+                     if (utilityValue <= alpha)
+                     {
+                        return utilityValue;
+                     }
+
+                     if (beta > utilityValue)
+                     {
+                        beta = utilityValue;
+                     }
+                  }
+               }
+               row -= 1;   
+            }
+         }
+
+         column -= jump;
+         jump += 1;
+         row += 1;
+      }
+   }
+
+/*   for (location = 0; location < BOARD_SIZE * BOARD_SIZE; location += 1)
    {
       if (board.isValidMove(location))
       {
@@ -129,7 +410,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
             }
          }
       }
-   }
+   }*/
 
    if (depth == 0)
    {
