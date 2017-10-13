@@ -79,7 +79,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
 
 
    // Begin looking for moves in middle of board, going side to side
-   if (whichPlayer == playerA)
+/*   if (whichPlayer == playerA)
    {
       column = 0;
       row = BOARD_SIZE / 2 - ((BOARD_SIZE + 1) % 2);
@@ -356,9 +356,9 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
          jump += 1;
          row += 1;
       }
-   }
+   } */
 
-/*   for (location = 0; location < BOARD_SIZE * BOARD_SIZE; location += 1)
+   for (location = 0; location < BOARD_SIZE * BOARD_SIZE; location += 1)
    {
       if (board.isValidMove(location))
       {
@@ -410,7 +410,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
             }
          }
       }
-   }*/
+   }
 
    if (depth == 0)
    {
