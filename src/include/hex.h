@@ -17,8 +17,8 @@ using namespace std;
 /**
 Global variables
 **/
-const int MAX_DEPTH = 25;
-const int BOARD_SIZE = 3;
+const int MAX_DEPTH = 4;
+const int BOARD_SIZE = 5;
 
 // const int NUM_PLAYERS = 100;
 // extern vector<int> netShape;

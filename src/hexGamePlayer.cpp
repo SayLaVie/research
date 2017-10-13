@@ -79,7 +79,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
 
 
    // Begin looking for moves in middle of board, going side to side
-/*   if (whichPlayer == playerA)
+   if (whichPlayer == playerA)
    {
       column = 0;
       row = BOARD_SIZE / 2 - ((BOARD_SIZE + 1) % 2);
@@ -209,7 +209,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
                   }
                }
 
-               column -= 1;     
+               column -= 1;
             }
          }
 
@@ -222,7 +222,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
    // Start in middle of board connecting top to bottom
    else
    {
-      column = BOARD_SIZE / 2 - ((BOARD_SIZE + 1) / 2);
+      column = BOARD_SIZE / 2 - ((BOARD_SIZE + 1) % 2);
       row = 0;
       jump = 1;
 
@@ -283,7 +283,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
                   }
                }
             }
-            row += 1;      
+            row += 1;
          }
 
          // Jump and fix
@@ -348,7 +348,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
                      }
                   }
                }
-               row -= 1;   
+               row -= 1;
             }
          }
 
@@ -356,9 +356,9 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
          jump += 1;
          row += 1;
       }
-   } */
+   }
 
-   for (location = 0; location < BOARD_SIZE * BOARD_SIZE; location += 1)
+/*   for (location = 0; location < BOARD_SIZE * BOARD_SIZE; location += 1)
    {
       if (board.isValidMove(location))
       {
@@ -411,6 +411,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
          }
       }
    }
+*/
 
    if (depth == 0)
    {
@@ -445,7 +446,7 @@ double hexGamePlayer::neuralNetHeuristic(const Board board, player whichPlayer)
    		if (thisOwner == none)
    		{
             boardState.push_back(0);
-         }	
+         }
    		else if (thisOwner == whichPlayer)
          {
    			boardState.push_back(1);
@@ -544,7 +545,7 @@ Prints out weights to a file (stream provided by fout) for machine to read in th
 void hexGamePlayer::printWeights(ofstream &fout)
 {
    fout << "stat " << gamesWon << endl;
-   
+
    for (int layer = 0; layer < neuralNetWeights.size(); layer += 1)
    {
       fout << "\tlayer" << endl;
