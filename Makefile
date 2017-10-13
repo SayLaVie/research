@@ -1,8 +1,8 @@
 CXX=g++
 CXX_FLAGS=-std=c++11 -Isrc/include/
 CPP=$(wildcard src/*.cpp)
-SHARED_OBJECTS=src/build/hex.o src/build/hexGamePlayer.o src/build/hexWorld.o
-EVOLUTION_OBJECTS=src/build/hexEvolutionMain.o src/build/hexEvolutionHelpers.o
+SHARED_OBJECTS=src/build/hex.o src/build/hexGamePlayer.o
+EVOLUTION_OBJECTS=src/build/hexEvolutionMain.o src/build/hexEvolutionHelpers.o src/build/hexWorld.o
 HUMANBOT_OBJECTS=src/build/hexHumanVsBotMain.o src/build/hexHumanVsBotHelpers.o
 ALL_OBJECTS=$(wildcard src/build/*.o)
 DEP=$(ALL_OBJECTS:%.o=%.d)
