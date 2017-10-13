@@ -5,7 +5,7 @@ author: Michael McCarver
 advisor: Dr. Rob LeGrand
 **********************/
 
-#include "hexGamePlayer.h"
+#include <hexGamePlayer.h>
 #include <cmath>
 
 // Constructor takes a set of weights for the neural net heuristic
@@ -28,6 +28,7 @@ hexGamePlayer::hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights, 
 int hexGamePlayer::play(const Board &board, player whichPlayer)
 {
    int moveToMake, location;
+   Board copyBoard;
 
    moveToMake = miniMax(board, whichPlayer, 0, -MAX_DEPTH + 1, MAX_DEPTH + 1);
 
@@ -66,7 +67,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
       return maximizer ? -1 - (double)(MAX_DEPTH / depth) : 1 + (double)(MAX_DEPTH / depth);
    }
 
-   if (depth > MAX_DEPTH)
+   if (depth >= MAX_DEPTH)
    {
       heuristicValue = neuralNetHeuristic(board, whichPlayer);
 
@@ -76,7 +77,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
    utilityValue = maximizer ? -MAX_DEPTH - 1 : MAX_DEPTH + 1;
    tmpBestMove = -1; // invalid default move
 
-   for (location = 0; location < BOARD_SIZE * BOARD_SIZE; ++location) // May change the way we iterate through valid moves
+   for (location = 0; location < BOARD_SIZE * BOARD_SIZE; location += 1)
    {
       if (board.isValidMove(location))
       {

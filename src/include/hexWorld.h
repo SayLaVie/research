@@ -33,6 +33,7 @@ class hexWorld
 private:
 	int numPlayers;
 	vector<hexGamePlayer> hexGamePlayers;
+	vector<int> netShape;
 
 	void geneticAlgorithm();
 	void deletePopulation(){hexGamePlayers.clear();}
@@ -40,12 +41,9 @@ private:
 	int getNeighborLocation(int playerLocation, int columnOffset, int rowOffset);
 
 public:
-	hexWorld(int numPlayers = NUM_PLAYERS){this->numPlayers = numPlayers;}
-	hexWorld(vector<hexGamePlayer> hexGamePlayers)
-	{
-		this->numPlayers = hexGamePlayers.size();
-		this->hexGamePlayers = hexGamePlayers;
-	};
+	hexWorld(int numPlayers = 100, vector<int> netShape = {BOARD_SIZE * BOARD_SIZE, BOARD_SIZE, 1});
+
+	hexWorld(vector<hexGamePlayer> hexGamePlayers);
 
 	// Some sort of void function that creates the next generation of players.
 	// If this is the first iteration (no existing players), create hexGamePlayers
@@ -67,7 +65,7 @@ public:
 	int getBreeder(default_random_engine &seedGenerator, vector<int> probabilities);
 	double generateWeight(default_random_engine &seedGenerator, double mean);
 
-	hexWorld& operator=(hexWorld &rhs);
+	hexWorld& operator=(hexWorld rhs);
 };
 
 #endif // #ifndef HEXWORLD_H

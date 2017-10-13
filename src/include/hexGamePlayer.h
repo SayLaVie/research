@@ -11,12 +11,14 @@ advisor: Dr. Rob LeGrand
 #include "hex.h"
 #include <cmath>
 #include <fstream>
+#include <algorithm>
 
 class hexGamePlayer
 {
 private:
    // neuralNetWeights is a 3D vector. Of the form: neuralNetWeights[column][rowDestination][rowOrigination]
    vector<vector<vector<double> > > neuralNetWeights;
+   vector<pair<double, int> > moveOrder;
 
    // Private data about this players played games
    int gamesWon, movesMade;

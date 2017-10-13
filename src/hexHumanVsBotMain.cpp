@@ -7,14 +7,21 @@ Author: Michael McCarver
 Advisor: Dr. Rob LeGrand
 */
 
-#include "hexHelperFunctions.h"
-#include <cstdlib>
-#include <sys/stat.h>
+#include <hexHumanVsBotHelpers.h>
+// #include <cstdlib>
+// #include <sys/stat.h>
+// #include <cctype>
+
+// Define extern variable netShape
+vector<int> netShape;
+
+void printUsage(int exitCode);
 
 int main(int argc, char *argv[])
 {
 	int arg;
-	string argument, playerFileName;
+	string argument, playerFileName, answer;
+	bool playAgain, answerQuestion;
 	ifstream fin;
 
 	for (arg = 1; arg < argc; arg += 1)
@@ -23,7 +30,7 @@ int main(int argc, char *argv[])
 
 		if (argument == "-h" || argument == "--help")
 		{
-			printUsage(0, "hexHumanVsBot");
+			printUsage(0);
 		}
 
 		if (argument == "-p" || argument == "--player")
@@ -31,7 +38,7 @@ int main(int argc, char *argv[])
 			if (arg + 1 > argc)
 			{
 				cerr << "Player option requires one argument" << endl;
-				printUsage(1, "hexHumanVsBot");
+				printUsage(1);
 			}
 			
 			arg += 1;
@@ -41,14 +48,14 @@ int main(int argc, char *argv[])
 		else
 		{
 			cerr << "Invalid option" << endl;
-			printUsage(1, "hexHumanVsBot");
+			printUsage(1);
 		}
 	}
 
 	if (playerFileName.empty())
 	{
 		cerr << "The name of a player's file is required for execution" << endl;
-		printUsage(1, "hexHumanVsBot");
+		printUsage(1);
 	}
 
 	fin.open(playerFileName);
@@ -56,8 +63,37 @@ int main(int argc, char *argv[])
 	if (!fin.is_open())
 	{
 		cerr << "Unable to open player's file" << endl;
-		printUsage(1, "hexHumanVsBot");
+		printUsage(1);
 	}
 
-	// Parse file here (take into consideration extern netShape vector)
+
+	// Declare and initialize hexGamePlayer opponent from input file data
+	// *NOTE* there is currently no input sanitation
+	hexGamePlayer bot(singleNeuralNetFileParser(fin));
+
+	// Play Hex Games
+	do
+	{
+		playHexGame(bot);
+
+		answerQuestion = false;
+
+		while (!answerQuestion)
+		{
+			cout << "Would you like to play again (Y/N)? ";
+			cin >> answer;
+
+			if (answer.length() != 1 || (toupper(answer[0]) != 'Y' && toupper(answer[0]) != 'N'))
+			{
+				cout << "Invalid choice" << endl;
+			}
+			else
+			{
+				answerQuestion = true;
+			}
+		}
+
+		playAgain = answer == "Y" || answer == "y";
+
+	} while(playAgain);
 }

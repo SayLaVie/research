@@ -5,7 +5,7 @@ author: Michael McCarver
 advisor: Dr. Rob LeGrand
 **********************/
 
-#include "hex.h"
+#include <hex.h>
 
 // Constructor used during board creation
 Tile::Tile(int location, int size)
@@ -284,7 +284,7 @@ void Board::printBoard() const // Prints the board out
 
    width = (size - 1) * 3;
 
-   // cout << endl << setw(width + BOARD_SIZE) << "";
+   cout << endl << setw(width + BOARD_SIZE) << "";
 
    for (column = 0; column < size; ++column)
    {

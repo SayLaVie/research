@@ -17,10 +17,11 @@ using namespace std;
 /**
 Global variables
 **/
-const int MAX_DEPTH = 0;
+const int MAX_DEPTH = 1;
 const int BOARD_SIZE = 5;
-const int NUM_PLAYERS = 100;
-const vector<int> netShape = {BOARD_SIZE * BOARD_SIZE, 1};
+
+// const int NUM_PLAYERS = 100;
+// extern vector<int> netShape;
 
 enum player {playerA, playerB, none};
 

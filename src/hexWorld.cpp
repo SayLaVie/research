@@ -19,7 +19,33 @@ that clumps values closer to 0.
 	- piecewise_linear_distribution (with our own set probabilities)
 *************************************/
 
-#include "hexWorld.h"
+#include <hexWorld.h>
+
+hexWorld::hexWorld(int numPlayers, vector<int> netShape)
+{
+	this->numPlayers = numPlayers;
+	this->netShape = netShape;
+}
+
+hexWorld::hexWorld(vector<hexGamePlayer> hexGamePlayers)
+{
+	vector<vector<vector<double> > > neuralNet;
+
+	this->numPlayers = hexGamePlayers.size();
+	this->hexGamePlayers = hexGamePlayers;
+
+	neuralNet = hexGamePlayers[0].getNet();
+
+	// Infer the shape of the network from the weights
+	for (int layer = 0; layer < neuralNet.size(); layer += 1)
+	{
+		this->netShape.push_back(neuralNet[layer][0].size() - 1);
+	}
+
+	// Nets always end with one output node
+	this->netShape.push_back(1);
+};
+
 
 // This function sets the weights for the neural net
 void hexWorld::nextGeneration()
@@ -46,7 +72,7 @@ void hexWorld::nextGeneration()
 	// Check if this is the first generation (start with randomized weights)
 	if (hexGamePlayers.size() == 0)
 	{
-		for (player = 0; player < NUM_PLAYERS; player += 1)
+		for (player = 0; player < numPlayers; player += 1)
 		{
 			netWeights.clear();
 
@@ -88,7 +114,7 @@ void hexWorld::nextGeneration()
 	{
 		newHexGamePlayers.clear();
 
-		for (player = 0; player < NUM_PLAYERS; player += 1)
+		for (player = 0; player < numPlayers; player += 1)
 		{
 			netWeights.clear();
 			neighbors = getNeighbors(player);
@@ -188,7 +214,7 @@ int hexWorld::getNeighborLocation(int playerLocation, int columnOffset, int rowO
 {
 	int neighborLocation, neighborColumn, neighborRow, playerColumn, playerRow, numPlayersDimension;
 
-	numPlayersDimension = sqrt(NUM_PLAYERS);
+	numPlayersDimension = sqrt(numPlayers);
 	playerColumn = playerLocation % numPlayersDimension;
 	playerRow = playerLocation / numPlayersDimension;
 
@@ -242,7 +268,7 @@ double hexWorld::generateWeight(default_random_engine &seedGenerator, double mea
 	return weightGenerator(seedGenerator);
 }
 
-hexWorld& hexWorld::operator=(hexWorld &rhs)
+hexWorld& hexWorld::operator=(hexWorld rhs)
 {
 	this->hexGamePlayers.clear();
 	this->hexGamePlayers = rhs.getHexGamePlayers();

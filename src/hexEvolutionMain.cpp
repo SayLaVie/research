@@ -5,9 +5,14 @@ Author: Michael McCarver
 Advisor: Dr. Rob LeGrand
 */
 
-#include "hexHelperFunctions.h"
+#include <hexEvolutionHelpers.h>
 #include <cstdlib>
 #include <sys/stat.h>
+
+// Helper functions specific to hexEvolution
+void printUsage(int exitCode);
+void playHexGames(hexWorld &population, ofstream &fout);
+player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB);
 
 int main(int argc, char *argv[])
 {
@@ -19,20 +24,22 @@ int main(int argc, char *argv[])
 	string argument, resumeFile, outputFile, experimentName, iterationDirectory, saveFile;
 	char experimentTime[40], resultsTime[30];
 	vector<hexGamePlayer> resumePlayers;
-	hexWorld population;
+	hexWorld population(100, {25, 5, 1});
 
 	// Default values
 	numberOfIterations = 10;
 	saveAfterNIterations = 10;
 	outputFile = "results/results.out";
 
+	// Default netShape
+	// netShape = {BOARD_SIZE * BOARD_SIZE, BOARD_SIZE, 1};
 
 	/*
 		Command line sanitation
 	*/
 	if (argc > 9)
 	{
-		printUsage(1, "hexEvolution");
+		printUsage(1);
 	}
 
 	for (arg = 1; arg < argc; arg += 1)
@@ -42,7 +49,7 @@ int main(int argc, char *argv[])
 		// Display command line options
 		if (argument == "-h" || argument == "--help")
 		{
-			printUsage(0, "hexEvolution");
+			printUsage(0);
 		}
 
 		// Frequency with which to save generation states
@@ -51,7 +58,7 @@ int main(int argc, char *argv[])
 			if (arg + 1 >= argc)
 			{
 				cerr << "frequency option requires one argument" << endl;
-				printUsage(1, "hexEvolution");
+				printUsage(1);
 			}
 
 			arg += 1;
@@ -59,7 +66,7 @@ int main(int argc, char *argv[])
 			if (!isNumeric(argv[arg]) || atoi(argv[arg]) <= 0)
 			{
 				cerr << "frequency option takes integer values greater than 0 only" << endl;
-				printUsage(1, "hexEvolution");
+				printUsage(1);
 			}
 
 			saveAfterNIterations = atoi(argv[arg]);
@@ -72,7 +79,7 @@ int main(int argc, char *argv[])
 			if (arg + 1 >= argc)
 			{
 				cerr << "resume option requires one argument" << endl;
-				printUsage(1, "hexEvolution");
+				printUsage(1);
 			}
 			arg += 1;
 			resumeFile = argv[arg];
@@ -84,7 +91,7 @@ int main(int argc, char *argv[])
 			if (arg + 1 >= argc)
 			{
 				cerr << "iterations option requires one argument" << endl;
-				printUsage(1, "hexEvolution");
+				printUsage(1);
 			}
 
 			arg += 1;
@@ -92,7 +99,7 @@ int main(int argc, char *argv[])
 			if (!isNumeric(argv[arg]) || atoi(argv[arg]) <= 0)
 			{
 				cerr << "iteration option takes integer values greater than 0 only" << endl;
-				printUsage(1, "hexEvolution");
+				printUsage(1);
 			}
 
 			numberOfIterations = atoi(argv[arg]);
@@ -104,7 +111,7 @@ int main(int argc, char *argv[])
 			if (arg + 1 >= argc)
 			{
 				cerr << "ouput option requires one argument" << endl;
-				printUsage(1, "hexEvolution");
+				printUsage(1);
 			}
 			arg += 1;
 			outputFile = argv[arg];
@@ -113,7 +120,7 @@ int main(int argc, char *argv[])
 		else
 		{
 			cerr << "Invalid option." << endl;
-			printUsage(1, "hexEvolution");
+			printUsage(1);
 		}
 	}
 
@@ -128,31 +135,10 @@ int main(int argc, char *argv[])
 		if (!fin.is_open())
 		{
 			cerr << "Unable to open file " << resumeFile << endl;
-			printUsage(1, "hexEvolution");
+			printUsage(1);
 		}
 
-		// Function call here to read input from resumeFile and store into resumePlayers vector
-		resumePlayers = entirePopulationFileParser(fin);
-
-		// Verify that number of players found matches NUM_PLAYERS
-		if (resumePlayers.size() != NUM_PLAYERS)
-		{
-			cerr << "Input file contains incorrect number of players" << endl;
-			printUsage(1, "hexEvolution");
-		}
-
-		// File input sanitation
-		for (int layer = 0; layer < netShape.size() - 1; layer += 1)
-		{
-			if (resumePlayers[0].getNet()[layer][0].size() != (netShape[layer] + 1))
-			{
-				cerr << "Incompatible neural network size/shape in input file:" << endl;
-				// cerr << resumePlayers[0].getNet()[layer][0].size() << " " << netShape[layer] + 1 << endl;
-				printUsage(1, "hexEvolution");
-			}
-		}
-
-		hexWorld population(resumePlayers);
+		hexWorld population = entirePopulationFileParser(fin);
 
 		fin.close();
 	}
@@ -166,7 +152,7 @@ int main(int argc, char *argv[])
 	if (!foutResults.is_open())
 	{
 		cerr << "Unable to open file " << outputFile << endl;
-		printUsage(1, "hexEvolution");
+		printUsage(1);
 	}
 
 
