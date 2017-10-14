@@ -17,7 +17,7 @@ using namespace std;
 /**
 Global variables
 **/
-const int MAX_DEPTH = 4;
+const int MAX_DEPTH = 1;
 const int BOARD_SIZE = 5;
 
 // const int NUM_PLAYERS = 100;

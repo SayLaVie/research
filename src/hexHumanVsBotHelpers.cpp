@@ -161,6 +161,8 @@ void playHexGame(hexGamePlayer bot)
 	}
 	else
 	{
+		// Print out board one last time, because bot has made a move since the last print out
+		board.printBoard();
 		cout << "Better luck next time!" << endl;
 	}
 }
