@@ -199,3 +199,20 @@ void printCurrentGenerationToFile(hexWorld population, ofstream &fout)
 		population.getHexGamePlayer(player).printWeights(fout);
 	}
 }
+
+// This function returns a weighted-average representative of the given population
+//		 *NOTE* this function may need to be altered for networks more complicated than
+// single layer.
+hexGamePlayer populationRepresentative(hexWorld population)
+{
+	int layer, rowDestination, rowOrigination, player;
+	vector<vector<vector<double> > > sampleNet;
+
+	// Grab the net of the first player to use for loop parameters
+	sampleNet = population.getHexGamePlayer(0).getNet();
+
+	for (layer = 0; layer < sampleNet.size(); layer += 1)
+	{
+		
+	}
+}

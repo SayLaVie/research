@@ -13,3 +13,7 @@ hexWorld entirePopulationFileParser(ifstream &fin);
 void hexPopulationSanitation(hexWorld population);
 
 void printCurrentGenerationToFile(hexWorld population, ofstream &fout);
+
+// Find a weighted average for each weight throughout the population, and create a hexGamePlayer
+// with these weights.
+hexGamePlayer populationRepresentative(hexWorld population);

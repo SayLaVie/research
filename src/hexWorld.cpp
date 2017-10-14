@@ -168,6 +168,8 @@ void hexWorld::nextGeneration()
 				netWeights.push_back(rowDestinationVector);
 			}
 
+			// Swap weights here?
+
 			newHexGamePlayers.push_back(netWeights);
 		}
 

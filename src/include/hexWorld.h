@@ -41,7 +41,7 @@ private:
 	int getNeighborLocation(int playerLocation, int columnOffset, int rowOffset);
 
 public:
-	hexWorld(int numPlayers = 100, vector<int> netShape = {BOARD_SIZE * BOARD_SIZE, BOARD_SIZE, 1});
+	hexWorld(int numPlayers = 100, vector<int> netShape = {BOARD_SIZE * BOARD_SIZE, 1});
 
 	hexWorld(vector<hexGamePlayer> hexGamePlayers);
 
