@@ -110,10 +110,6 @@ hexWorld entirePopulationFileParser(ifstream &fin)
 
 	while (fin >> parserGuide)
 	{
-		// Add netShape variable and code
-		// Add numPlayers variable and code
-
-
 		// numGamesWon stat for hexGamePlayer
 		if (parserGuide == "stat")
 		{
@@ -186,6 +182,7 @@ hexWorld entirePopulationFileParser(ifstream &fin)
 void hexPopulationSanitation(hexWorld population)
 {
 	// No sanitation yet
+	;
 }
 
 void printCurrentGenerationToFile(hexWorld population, ofstream &fout)
@@ -203,16 +200,42 @@ void printCurrentGenerationToFile(hexWorld population, ofstream &fout)
 // This function returns a weighted-average representative of the given population
 //		 *NOTE* this function may need to be altered for networks more complicated than
 // single layer.
-hexGamePlayer populationRepresentative(hexWorld population)
+void printPopulationRepresentative(hexWorld population, ofstream &fout)
 {
 	int layer, rowDestination, rowOrigination, player;
+	double sum, weightedAverage;
 	vector<vector<vector<double> > > sampleNet;
 
 	// Grab the net of the first player to use for loop parameters
 	sampleNet = population.getHexGamePlayer(0).getNet();
 
+	fout << "// populationRepresentative is a weighted average of all hexGamePlayers in a hexWorld" << endl;
+
 	for (layer = 0; layer < sampleNet.size(); layer += 1)
 	{
-		
+		fout << "\tlayer" << endl;
+
+		for (rowDestination = 0; rowDestination < sampleNet[layer].size(); rowDestination += 1)
+		{
+			fout << "\t\tnode ";
+
+			for (rowOrigination = 0; rowOrigination < sampleNet[layer][rowDestination].size(); rowOrigination += 1)
+			{
+				sum = 0;
+
+				for (player = 0; player < population.getNumPlayers(); player += 1)
+				{
+					sum += population.getHexGamePlayer(player).getWeight(layer, rowDestination, rowOrigination) * population.getHexGamePlayer(player).getGamesWon();
+				}
+
+				weightedAverage = sum / population.getNumPlayers();
+
+				fout << weightedAverage << ',';
+			}
+
+			fout << endl;
+		}
 	}
+
+	fout << "endPlayer" << endl;
 }

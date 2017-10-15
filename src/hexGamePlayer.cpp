@@ -534,6 +534,11 @@ double hexGamePlayer::getWeight(int layer, int rowDestination, int rowOriginatio
    return neuralNetWeights[layer][rowDestination][rowOrigination];
 }
 
+void hexGamePlayer::setWeight(int layer, int rowDestination, int rowOrigination, double newWeight)
+{
+   neuralNetWeights[layer][rowDestination][rowOrigination] = newWeight;
+}
+
 /*
 Prints out weights to a file (stream provided by fout) for machine to read in the future.
 "stat" symbol guide indicates the next input is numGamesWon

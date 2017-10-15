@@ -40,7 +40,8 @@ public:
    // Not currently keeping track of moves during games
    void addMoves(int numMoves) {movesMade += numMoves;}
 
-   double getWeight(int layer, int rowOrigination, int rowDestination);
+   double getWeight(int layer, int rowDestination, int rowOrigination);
+   void setWeight(int layer, int rowDestination, int rowOrigination, double newWeight);
    void printWeights(ofstream &fout);
 
    vector<vector<vector<double> > > getNet() {return neuralNetWeights;}

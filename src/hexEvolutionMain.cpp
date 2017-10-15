@@ -24,23 +24,12 @@ int main(int argc, char *argv[])
 	string argument, resumeFile, outputFile, experimentName, iterationDirectory, saveFile;
 	char experimentTime[40], resultsTime[30];
 	vector<hexGamePlayer> resumePlayers;
-	hexWorld population(100, {25, 5, 1});
+	hexWorld population;
 
 	// Default values
 	numberOfIterations = 10;
 	saveAfterNIterations = 10;
 	outputFile = "results/results.out";
-
-	// Default netShape
-	// netShape = {BOARD_SIZE * BOARD_SIZE, BOARD_SIZE, 1};
-
-	/*
-		Command line sanitation
-	*/
-	if (argc > 9)
-	{
-		printUsage(1);
-	}
 
 	for (arg = 1; arg < argc; arg += 1)
 	{
@@ -208,6 +197,22 @@ int main(int argc, char *argv[])
 
 			// Function here to save hexWorld data
 			printCurrentGenerationToFile(population, foutSave);
+
+			foutSave.close();
+
+			// Save populationRepresentative
+			saveFile = iterationDirectory + "/populationRepresentative.player";
+
+			foutSave.open(saveFile);
+			
+			if (!foutSave.is_open())
+			{
+				cerr << "Could not save populationRepresentative data to file " << saveFile << endl;
+				exit(1);
+			}
+
+			// Print a weighted average of all players
+			printPopulationRepresentative(population, foutSave);
 
 			foutSave.close();
 		}

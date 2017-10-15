@@ -20,13 +20,15 @@ each other).
 #include "hexGamePlayer.h"
 #include <random>
 #include <ctime>
+#include <utility>
 
 /**
 Global seed generator
 I ran into trouble declaring it as const. It's possible that the generator could
 be re-seeded
 **/
-static default_random_engine seedGenerator(time(NULL));
+// static default_random_engine seedGenerator(time(NULL));
+static mt19937_64 seedGenerator(time(NULL));
 
 class hexWorld
 {
@@ -39,6 +41,9 @@ private:
 	void deletePopulation(){hexGamePlayers.clear();}
 
 	int getNeighborLocation(int playerLocation, int columnOffset, int rowOffset);
+
+	// Swap random weights between two players
+	void swapWeightsBetweenPlayers(hexGamePlayer &playerA, hexGamePlayer &playerB);
 
 public:
 	hexWorld(int numPlayers = 100, vector<int> netShape = {BOARD_SIZE * BOARD_SIZE, 1});
@@ -62,8 +67,8 @@ public:
 	
 	void addPlayerWin(int playerLocation) {hexGamePlayers[playerLocation].addGameWon();}
 
-	int getBreeder(default_random_engine &seedGenerator, vector<int> probabilities);
-	double generateWeight(default_random_engine &seedGenerator, double mean);
+	int getBreeder(mt19937_64 &seedGenerator, vector<int> probabilities);
+	double generateWeight(mt19937_64 &seedGenerator, double mean);
 
 	hexWorld& operator=(hexWorld rhs);
 };
