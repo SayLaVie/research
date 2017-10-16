@@ -29,6 +29,7 @@ private:
    double sigmoidFunction(double input);
 
 public:
+   hexGamePlayer();
    hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights);
    hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights, int numGamesWon);
    int play(const Board &board, player whichPlayer);
