@@ -71,7 +71,6 @@ void hexWorld::nextGeneration()
 	// Bernoulli_distribution is effectively a coin toss. Returns true or false.
 	bernoulli_distribution coinToss(0.5);
 
-
 	// Check if this is the first generation (start with randomized weights)
 	if (hexGamePlayers.size() == 0)
 	{
@@ -171,7 +170,8 @@ void hexWorld::nextGeneration()
 				netWeights.push_back(rowDestinationVector);
 			}
 
-
+			// Swap two random weights in this network
+			swapWeights(netWeights);
 
 			newHexGamePlayers.push_back(netWeights);
 		}
