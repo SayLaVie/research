@@ -43,10 +43,7 @@ private:
 	int getNeighborLocation(int playerLocation, int columnOffset, int rowOffset);
 
 	// Swap random weights between two players
-	void swapWeightsBetweenPlayers(hexGamePlayer &playerA, hexGamePlayer &playerB);
-
-	// I need to be able to modify hexGamePlayers when swapping weights
-	hexGamePlayer& getHexGamePlayerReference(int playerLocation) {return hexGamePlayers[playerLocation];}
+	void swapWeightsBetweenPlayers(int playerALocation, int playerBLocation);
 
 public:
 	hexWorld(int numPlayers = 100, vector<int> netShape = {BOARD_SIZE * BOARD_SIZE, 1});

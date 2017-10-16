@@ -280,7 +280,7 @@ hexWorld& hexWorld::operator=(hexWorld rhs)
 	return *this;
 }
 
-void hexWorld::swapWeightsBetweenPlayers(hexGamePlayer &playerA, hexGamePlayer &playerB)
+void hexWorld::swapWeightsBetweenPlayers(int playerALocation, int playerBLocation)
 {
 	// Sizes of particular vectors.
 	int numLayers, numDestinationsA, numDestinationsB, numOriginationsA, numOriginationsB;
@@ -291,8 +291,8 @@ void hexWorld::swapWeightsBetweenPlayers(hexGamePlayer &playerA, hexGamePlayer &
 	// Temp variable used during swap;
 	double swapTemp;
 
-	netPlayerA = playerA.getNet();
-	netPlayerB = playerB.getNet();
+	netPlayerA = hexGamePlayers[playerALocation].getNet();
+	netPlayerB = hexGamePlayers[playerBLocation].getNet();
 
 	// The last layer of a neuralNetWeights vector will always be the output node, so that can be ignored.
 	// The number of layers will be the same for both players
@@ -359,10 +359,11 @@ void hexWorld::swapWeightsBetweenPlayers(hexGamePlayer &playerA, hexGamePlayer &
 
 	// Swap the two weights
 	
-	swapTemp = playerA.getWeight(randomLayerA, randomDestinationA, randomOriginationA);
+	// swapTemp = playerA.getWeight(randomLayerA, randomDestinationA, randomOriginationA);
+	swapTemp = hexGamePlayers[playerALocation].getWeight(randomLayerA, randomDestinationA, randomOriginationA);
 	
-	playerA.setWeight(randomLayerA, randomDestinationA, randomOriginationA, 
-		playerB.getWeight(randomLayerB, randomDestinationB, randomOriginationB));
+	hexGamePlayers[playerALocation].setWeight(randomLayerA, randomDestinationA, randomOriginationA, 
+		hexGamePlayers[playerBLocation].getWeight(randomLayerB, randomDestinationB, randomOriginationB));
 
-	playerB.setWeight(randomLayerB, randomDestinationB, randomOriginationB, swapTemp);
+	hexGamePlayers[playerBLocation].setWeight(randomLayerB, randomDestinationB, randomOriginationB, swapTemp);
 }
