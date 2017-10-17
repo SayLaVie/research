@@ -62,8 +62,6 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
 
    if (board.isGameOver())
    {
-      // return maximizer ? -500 + depth : 500 - depth; // Will change these values to be less arbitrary
-      // For now, only returning -1 : 1
       return maximizer ? -1 - (double)(MAX_DEPTH / depth) : 1 + (double)(MAX_DEPTH / depth);
    }
 
@@ -526,7 +524,7 @@ double hexGamePlayer::neuralNetHeuristic(const Board board, player whichPlayer)
 
 double hexGamePlayer::sigmoidFunction(double input)
 {
-   return 1 / (1 + exp(-input));
+   return 1.0 / (1.0 + exp(-input));
 }
 
 double hexGamePlayer::getWeight(int layer, int rowDestination, int rowOrigination)

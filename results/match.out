@@ -1,0 +1,46 @@
+	First match
+Player A: agents/singleLayerIteration15000Player30.data
+Player B: agents/singleLayerIteration100_Player80.data
+
+
+                   *A*  *B*  *C*  *D*  *E*
+
+           *4*    -    -    -   B2    -    *4*
+
+        *3*    -    -    -   A3   B4    *3*
+
+     *2*   A8   A7   A1   B1    -    *2*
+
+  *1*   A6   B6   B0   A2   A5    *1*
+
+*0*   B7   A0   B3   A4   B5    *0*
+
+   *A*  *B*  *C*  *D*  *E*
+
+Winner of this match is agents/singleLayerIteration15000Player30.data
+
+
+	Second match
+Player A: agents/singleLayerIteration100_Player80.data
+Player B: agents/singleLayerIteration15000Player30.data
+
+
+                   *A*  *B*  *C*  *D*  *E*
+
+           *4*   A5   B5    -   A4    -    *4*
+
+        *3*    -   B4   A1    -   A2    *3*
+
+     *2*   A3   A0   B2    -    -    *2*
+
+  *1*   B3    -   B1    -    -    *1*
+
+*0*    -    -   B0    -    -    *0*
+
+   *A*  *B*  *C*  *D*  *E*
+
+Winner of this match is agents/singleLayerIteration15000Player30.data
+stat 0
+	layer
+		node 260.008,-125.096,40.3535,-85.3905,-86.5542,-7.47118,238.485,-78.2156,26.6278,-77.7728,-43.1284,-78.7403,141.129,228.168,-134.061,23.0118,59.3815,140.699,154.608,70.3721,-60.3931,-40.7759,55.0636,-136.014,9.88974,-85.3042,
+endPlayer

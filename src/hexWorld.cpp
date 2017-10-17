@@ -66,7 +66,6 @@ void hexWorld::nextGeneration()
 	double currentWeight;
 	int layer, rowDestination, rowOrigination, player, neighbor, gamesWon, breederChoice;
 	vector<hexGamePlayer> newHexGamePlayers;
-	hexGamePlayer tmpHexPlayer;
 
 	// Bernoulli_distribution is effectively a coin toss. Returns true or false.
 	bernoulli_distribution coinToss(0.5);

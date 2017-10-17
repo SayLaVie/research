@@ -10,7 +10,6 @@ advisor: Dr. Rob LeGrand
 
 #include "hex.h"
 #include <cmath>
-#include <fstream>
 #include <algorithm>
 
 class hexGamePlayer
@@ -29,7 +28,6 @@ private:
    double sigmoidFunction(double input);
 
 public:
-   hexGamePlayer();
    hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights);
    hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights, int numGamesWon);
    int play(const Board &board, player whichPlayer);

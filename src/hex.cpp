@@ -39,7 +39,9 @@ Board::Board(const Board &copy)
 
    this->BoardLayout = copy.getBoard();
 
-   this->size = copy.getSize();   
+   this->size = copy.getSize();
+
+   this->turnCounter = copy.turnCounter;
 }
 
 Board::Board(vector<Tile> BoardLayout)
@@ -59,6 +61,8 @@ Board& Board::operator=(const Board &rhs)
    this->size = rhs.getSize();
 
    this->BoardLayout = rhs.getBoard();
+
+   this->turnCounter = rhs.turnCounter;
 
    return *this;
 }
@@ -278,7 +282,8 @@ bool Board::isGameOver()
    return false;
 }
 
-void Board::printBoard() const // Prints the board out
+// Two functions for printing out the board
+void Board::printBoard() const 
 {
    int column, hex, row, offset, move, width;
 
@@ -337,4 +342,61 @@ void Board::printBoard() const // Prints the board out
    }
 }
 
+void Board::printBoard(ofstream &fout)
+{
+   int column, hex, row, offset, move, width;
 
+   width = (size - 1) * 3;
+
+   fout << endl << setw(width + BOARD_SIZE) << "";
+
+   for (column = 0; column < size; ++column)
+   {
+      fout << setw(3) << right << "*" << (char)(65 + column) << "*";
+   }
+   fout << endl;
+
+   for (row = size - 1; row >= 0; --row)
+   {
+      fout << endl << setw(width) << "*" << row << "*";
+
+      for (column = 0; column < size; ++column)
+      {
+         hex = size * row + column;
+
+         move = BoardLayout[hex].getTurnTaken();
+         offset = 1;
+
+         while (move / 10)
+         {
+            move /= 10;
+            ++offset;
+         }
+
+         if (BoardLayout[hex].getOwner() == playerA)
+         {
+            fout << setw(5 - offset) << right << "A" << BoardLayout[hex].getTurnTaken();
+         }
+         else if (BoardLayout[hex].getOwner() == playerB)
+         {
+            fout << setw(5 - offset) << right << "B" << BoardLayout[hex].getTurnTaken();
+         }
+         else
+         {
+            fout << setw(5) << right << "-";
+         }
+      }
+
+      fout << setw(5) << right << "*" << row << "*" << endl;
+
+      width -= 3;
+
+      // fout << endl;
+   }
+
+   fout << endl << setw(1) << "";
+   for (column = 0; column < size; ++column)
+   {
+      fout << setw(3) << right << "*" << (char)(65 + column) << "*";
+   }
+}

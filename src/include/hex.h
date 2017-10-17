@@ -11,6 +11,7 @@ advisor: Dr. Rob LeGrand
 #include <iomanip>
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -76,6 +77,7 @@ public:
    bool isGameOver();
    int getSize() const {return size;}
    void printBoard() const;
+   void printBoard(ofstream &fout);
 
    vector<Tile> getBoard() const{return BoardLayout;}
    Tile getTile(int location){return BoardLayout[location];}
