@@ -150,6 +150,7 @@ void playHexGame(hexGamePlayer bot)
 		{
 			playerMove = bot.play(board, currentPlayer);
 			board.makeMove(playerMove, currentPlayer);
+			cout << endl << "Bot's evaluation: " << bot.neuralNetHeuristic(board, currentPlayer) << endl;
 		}
 
 		turnNumber += 1;
@@ -157,12 +158,12 @@ void playHexGame(hexGamePlayer bot)
 
 	if (currentPlayer == humanPlayer)
 	{
-		cout << "Congratulations! You are the Winner!" << endl;
+		cout << endl << "Congratulations! You are the Winner!" << endl;
 	}
 	else
 	{
 		// Print out board one last time, because bot has made a move since the last print out
 		board.printBoard();
-		cout << "Better luck next time!" << endl;
+		cout << endl << "Better luck next time!" << endl;
 	}
 }
