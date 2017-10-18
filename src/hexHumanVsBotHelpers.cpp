@@ -84,6 +84,7 @@ void playHexGame(hexGamePlayer bot)
 	Board board(BOARD_SIZE);
 	string answer, move;
 	int row, column, playerMove, turnNumber;
+	double botEval;
 	bool answerQuestion, madeMove;
 	player currentPlayer, humanPlayer;
 
@@ -148,9 +149,10 @@ void playHexGame(hexGamePlayer bot)
 		}
 		else
 		{
-			playerMove = bot.play(board, currentPlayer);
+			playerMove = bot.play(board, currentPlayer, false);
 			board.makeMove(playerMove, currentPlayer);
-			cout << endl << "Bot's evaluation: " << bot.neuralNetHeuristic(board, currentPlayer) << endl;
+			botEval = bot.neuralNetHeuristic(board, currentPlayer);
+			cout << endl << "Bot's evaluation: " << botEval << endl;
 		}
 
 		turnNumber += 1;

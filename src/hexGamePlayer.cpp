@@ -25,12 +25,20 @@ hexGamePlayer::hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights, 
 
 // This function starts off the minimax function with default values, and returns the integer location
 // of which move to play next
-int hexGamePlayer::play(const Board &board, player whichPlayer)
+int hexGamePlayer::play(const Board &board, player whichPlayer, bool isEvolving)
 {
    int moveToMake, location;
    Board copyBoard;
 
-   moveToMake = miniMax(board, whichPlayer, 0, -MAX_DEPTH + 1, MAX_DEPTH + 1);
+   if (isEvolving)
+   {
+      moveToMake = boardEvalLearning(board, whichPlayer);
+   }
+
+   else
+   {
+      moveToMake = miniMax(board, whichPlayer, 0, -MAX_DEPTH + 1, MAX_DEPTH + 1);
+   }
 
    if (board.isValidMove(moveToMake))
    {
@@ -47,6 +55,155 @@ int hexGamePlayer::play(const Board &board, player whichPlayer)
    }
 
    return moveToMake;
+}
+
+double hexGamePlayer::boardEvalLearning(Board board, player whichPlayer)
+{
+   int location, tmpBestMove, column, row, jump;
+   double utilityValue, eval;
+   Board copyBoard;
+
+   tmpBestMove = -1; // invalid default move
+
+   // Begin looking for moves in middle of board, going side to side
+   if (whichPlayer == playerA)
+   {
+      column = 0;
+      row = BOARD_SIZE / 2 - ((BOARD_SIZE + 1) % 2);
+      jump = 1;
+
+      utilityValue = -1;
+
+      // Move left to right across board
+      while (row >= 0 && row < BOARD_SIZE)
+      {
+         while (column < BOARD_SIZE)
+         {
+            location = BOARD_SIZE * row + column;
+
+            if (board.isValidMove(location))
+            {
+               copyBoard = board;
+               copyBoard.makeMove(location, whichPlayer);
+
+               eval = neuralNetHeuristic(copyBoard, whichPlayer);
+
+               if (utilityValue < eval)
+               {
+                  utilityValue = eval;
+
+                  tmpBestMove = location;
+               }
+            }
+
+            column += 1;
+         }
+
+         // Jump to a row above and fix column value
+         row += jump;
+         jump += 1;
+         column -= 1;
+
+         if (row >= 0 && row < BOARD_SIZE)
+         {
+            // Move right to left across board
+            while (column >= 0)
+            {
+               location = BOARD_SIZE * row + column;
+
+               if (board.isValidMove(location))
+               {
+                  copyBoard = board;
+                  copyBoard.makeMove(location, whichPlayer);
+
+                  eval = neuralNetHeuristic(copyBoard, whichPlayer);                  
+
+                  if (utilityValue < eval)
+                  {
+                     utilityValue = eval;
+
+                     tmpBestMove = location;
+                  }
+               }
+
+               column -= 1;
+            }
+         }
+
+         // Jump to a row below and fix column value
+         row -= jump;
+         jump += 1;
+         column += 1;
+      }
+   }
+   // Start in middle of board connecting top to bottom
+   else
+   {
+      column = BOARD_SIZE / 2 - ((BOARD_SIZE + 1) % 2);
+      row = 0;
+      jump = 1;
+
+      // Move bottom to top across board
+      while (column >= 0 && column < BOARD_SIZE)
+      {
+         while (row < BOARD_SIZE)
+         {
+            location = BOARD_SIZE * row + column;
+
+            if (board.isValidMove(location))
+            {
+               copyBoard = board;
+               copyBoard.makeMove(location, whichPlayer);
+
+               eval = neuralNetHeuristic(copyBoard, whichPlayer);
+
+               if (utilityValue < eval)
+               {
+                  utilityValue = eval;
+
+                  tmpBestMove = location;
+               }
+            }
+            row += 1;
+         }
+
+         // Jump and fix
+         column += jump;
+         jump += 1;
+         row -= 1;
+
+         if (column >= 0 && column < BOARD_SIZE)
+         {
+            // Move top to bottom across board
+            while (row >= 0)
+            {
+               location = BOARD_SIZE * row + column;
+
+               if (board.isValidMove(location))
+               {
+                  copyBoard = board;
+                  copyBoard.makeMove(location, whichPlayer);
+
+                  eval = neuralNetHeuristic(copyBoard, whichPlayer);
+
+                  if (utilityValue < eval)
+                  {
+                     utilityValue = eval;
+
+                     tmpBestMove = location;
+                  }
+               }
+               row -= 1;
+            }
+         }
+
+         column -= jump;
+         jump += 1;
+         row += 1;
+      }
+   }
+
+   return tmpBestMove;
 }
 
 // This is the recursive minimax function, with a depth limit (maxDepth set in the hex.h file).
@@ -524,7 +681,7 @@ double hexGamePlayer::neuralNetHeuristic(const Board board, player whichPlayer)
 
 double hexGamePlayer::sigmoidFunction(double input)
 {
-   return 1.0 / (1.0 + exp(-input));
+   return 1 / (1 + exp(-input));
 }
 
 double hexGamePlayer::getWeight(int layer, int rowDestination, int rowOrigination)

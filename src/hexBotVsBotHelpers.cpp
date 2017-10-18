@@ -99,12 +99,12 @@ void playHexGame(hexGamePlayer botA, string nameBotA, hexGamePlayer botB, string
 
 		if (currentPlayer == playerA)
 		{
-			playerMove = botA.play(board, playerA);
+			playerMove = botA.play(board, playerA, false);
 			board.makeMove(playerMove, playerA);
 		}
 		else
 		{
-			playerMove = botB.play(board, playerB);
+			playerMove = botB.play(board, playerB, false);
 			board.makeMove(playerMove, playerB);
 		}
 
@@ -131,12 +131,12 @@ void playHexGame(hexGamePlayer botA, string nameBotA, hexGamePlayer botB, string
 		if (currentPlayer == playerA)
 		{
 			// botB is playerA now
-			playerMove = botB.play(board, playerA);
+			playerMove = botB.play(board, playerA, false);
 			board.makeMove(playerMove, playerA);
 		}
 		else
 		{
-			playerMove = botA.play(board, playerB);
+			playerMove = botA.play(board, playerB, false);
 			board.makeMove(playerMove, playerB);
 		}
 
@@ -147,6 +147,4 @@ void playHexGame(hexGamePlayer botA, string nameBotA, hexGamePlayer botB, string
 	board.printBoard(fout);
 
 	fout << endl << endl << "Winner of this match is " << (currentPlayer == playerA ? nameBotB : nameBotA) << endl;
-
-	botA.printWeights(fout);
 }

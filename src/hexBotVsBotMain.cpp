@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 			printUsage(0);
 		}
 
-		if (argument == "-o" || argument == "--output")
+		else if (argument == "-o" || argument == "--output")
 		{
 			if (arg + 1 > argc)
 			{
@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 			resultsFileName = argv[arg];
 		}
 
-		if (argument == "-p" || argument == "--players")
+		else if (argument == "-p" || argument == "--players")
 		{
 			if (arg + 2 > argc)
 			{

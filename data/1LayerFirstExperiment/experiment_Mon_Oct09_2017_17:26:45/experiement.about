@@ -1,0 +1,6 @@
+This experiement is a continuation of experiment_Sun_Oct08_2017_21:50:26.
+
+There are now a total of 100 iterations of the following form:
+	NetShape: 25 inputs going to 1 node
+	MaxDepth: 3
+	BoardSize: 5x5

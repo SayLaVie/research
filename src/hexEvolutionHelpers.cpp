@@ -40,11 +40,11 @@ player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
 
 		if (currentPlayer == playerA)
 		{
-			playerMove = hexPlayerA.play(board, playerA);
+			playerMove = hexPlayerA.play(board, playerA, true);
 		}
 		else
 		{
-			playerMove = hexPlayerB.play(board, playerB);
+			playerMove = hexPlayerB.play(board, playerB, true);
 		}
 
 		// Put an 'if not valid move' conditional here

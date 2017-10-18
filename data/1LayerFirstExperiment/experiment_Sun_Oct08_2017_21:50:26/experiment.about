@@ -1,0 +1,4 @@
+This experiment is of the following specs:
+	NetShape: 25 inputs going to 1 node
+	MaxDepth: 3
+	BoardSize: 5x5 
