@@ -1,0 +1,46 @@
+	First match
+Player A: data/1LayerSwap/experiment_Tue_Oct17_2017_00:37:28/iteration14999/populationRepresentative.player
+Player B: agents/singleLayerSwap_Player80.data
+
+
+                   *A*  *B*  *C*  *D*  *E*
+
+           *4*   A4   B1   A0   B4    -    *4*
+
+        *3*    -   B5   A3   A8    -    *3*
+
+     *2*   A7   A9   A1   B0  A10    *2*
+
+  *1*   B8   B9   A5   B6   A6    *1*
+
+*0*   B2   B3   B7   A2    -    *0*
+
+   *A*  *B*  *C*  *D*  *E*
+
+Winner of this match is data/1LayerSwap/experiment_Tue_Oct17_2017_00:37:28/iteration14999/populationRepresentative.player
+
+
+	Second match
+Player A: agents/singleLayerSwap_Player80.data
+Player B: data/1LayerSwap/experiment_Tue_Oct17_2017_00:37:28/iteration14999/populationRepresentative.player
+
+
+                   *A*  *B*  *C*  *D*  *E*
+
+           *4*    -    -   B5    -    -    *4*
+
+        *3*   A3    -   A0   B6   A5    *3*
+
+     *2*    -    -   B1   B3   B0    *2*
+
+  *1*   A4    -   B4   A6   A1    *1*
+
+*0*   A2    -   B2    -    -    *0*
+
+   *A*  *B*  *C*  *D*  *E*
+
+Winner of this match is data/1LayerSwap/experiment_Tue_Oct17_2017_00:37:28/iteration14999/populationRepresentative.player
+stat 0
+	layer
+		node -572.229,-612.476,-618.475,-627.654,-559.291,-521.097,-616.965,-597.661,-631.689,-566.02,-561.209,-580.554,-524.543,-503.073,-520.773,-433.599,-504.619,-691.188,-600.107,-580.503,-691.508,-575.265,-535.203,-673.175,-744.266,-588.181,
+endPlayer
