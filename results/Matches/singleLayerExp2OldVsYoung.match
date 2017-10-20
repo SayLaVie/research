@@ -1,0 +1,42 @@
+	First match
+Player A: agents/SingleLayer/singleLayerExp2Player6.data
+Player B: agents/SingleLayer/singleLayerExp2Iteration1000Player81.data
+
+
+                   *A*  *B*  *C*  *D*  *E*
+
+           *4*    -   B3    -   B0    -    *4*
+
+        *3*    -   A0   B5    -    -    *3*
+
+     *2*   A2   A5    -   B2   A3    *2*
+
+  *1*    -    -   A4   A1   A6    *1*
+
+*0*    -    -    -   B1   B4    *0*
+
+   *A*  *B*  *C*  *D*  *E*
+
+Winner of this match is agents/SingleLayer/singleLayerExp2Player6.data
+
+
+	Second match
+Player A: agents/SingleLayer/singleLayerExp2Iteration1000Player81.data
+Player B: agents/SingleLayer/singleLayerExp2Player6.data
+
+
+                   *A*  *B*  *C*  *D*  *E*
+
+           *4*   A4   A6   B2    -    -    *4*
+
+        *3*   A1   B1   A2    -   A0    *3*
+
+     *2*    -    -   B5   A5    -    *2*
+
+  *1*    -    -   B4   B0   A3    *1*
+
+*0*    -    -   B3    -    -    *0*
+
+   *A*  *B*  *C*  *D*  *E*
+
+Winner of this match is agents/SingleLayer/singleLayerExp2Iteration1000Player81.data

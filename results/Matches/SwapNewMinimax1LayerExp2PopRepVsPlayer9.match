@@ -1,0 +1,42 @@
+	First match
+Player A: agents/1LayerSwapNewMinimax/Exp2PopRep.data
+Player B: agents/1LayerSwapNewMinimax/Exp2Player9.data
+
+
+                   *A*  *B*  *C*  *D*  *E*
+
+           *4*    -    -   B7   A2    -    *4*
+
+        *3*    -   A7   B3   A6   A3    *3*
+
+     *2*   A5   B2   B0   B1   A4    *2*
+
+  *1*    -    -   B4   A0   B5    *1*
+
+*0*    -    -   A1   B6    -    *0*
+
+   *A*  *B*  *C*  *D*  *E*
+
+Winner of this match is agents/1LayerSwapNewMinimax/Exp2Player9.data
+
+
+	Second match
+Player A: agents/1LayerSwapNewMinimax/Exp2Player9.data
+Player B: agents/1LayerSwapNewMinimax/Exp2PopRep.data
+
+
+                   *A*  *B*  *C*  *D*  *E*
+
+           *4*    -   A5   B5   B3    -    *4*
+
+        *3*   A6   B0   A1    -   B2    *3*
+
+     *2*   B1   A4   A0   A3   A7    *2*
+
+  *1*   B4    -   A2    -    -    *1*
+
+*0*    -    -   B6    -    -    *0*
+
+   *A*  *B*  *C*  *D*  *E*
+
+Winner of this match is agents/1LayerSwapNewMinimax/Exp2Player9.data
