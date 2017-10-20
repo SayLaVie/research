@@ -116,7 +116,7 @@ double hexGamePlayer::boardEvalLearning(Board board, player whichPlayer)
                   copyBoard = board;
                   copyBoard.makeMove(location, whichPlayer);
 
-                  eval = neuralNetHeuristic(copyBoard, whichPlayer);                  
+                  eval = neuralNetHeuristic(copyBoard, whichPlayer);
 
                   if (utilityValue < eval)
                   {
@@ -219,7 +219,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
 
    if (board.isGameOver())
    {
-      return maximizer ? -1 - (double)(MAX_DEPTH / depth) : 1 + (double)(MAX_DEPTH / depth);
+      return maximizer ? -1 - (double)MAX_DEPTH / depth : 1 + (double)MAX_DEPTH / depth;
    }
 
    if (depth >= MAX_DEPTH)
