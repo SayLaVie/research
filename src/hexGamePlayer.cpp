@@ -214,6 +214,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
    double utilityValue, eval, heuristicValue;
    bool maximizer;
    Board copyBoard;
+   player truePlayer;
 
    maximizer = depth % 2 == 0;
 
@@ -224,7 +225,11 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
 
    if (depth >= MAX_DEPTH)
    {
-      heuristicValue = neuralNetHeuristic(board, whichPlayer);
+      // This method below is likely incorrect
+      // heuristicValue = neuralNetHeuristic(board, whichPlayer);
+
+      truePlayer = maximizer ? whichPlayer : (whichPlayer == playerA ? playerB : playerA);
+      heuristicValue = neuralNetHeuristic(board, truePlayer);
 
       return maximizer ? heuristicValue : -heuristicValue;
    }
