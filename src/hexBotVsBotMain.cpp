@@ -8,14 +8,6 @@ Advisor: Dr. Rob LeGrand
 */
 
 #include <hexBotVsBotHelpers.h>
-// #include <cstdlib>
-// #include <sys/stat.h>
-// #include <cctype>
-
-// Define extern variable netShape
-vector<int> netShape;
-
-void printUsage(int exitCode);
 
 int main(int argc, char *argv[])
 {
@@ -23,8 +15,9 @@ int main(int argc, char *argv[])
 	string argument, playerAFileName, playerBFileName, resultsFileName, answer;
 	ifstream fin;
 	ofstream fout;
+	vector<int> netShape;	
 
-	resultsFileName = "results/match.out";
+	resultsFileName = "results/bot.match";
 
 	for (arg = 1; arg < argc; arg += 1)
 	{
@@ -37,7 +30,7 @@ int main(int argc, char *argv[])
 
 		else if (argument == "-o" || argument == "--output")
 		{
-			if (arg + 1 > argc)
+			if (arg + 1 >= argc)
 			{
 				cerr << "ouput option requires one argument" << endl;
 				printUsage(1);
@@ -49,7 +42,7 @@ int main(int argc, char *argv[])
 
 		else if (argument == "-p" || argument == "--players")
 		{
-			if (arg + 2 > argc)
+			if (arg + 2 >= argc)
 			{
 				cerr << "player option requires two arguments" << endl;
 				printUsage(1);
@@ -78,7 +71,7 @@ int main(int argc, char *argv[])
 
 	if (!fin.is_open())
 	{
-		cerr << "Unable to open player's file" << endl;
+		cerr << "Unable to open file for " << playerAFileName << endl;
 		printUsage(1);
 	}
 
@@ -93,7 +86,7 @@ int main(int argc, char *argv[])
 
 	if (!fin.is_open())
 	{
-		cerr << "The name of two players' files are required for execution" << endl;
+		cerr << "Unable to open file for " << playerBFileName << endl;
 		printUsage(1);
 	}
 

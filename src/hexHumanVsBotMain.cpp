@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 
 		if (argument == "-p" || argument == "--player")
 		{
-			if (arg + 1 > argc)
+			if (arg + 1 >= argc)
 			{
 				cerr << "Player option requires one argument" << endl;
 				printUsage(1);

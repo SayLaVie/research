@@ -5,7 +5,7 @@ void printUsage(int exitCode)
 	cerr << "Usage: hexBotVsBot <option>" << endl;
 	cerr << "Options:" << endl;
 	cerr << "\t-h,--help\t\tShow this message" << endl;
-	cerr << "\t-o,--output\t\tSpecify the relative or full path name of a file to print match results to (default: resutlts/match.out)" << endl;
+	cerr << "\t-o,--output\t\tSpecify the relative or full path name of a file to print match results to (default: results/bot.match)" << endl;
 	cerr << "\t-p,--players\t\tSpecify two relative or full path names of files that contain data for hexPlayers" << endl;
 
 	exit(exitCode);
@@ -99,12 +99,14 @@ void playHexGame(hexGamePlayer botA, string nameBotA, hexGamePlayer botB, string
 
 		if (currentPlayer == playerA)
 		{
-			playerMove = botA.play(board, playerA, false);
+			// Changed isEvolving value to true (last parameter) in order to use boardEvalLearning instead of minimax			
+			playerMove = botA.play(board, playerA, true);
 			board.makeMove(playerMove, playerA);
 		}
 		else
 		{
-			playerMove = botB.play(board, playerB, false);
+			// Changed isEvolving value to true (last parameter) in order to use boardEvalLearning instead of minimax
+			playerMove = botB.play(board, playerB, true);
 			board.makeMove(playerMove, playerB);
 		}
 
@@ -131,12 +133,14 @@ void playHexGame(hexGamePlayer botA, string nameBotA, hexGamePlayer botB, string
 		if (currentPlayer == playerA)
 		{
 			// botB is playerA now
-			playerMove = botB.play(board, playerA, false);
+			// Changed isEvolving value to true (last parameter) in order to use boardEvalLearning instead of minimax			
+			playerMove = botB.play(board, playerA, true);
 			board.makeMove(playerMove, playerA);
 		}
 		else
 		{
-			playerMove = botA.play(board, playerB, false);
+			// Changed isEvolving value to true (last parameter) in order to use boardEvalLearning instead of minimax			
+			playerMove = botA.play(board, playerB, true);
 			board.makeMove(playerMove, playerB);
 		}
 

@@ -45,6 +45,11 @@ int hexGamePlayer::play(const Board &board, player whichPlayer, bool isEvolving)
       return moveToMake;
    }
 
+   // There should never be an invalid move returned, so exit with an error here
+   cerr << "Invalid move selected" << endl;
+   exit(1);
+
+   /*
    // If no good move was found, simply choose the next available move
    for (location = 0; location < BOARD_SIZE * BOARD_SIZE; location += 1)
    {
@@ -55,6 +60,7 @@ int hexGamePlayer::play(const Board &board, player whichPlayer, bool isEvolving)
    }
 
    return moveToMake;
+   */
 }
 
 double hexGamePlayer::boardEvalLearning(Board board, player whichPlayer)
@@ -63,7 +69,7 @@ double hexGamePlayer::boardEvalLearning(Board board, player whichPlayer)
    double utilityValue, eval;
    Board copyBoard;
 
-   tmpBestMove = -1; // invalid default move
+   tmpBestMove = -1;
 
    // Begin looking for moves in middle of board, going side to side
    if (whichPlayer == playerA)

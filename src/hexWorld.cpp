@@ -21,6 +21,9 @@ that clumps values closer to 0.
 
 #include <hexWorld.h>
 
+// Function to handle swapping. Any changes in swapping strategy can be implemented here
+void swappingStrategy(vector<vector<vector<double> > > &net);
+
 void swapWeights(vector<vector<vector<double> > > &net);
 
 hexWorld::hexWorld(int numPlayers, vector<int> netShape)
@@ -169,8 +172,9 @@ void hexWorld::nextGeneration()
 				netWeights.push_back(rowDestinationVector);
 			}
 
-			// Swap two random weights in this network
-			swapWeights(netWeights);
+			// Call swapping strategy. Any changes to strategy for experimentation
+			// should be implemented in swappingStrategy function
+			swappingStrategy(netWeights);
 
 			newHexGamePlayers.push_back(netWeights);
 		}
@@ -447,4 +451,11 @@ void swapWeights(vector<vector<vector<double> > > &net)
 		net[randomLayerB][randomDestinationB][randomOriginationB];
 
 	net[randomLayerB][randomDestinationB][randomOriginationB] = swapTemp;
+}
+
+// This is where specific changes to swapping strategy are implemented
+void swappingStrategy(vector<vector<vector<double> > > &net)
+{
+	// Always swap two random weights, but only one time
+	swapWeights(net);
 }
