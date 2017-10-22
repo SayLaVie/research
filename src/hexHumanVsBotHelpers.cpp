@@ -4,12 +4,25 @@ void printUsage(int exitCode)
 {
 	cerr << "Usage: hexHumanVsBot <option>" << endl;
 	cerr << "Options:" << endl;
+	cerr << "\t-d,--depth\t\tSpecify a depth for the minimax search (default: depth=0 i.e. do not use minimax)" << endl;
 	cerr << "\t-h,--help\t\tShow this message" << endl;
 	cerr << "\t-p,--player\t\tSpecify the relative or full path name of a file that contains the data for a hexPlayer" << endl;
 
 	exit(exitCode);
 }
 
+bool isNumeric(string input)
+{
+	for (int character = 0; character < input.length(); character += 1)
+	{
+		if (!isdigit(input[character]))
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
  
 // Takes ifstream and parses nerualNetWeights 3-D vector from file.
 vector<vector<vector<double> > > singleNeuralNetFileParser(ifstream &fin)
@@ -126,19 +139,24 @@ void playHexGame(hexGamePlayer bot)
 
 		if (currentPlayer == humanPlayer)
 		{
-			board.printBoard();
-			cout << endl << "Move: ";
-			cin >> move;
+			madeMove = false;
+			
+			while (!madeMove)
+			{
+				board.printBoard();
+				cout << endl << "Move: ";
+				cin >> move;
 
-			if (move.length() > 2 || !isalpha(move[0]) || toupper(move[0]) - 64 > BOARD_SIZE || 
-					!isdigit(move[1]) || (move[1] - 48) + 1 > BOARD_SIZE)
-			{
-				cout << "Make sure that your move is of the form <alpha><digit>" << endl;
-				cout << "For example, A0" << endl;
-			}
-			else
-			{
-				madeMove = true;
+				if (move.length() > 2 || !isalpha(move[0]) || toupper(move[0]) - 64 > BOARD_SIZE || 
+						!isdigit(move[1]) || (move[1] - 48) + 1 > BOARD_SIZE)
+				{
+					cout << "Make sure that your move is of the form <alpha><digit>" << endl;
+					cout << "For example, A0" << endl;
+				}
+				else
+				{
+					madeMove = true;
+				}
 			}
 
 			column = toupper(move[0]) - 65;
@@ -149,10 +167,10 @@ void playHexGame(hexGamePlayer bot)
 		}
 		else
 		{
-			playerMove = bot.play(board, currentPlayer, false);
+			playerMove = bot.play(board, currentPlayer);
 			board.makeMove(playerMove, currentPlayer);
-			botEval = bot.neuralNetHeuristic(board, currentPlayer);
-			cout << endl << "Bot's evaluation: " << botEval << endl;
+			// botEval = bot.neuralNetHeuristic(board, currentPlayer);
+			// cout << endl << "Bot's evaluation: " << botEval << endl;
 		}
 
 		turnNumber += 1;

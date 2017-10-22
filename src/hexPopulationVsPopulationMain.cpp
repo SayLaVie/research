@@ -1,5 +1,7 @@
 #include <hexPopulationVsPopulationHelpers.h>
 
+int MAX_DEPTH;
+
 int main (int argc, char *argv[])
 {
 	int arg;
@@ -9,13 +11,27 @@ int main (int argc, char *argv[])
 	PopulationPair gameStats;
 
 	outputFile = "results/population.match";
+	MAX_DEPTH = 0;
 
 	// Parse through options
 	for (arg = 1; arg < argc; arg += 1)
 	{
 		argument = argv[arg];
 
-		if (argument == "-h" || argument == "--help")
+		if (argument == "-d" || argument == "--depth")
+		{
+			if (arg + 1 >= argc || !isNumeric(argv[arg + 1]))
+			{
+				cerr << "Depth option requires one positive integer argument" << endl;
+				printUsage(1);
+			}
+
+			arg += 1;
+
+			MAX_DEPTH = atoi(argv[arg]);
+		}
+
+		else if (argument == "-h" || argument == "--help")
 		{
 			printUsage(0);
 		}
@@ -92,7 +108,7 @@ int main (int argc, char *argv[])
 		printUsage(1);
 	}
 
-	gameStats = playHexGames(populationA, populationB);
+	playHexGames(populationA, populationB, gameStats);
 
 	// Print out game stats to output file
 	fout << "Population matchup between:" << endl;
@@ -103,11 +119,15 @@ int main (int argc, char *argv[])
 	fout << "\t" << populationAFileName << ": " << gameStats.numberOfTotalWinsA << endl;
 	fout << "\t" << populationBFileName << ": " << gameStats.numberOfTotalWinsB << endl;
 	fout << endl;
+	fout << "Total number of games won as:" << endl;
+	fout << "\tPlayerA: " << gameStats.totalWinsAsA << endl;
+	fout << "\tPlayerB: " << gameStats.totalWinsAsB << endl;
+	fout << endl;
 	fout << "Winningest players:" << endl;
 	fout << "\t" << populationAFileName << ": " << gameStats.bestPlayerA << " with " 
-		<< populationA.getHexGamePlayer(gameStats.bestPlayerA).getGamesWon() << " games won" << endl;
+		<< gameStats.bestPlayerAWins << " games won" << endl;
 	fout << "\t" << populationBFileName << ": " << gameStats.bestPlayerB << " with "
-		<< populationB.getHexGamePlayer(gameStats.bestPlayerB).getGamesWon() << " games won" << endl;
+		<< gameStats.bestPlayerBWins << " games won" << endl;
 
 	fout.close();
 }

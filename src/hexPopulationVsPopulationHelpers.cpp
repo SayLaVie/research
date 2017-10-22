@@ -4,21 +4,35 @@ void printUsage(int exitCode)
 {
 	cerr << "Usage: hexPopulationVsPopulation <option(s)" << endl;
 	cerr << "Options:" << endl;
+	cerr << "\t-d,--depth\t\tSpecify a depth for the minimax search (default: depth=0 i.e. do not use minimax)" << endl;
 	cerr << "\t-h,--help\t\tShow this message" << endl;
 	cerr << "\t-o,--output\t\tSpecify the relative or full path name of a file to print data to (default: results/population.match" << endl;
-	cerr << "\t-p,--populations\t\tSpecify two relative or full path names of files that contain population data" << endl;
+	cerr << "\t-p,--populations\tSpecify two relative or full path names of files that contain population data" << endl;
 
 	exit(exitCode);
 }
 
-PopulationPair playHexGames(hexWorld populationA, hexWorld populationB)
+bool isNumeric(string input)
+{
+	for (int character = 0; character < input.length(); character += 1)
+	{
+		if (!isdigit(input[character]))
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void playHexGames(hexWorld populationA, hexWorld populationB, PopulationPair &gameStats)
 {
 	int numberWinsA, numberWinsB, numPlayers, tmpBestPlayerA, tmpBestPlayerB, hexPlayer, playerA, playerB;
 	player winner;
-	PopulationPair gameStats;
 
 	numberWinsA = 0;
 	numberWinsB = 0;
+
 	// * Assuming that both populations are the same size *
 	numPlayers = populationA.getNumPlayers();
 
@@ -32,10 +46,14 @@ PopulationPair playHexGames(hexWorld populationA, hexWorld populationB)
 			if (winner == playerA)
 			{
 				gameStats.numberOfTotalWinsA += 1;
+				gameStats.totalWinsAsA += 1;
+				populationA.addHexGamePlayerWin(playerA);
 			}
 			else
 			{
 				gameStats.numberOfTotalWinsB += 1;
+				gameStats.totalWinsAsB += 1;
+				populationB.addHexGamePlayerWin(playerB);
 			}
 
 			winner = playHexGame(populationB.getHexGamePlayer(playerB), populationA.getHexGamePlayer(playerA));
@@ -43,10 +61,14 @@ PopulationPair playHexGames(hexWorld populationA, hexWorld populationB)
 			if (winner == playerA)
 			{
 				gameStats.numberOfTotalWinsB += 1;
+				gameStats.totalWinsAsA += 1;
+				populationB.addHexGamePlayerWin(playerB);
 			}
 			else
 			{
 				gameStats.numberOfTotalWinsA += 1;
+				gameStats.totalWinsAsB += 1;
+				populationA.addHexGamePlayerWin(playerA);
 			}
 		}
 	}
@@ -72,9 +94,9 @@ PopulationPair playHexGames(hexWorld populationA, hexWorld populationB)
 
 	// Both tmpBestPlayers should now refer to each population's most winningest player
 	gameStats.bestPlayerA = tmpBestPlayerA;
+	gameStats.bestPlayerAWins = populationA.getHexGamePlayer(tmpBestPlayerA).getGamesWon();
 	gameStats.bestPlayerB = tmpBestPlayerB;
-
-	return gameStats;
+	gameStats.bestPlayerBWins = populationB.getHexGamePlayer(tmpBestPlayerB).getGamesWon();
 }
 
 player playHexGame(hexGamePlayer botA, hexGamePlayer botB)
@@ -91,11 +113,11 @@ player playHexGame(hexGamePlayer botA, hexGamePlayer botB)
 
 		if (currentPlayer == playerA)
 		{
-			playerMove = botA.play(board, currentPlayer, true);
+			playerMove = botA.play(board, currentPlayer);
 		}
 		else
 		{
-			playerMove = botB.play(board, currentPlayer, true);
+			playerMove = botB.play(board, currentPlayer);
 		}
 
 		board.makeMove(playerMove, currentPlayer);

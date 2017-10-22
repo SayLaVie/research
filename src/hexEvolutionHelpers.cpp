@@ -38,13 +38,14 @@ player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
 	{
 		currentPlayer = static_cast<player>(numberOfTurns % 2);
 
+		// Call .play with a depth of 0 to signify that we aren't using minimax
 		if (currentPlayer == playerA)
 		{
-			playerMove = hexPlayerA.play(board, playerA, true);
+			playerMove = hexPlayerA.play(board, playerA);
 		}
 		else
 		{
-			playerMove = hexPlayerB.play(board, playerB, true);
+			playerMove = hexPlayerB.play(board, playerB);
 		}
 
 		// Put an 'if not valid move' conditional here

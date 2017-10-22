@@ -18,7 +18,8 @@ using namespace std;
 /**
 Global variables
 **/
-const int MAX_DEPTH = 1;
+// const int MAX_DEPTH = 1;
+extern int MAX_DEPTH;
 const int BOARD_SIZE = 5;
 
 enum player {playerA, playerB, none};

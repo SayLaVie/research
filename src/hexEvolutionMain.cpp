@@ -14,6 +14,8 @@ void printUsage(int exitCode);
 void playHexGames(hexWorld &population, ofstream &fout);
 player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB);
 
+int MAX_DEPTH = 0;
+
 int main(int argc, char *argv[])
 {
 	time_t now;
@@ -35,13 +37,13 @@ int main(int argc, char *argv[])
 	{
 		argument = argv[arg];
 
-		// Display command line options
+		// Display command li	 options
 		if (argument == "-h" || argument == "--help")
 		{
 			printUsage(0);
 		}
 
-		// Frequency with which to save generation states
+		// Frequency with which to save nextGenerationration states
 		if (argument == "-f" || argument == "--frequency")
 		{
 			if (arg + 1 >= argc)

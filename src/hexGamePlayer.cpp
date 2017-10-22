@@ -25,12 +25,12 @@ hexGamePlayer::hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights, 
 
 // This function starts off the minimax function with default values, and returns the integer location
 // of which move to play next
-int hexGamePlayer::play(const Board &board, player whichPlayer, bool isEvolving)
+int hexGamePlayer::play(const Board &board, player whichPlayer)
 {
    int moveToMake, location;
    Board copyBoard;
 
-   if (isEvolving)
+   if (MAX_DEPTH == 0)
    {
       moveToMake = boardEvalLearning(board, whichPlayer);
    }
@@ -226,18 +226,20 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
 
    if (board.isGameOver())
    {
-      return maximizer ? -1 - (double)MAX_DEPTH / depth : 1 + (double)MAX_DEPTH / depth;
+      // Incentivize quick playing by decreasing the win value the further depth away it is
+      return maximizer ? 0 - (double)MAX_DEPTH / depth : 1 + (double)MAX_DEPTH / depth;
    }
 
    if (depth >= MAX_DEPTH)
    {
       // This method below is likely incorrect
       // heuristicValue = neuralNetHeuristic(board, whichPlayer);
+      // return maximizer ? heuristicValue : -heuristicValue;
 
       truePlayer = maximizer ? whichPlayer : (whichPlayer == playerA ? playerB : playerA);
       heuristicValue = neuralNetHeuristic(board, truePlayer);
-
-      return maximizer ? heuristicValue : -heuristicValue;
+// cout << heuristicValue << endl;
+      return heuristicValue;
    }
 
    utilityValue = maximizer ? -MAX_DEPTH - 1 : MAX_DEPTH + 1;
@@ -523,8 +525,8 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
          row += 1;
       }
    }
-
-/*   for (location = 0; location < BOARD_SIZE * BOARD_SIZE; location += 1)
+/*
+   for (location = 0; location < BOARD_SIZE * BOARD_SIZE; location += 1)
    {
       if (board.isValidMove(location))
       {
@@ -687,6 +689,7 @@ double hexGamePlayer::neuralNetHeuristic(const Board board, player whichPlayer)
 
    // The last input vector should have only one entry -- the final output of
    // the neural net.
+
    return inputVector[0];
 }
 

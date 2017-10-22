@@ -4,6 +4,7 @@ void printUsage(int exitCode)
 {
 	cerr << "Usage: hexBotVsBot <option>" << endl;
 	cerr << "Options:" << endl;
+	cerr << "\t-d,--depth\t\tSpecify a depth for the minimax search (default: depth=0 i.e. do not use minimax)" << endl;
 	cerr << "\t-h,--help\t\tShow this message" << endl;
 	cerr << "\t-o,--output\t\tSpecify the relative or full path name of a file to print match results to (default: results/bot.match)" << endl;
 	cerr << "\t-p,--players\t\tSpecify two relative or full path names of files that contain data for hexPlayers" << endl;
@@ -11,6 +12,18 @@ void printUsage(int exitCode)
 	exit(exitCode);
 }
 
+bool isNumeric(string input)
+{
+	for (int character = 0; character < input.length(); character += 1)
+	{
+		if (!isdigit(input[character]))
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
  
 // Takes ifstream and parses nerualNetWeights 3-D vector from file.
 vector<vector<vector<double> > > singleNeuralNetFileParser(ifstream &fin)
@@ -100,13 +113,13 @@ void playHexGame(hexGamePlayer botA, string nameBotA, hexGamePlayer botB, string
 		if (currentPlayer == playerA)
 		{
 			// Changed isEvolving value to true (last parameter) in order to use boardEvalLearning instead of minimax			
-			playerMove = botA.play(board, playerA, true);
+			playerMove = botA.play(board, playerA);
 			board.makeMove(playerMove, playerA);
 		}
 		else
 		{
 			// Changed isEvolving value to true (last parameter) in order to use boardEvalLearning instead of minimax
-			playerMove = botB.play(board, playerB, true);
+			playerMove = botB.play(board, playerB);
 			board.makeMove(playerMove, playerB);
 		}
 
@@ -134,13 +147,13 @@ void playHexGame(hexGamePlayer botA, string nameBotA, hexGamePlayer botB, string
 		{
 			// botB is playerA now
 			// Changed isEvolving value to true (last parameter) in order to use boardEvalLearning instead of minimax			
-			playerMove = botB.play(board, playerA, true);
+			playerMove = botB.play(board, playerA);
 			board.makeMove(playerMove, playerA);
 		}
 		else
 		{
 			// Changed isEvolving value to true (last parameter) in order to use boardEvalLearning instead of minimax			
-			playerMove = botA.play(board, playerB, true);
+			playerMove = botA.play(board, playerB);
 			board.makeMove(playerMove, playerB);
 		}
 

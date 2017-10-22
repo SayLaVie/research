@@ -30,7 +30,7 @@ private:
 public:
    hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights);
    hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights, int numGamesWon);
-   int play(const Board &board, player whichPlayer, bool isEvolving);
+   int play(const Board &board, player whichPlayer);
 
    // double neuralNetHeuristic(const Board board, player whichPlayer);
    double neuralNetHeuristic(const Board board, player whichPlayer);

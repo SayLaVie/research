@@ -9,6 +9,8 @@ Advisor: Dr. Rob LeGrand
 
 #include <hexBotVsBotHelpers.h>
 
+int MAX_DEPTH;
+
 int main(int argc, char *argv[])
 {
 	int arg;
@@ -18,12 +20,24 @@ int main(int argc, char *argv[])
 	vector<int> netShape;	
 
 	resultsFileName = "results/bot.match";
+	MAX_DEPTH = 0;
 
 	for (arg = 1; arg < argc; arg += 1)
 	{
 		argument = argv[arg];
 
-		if (argument == "-h" || argument == "--help")
+		if (argument == "-d" || argument == "--depth")
+		{
+			if (arg + 1 >= argc || !isNumeric(argv[argc + 1]))
+			{
+				cerr << "Depth output option requires one positive integer" << endl;
+			}
+
+			arg += 1;
+			MAX_DEPTH = atoi(argv[argc]);
+		}
+
+		else if (argument == "-h" || argument == "--help")
 		{
 			printUsage(0);
 		}
@@ -32,7 +46,7 @@ int main(int argc, char *argv[])
 		{
 			if (arg + 1 >= argc)
 			{
-				cerr << "ouput option requires one argument" << endl;
+				cerr << "Ouput option requires one argument" << endl;
 				printUsage(1);
 			}
 
@@ -44,7 +58,7 @@ int main(int argc, char *argv[])
 		{
 			if (arg + 2 >= argc)
 			{
-				cerr << "player option requires two arguments" << endl;
+				cerr << "Player option requires two arguments" << endl;
 				printUsage(1);
 			}
 			

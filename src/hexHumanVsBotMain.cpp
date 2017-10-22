@@ -14,7 +14,7 @@ Advisor: Dr. Rob LeGrand
 
 // Define extern variable netShape
 vector<int> netShape;
-
+int MAX_DEPTH;
 void printUsage(int exitCode);
 
 int main(int argc, char *argv[])
@@ -23,17 +23,31 @@ int main(int argc, char *argv[])
 	string argument, playerFileName, answer;
 	bool playAgain, answerQuestion;
 	ifstream fin;
+	MAX_DEPTH = 0;
 
 	for (arg = 1; arg < argc; arg += 1)
 	{
 		argument = argv[arg];
 
-		if (argument == "-h" || argument == "--help")
+		if (argument == "-d" || argument == "--depth")
+		{
+			if (arg + 1 >= argc || !isNumeric(argv[arg + 1]))
+			{
+				cerr << "Player option requires one positive integer" << endl;
+				printUsage(1);
+			}
+
+			arg += 1;
+
+			MAX_DEPTH = atoi(argv[arg]);
+		}
+
+		else if (argument == "-h" || argument == "--help")
 		{
 			printUsage(0);
 		}
 
-		if (argument == "-p" || argument == "--player")
+		else if (argument == "-p" || argument == "--player")
 		{
 			if (arg + 1 >= argc)
 			{
