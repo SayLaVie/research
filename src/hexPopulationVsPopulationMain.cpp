@@ -130,6 +130,7 @@ int main (int argc, char *argv[])
 	// 	<< gameStats.bestPlayerBWins << " games won" << endl;
 
 	// Print out sorted players for both players
+	// Uses pairs defined in ...helpers.h
 	fout << "Players Sorted by number of wins" << endl;
 
 	fout << populationAFileName << ":" << endl;
