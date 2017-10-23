@@ -1,103 +1,466 @@
-
-Stats for iteration9
-	Player0 games won: 6
-	Player1 games won: 5
-	Player2 games won: 7
-	Player3 games won: 7
-	Player4 games won: 9
-	Player5 games won: 5
-	Player6 games won: 7
-	Player7 games won: 6
-	Player8 games won: 3
-	Player9 games won: 8
-	Player10 games won: 7
-	Player11 games won: 9
-	Player12 games won: 4
-	Player13 games won: 3
-	Player14 games won: 3
-	Player15 games won: 6
-	Player16 games won: 4
-	Player17 games won: 4
-	Player18 games won: 7
-	Player19 games won: 9
-	Player20 games won: 4
-	Player21 games won: 8
-	Player22 games won: 9
-	Player23 games won: 10
-	Player24 games won: 3
-	Player25 games won: 4
-	Player26 games won: 4
-	Player27 games won: 9
-	Player28 games won: 4
-	Player29 games won: 8
-	Player30 games won: 2
-	Player31 games won: 8
-	Player32 games won: 3
-	Player33 games won: 5
-	Player34 games won: 9
-	Player35 games won: 7
-	Player36 games won: 9
-	Player37 games won: 2
-	Player38 games won: 4
-	Player39 games won: 7
-	Player40 games won: 8
-	Player41 games won: 6
-	Player42 games won: 5
-	Player43 games won: 7
-	Player44 games won: 8
-	Player45 games won: 4
-	Player46 games won: 2
-	Player47 games won: 10
-	Player48 games won: 7
-	Player49 games won: 7
-	Player50 games won: 4
-	Player51 games won: 7
-	Player52 games won: 7
-	Player53 games won: 5
-	Player54 games won: 10
-	Player55 games won: 5
-	Player56 games won: 10
-	Player57 games won: 4
-	Player58 games won: 6
-	Player59 games won: 5
-	Player60 games won: 10
-	Player61 games won: 5
-	Player62 games won: 4
-	Player63 games won: 2
-	Player64 games won: 6
-	Player65 games won: 5
-	Player66 games won: 8
-	Player67 games won: 6
-	Player68 games won: 3
-	Player69 games won: 4
-	Player70 games won: 3
-	Player71 games won: 7
-	Player72 games won: 6
-	Player73 games won: 4
-	Player74 games won: 6
-	Player75 games won: 5
-	Player76 games won: 5
-	Player77 games won: 4
-	Player78 games won: 10
-	Player79 games won: 8
-	Player80 games won: 9
-	Player81 games won: 4
-	Player82 games won: 8
-	Player83 games won: 7
-	Player84 games won: 7
-	Player85 games won: 11
-	Player86 games won: 7
-	Player87 games won: 6
-	Player88 games won: 5
-	Player89 games won: 2
-	Player90 games won: 4
-	Player91 games won: 4
-	Player92 games won: 7
-	Player93 games won: 4
-	Player94 games won: 5
-	Player95 games won: 4
-	Player96 games won: 6
-	Player97 games won: 8
-	Player98 games won: 9
-	Player99 games won: 7
-
+Iteration 0 beginning at Wed_Oct11_2017_19:06:11
+	Player0 vs:
+		9: Win
+		19: Loss
+		1: Loss
+		91: Win
+		10: Loss
+		90: Loss
+	Player1 vs:
+		0: Loss
+		10: Loss
+		2: Win
+		92: Loss
+		11: Loss
+		91: Loss
+	Player2 vs:
+		1: Loss
+		11: Loss
+		3: Loss
+		93: Win
+		12: Loss
+		92: Win
+	Player3 vs:
+		2: Win
+		12: Win
+		4: Loss
+		94: Win
+		13: Loss
+		93: Win
+	Player4 vs:
+		3: Win
+		13: Win
+		5: Win
+		95: Win
+		14: Win
+		94: Win
+	Player5 vs:
+		4: Loss
+		14: Win
+		6: Win
+		96: Loss
+		15: Win
+		95: Win
+	Player6 vs:
+		5: Loss
+		15: Loss
+		7: Loss
+		97: Loss
+		16: Loss
+		96: Loss
+	Player7 vs:
+		6: Win
+		16: Loss
+		8: Win
+		98: Win
+		17: Win
+		97: Win
+	Player8 vs:
+		7: Loss
+		17: Win
+		9: Win
+		99: Loss
+		18: Win
+		98: Win
+	Player9 vs:
+		8: Loss
+		18: Win
+		0: Loss
+		90: Win
+		19: Win
+		99: Loss
+	Player10 vs:
+		19: Loss
+		29: Win
+		11: Win
+		1: Win
+		20: Loss
+		0: Win
+	Player11 vs:
+		10: Loss
+		20: Win
+		12: Loss
+		2: Win
+		21: Loss
+		1: Win
+	Player12 vs:
+		11: Win
+		21: Loss
+		13: Loss
+		3: Win
+		22: Win
+		2: Win
+	Player13 vs:
+		12: Win
+		22: Win
+		14: Win
+		4: Win
+		23: Win
+		3: Win
+	Player14 vs:
+		13: Loss
+		23: Win
+		15: Win
+		5: Win
+		24: Loss
+		4: Loss
+	Player15 vs:
+		14: Loss
+		24: Win
+		16: Loss
+		6: Win
+		25: Win
+		5: Loss
+	Player16 vs:
+		15: Win
+		25: Win
+		17: Win
+		7: Win
+		26: Loss
+		6: Win
+	Player17 vs:
+		16: Loss
+		26: Loss
+		18: Win
+		8: Loss
+		27: Win
+		7: Win
+	Player18 vs:
+		17: Loss
+		27: Win
+		19: Win
+		9: Loss
+		28: Win
+		8: Loss
+	Player19 vs:
+		18: Win
+		28: Win
+		10: Win
+		0: Win
+		29: Loss
+		9: Win
+	Player20 vs:
+		29: Loss
+		39: Loss
+		21: Loss
+		11: Win
+		30: Win
+		10: Win
+	Player21 vs:
+		20: Win
+		30: Win
+		22: Win
+		12: Win
+		31: Loss
+		11: Win
+	Player22 vs:
+		21: Loss
+		31: Win
+		23: Loss
+		13: Loss
+		32: Win
+		12: Loss
+	Player23 vs:
+		22: Win
+		32: Win
+		24: Win
+		14: Loss
+		33: Loss
+		13: Loss
+	Player24 vs:
+		23: Loss
+		33: Win
+		25: Win
+		15: Loss
+		34: Win
+		14: Win
+	Player25 vs:
+		24: Loss
+		34: Loss
+		26: Loss
+		16: Win
+		35: Loss
+		15: Loss
+	Player26 vs:
+		25: Win
+		35: Win
+		27: Loss
+		17: Win
+		36: Win
+		16: Win
+	Player27 vs:
+		26: Win
+		36: Win
+		28: Win
+		18: Loss
+		37: Win
+		17: Loss
+	Player28 vs:
+		27: Loss
+		37: Win
+		29: Loss
+		19: Loss
+		38: Win
+		18: Loss
+	Player29 vs:
+		28: Win
+		38: Win
+		20: Win
+		10: Loss
+		39: Loss
+		19: Win
+	Player30 vs:
+		39: Win
+		49: Win
+		31: Win
+		21: Win
+		40: Win
+		20: Loss
+	Player31 vs:
+		30: Loss
+		40: Win
+		32: Loss
+		22: Loss
+		41: Win
+		21: Win
+	Player32 vs:
+		31: Win
+		41: Win
+		33: Loss
+		23: Win
+		42: Win
+		22: Win
+	Player33 vs:
+		32: Win
+		42: Win
+		34: Win
+		24: Win
+		43: Win
+		23: Win
+	Player34 vs:
+		33: Loss
+		43: Loss
+		35: Loss
+		25: Win
+		44: Loss
+		24: Loss
+	Player35 vs:
+		34: Win
+		44: Win
+		36: Win
+		26: Loss
+		45: Win
+		25: Win
+	Player36 vs:
+		35: Loss
+		45: Win
+		37: Loss
+		27: Win
+		46: Loss
+		26: Loss
+	Player37 vs:
+		36: Win
+		46: Win
+		38: Loss
+		28: Loss
+		47: Win
+		27: Loss
+	Player38 vs:
+		37: Win
+		47: Loss
+		39: Loss
+		29: Loss
+		48: Win
+		28: Loss
+	Player39 vs:
+		38: Win
+		48: Win
+		30: Loss
+		20: Win
+		49: Win
+		29: Win
+	Player40 vs:
+		49: Loss
+		59: Loss
+		41: Loss
+		31: Loss
+		50: Win
+		30: Loss
+	Player41 vs:
+		40: Win
+		50: Loss
+		42: Win
+		32: Loss
+		51: Win
+		31: Loss
+	Player42 vs:
+		41: Win
+		51: Win
+		43: Loss
+		33: Loss
+		52: Loss
+		32: Loss
+	Player43 vs:
+		42: Win
+		52: Win
+		44: Loss
+		34: Win
+		53: Win
+		33: Win
+	Player44 vs:
+		43: Win
+		53: Win
+		45: Win
+		35: Win
+		54: Win
+		34: Win
+	Player45 vs:
+		44: Win
+		54: Loss
+		46: Loss
+		36: Win
+		55: Loss
+		35: Loss
+	Player46 vs:
+		45: Win
+		55: Loss
+		47: Win
+		37: Loss
+		56: Loss
+		36: Win
+	Player47 vs:
+		46: Loss
+		56: Loss
+		48: Win
+		38: Loss
+		57: Loss
+		37: Loss
+	Player48 vs:
+		47: Loss
+		57: Win
+		49: Win
+		39: Loss
+		58: Win
+		38: Win
+	Player49 vs:
+		48: Loss
+		58: Win
+		40: Win
+		30: Loss
+		59: Win
+		39: Loss
+	Player50 vs:
+		59: Loss
+		69: Loss
+		51: Loss
+		41: Win
+		60: Win
+		40: Win
+	Player51 vs:
+		50: Loss
+		60: Win
+		52: Win
+		42: Win
+		61: Win
+		41: Loss
+	Player52 vs:
+		51: Loss
+		61: Loss
+		53: Loss
+		43: Loss
+		62: Win
+		42: Win
+	Player53 vs:
+		52: Win
+		62: Win
+		54: Win
+		44: Win
+		63: Loss
+		43: Loss
+	Player54 vs:
+		53: Win
+		63: Win
+		55: Loss
+		45: Win
+		64: Win
+		44: Loss
+	Player55 vs:
+		54: Win
+		64: Win
+		56: Loss
+		46: Win
+		65: Win
+		45: Win
+	Player56 vs:
+		55: Win
+		65: Loss
+		57: Win
+		47: Win
+		66: Win
+		46: Win
+	Player57 vs:
+		56: Loss
+		66: Loss
+		58: Win
+		48: Loss
+		67: Loss
+		47: Loss
+	Player58 vs:
+		57: Loss
+		67: Loss
+		59: Loss
+		49: Loss
+		68: Loss
+		48: Loss
+	Player59 vs:
+		58: Win
+		68: Loss
+		50: Win
+		40: Win
+		69: Loss
+		49: Loss
+	Player60 vs:
+		69: Win
+		79: Loss
+		61: Loss
+		51: Loss
+		70: Win
+		50: Loss
+	Player61 vs:
+		60: Win
+		70: Win
+		62: Win
+		52: Win
+		71: Win
+		51: Win
+	Player62 vs:
+		61: Loss
+		71: Loss
+		63: Win
+		53: Loss
+		72: Win
+		52: Loss
+	Player63 vs:
+		62: Win
+		72: Win
+		64: Win
+		54: Loss
+		73: Loss
+		53: Win
+	Player64 vs:
+		63: Loss
+		73: Loss
+		65: Loss
+		55: Win
+		74: Loss
+		54: Loss
+	Player65 vs:
+		64: Win
+		74: Win
+		66: Loss
+		56: Loss
+		75: Win
+		55: Loss
+	Player66 vs:
+		65: Win
+		75: Loss
