@@ -2,7 +2,7 @@
 
 void printUsage(int exitCode)
 {
-	cerr << "Usage: hexPopulationVsPopulation <option(s)" << endl;
+	cerr << "Usage: hexPopulationVsPopulation <option(s)>" << endl;
 	cerr << "Options:" << endl;
 	cerr << "\t-d,--depth\t\tSpecify a depth for the minimax search (default: depth=0 i.e. do not use minimax)" << endl;
 	cerr << "\t-h,--help\t\tShow this message" << endl;
