@@ -4,7 +4,7 @@ int MAX_DEPTH;
 
 int main (int argc, char *argv[])
 {
-	int arg;
+	int arg, player;
 	string outputFile, populationAFileName, populationBFileName, argument;
 	ofstream fout;
 	ifstream fin;
@@ -123,11 +123,30 @@ int main (int argc, char *argv[])
 	fout << "\tPlayerA: " << gameStats.totalWinsAsA << endl;
 	fout << "\tPlayerB: " << gameStats.totalWinsAsB << endl;
 	fout << endl;
-	fout << "Winningest players:" << endl;
-	fout << "\t" << populationAFileName << ": " << gameStats.bestPlayerA << " with " 
-		<< gameStats.bestPlayerAWins << " games won" << endl;
-	fout << "\t" << populationBFileName << ": " << gameStats.bestPlayerB << " with "
-		<< gameStats.bestPlayerBWins << " games won" << endl;
+	// fout << "Winningest players:" << endl;
+	// fout << "\t" << populationAFileName << ": " << gameStats.bestPlayerA << " with " 
+	// 	<< gameStats.bestPlayerAWins << " games won" << endl;
+	// fout << "\t" << populationBFileName << ": " << gameStats.bestPlayerB << " with "
+	// 	<< gameStats.bestPlayerBWins << " games won" << endl;
+
+	// Print out sorted players for both players
+	fout << "Players Sorted by number of wins" << endl;
+
+	fout << populationAFileName << ":" << endl;
+	
+	for (player = 0; player < gameStats.sortedPlayersA.size(); player += 1)
+	{
+		fout << "\tPlayer" << gameStats.sortedPlayersA[player].second << ": " 
+			<< gameStats.sortedPlayersA[player].first.getGamesWon() << endl;
+	}
+
+	fout << endl;
+	fout << populationBFileName << ":" << endl;
+	for (player = 0; player < gameStats.sortedPlayersB.size(); player += 1)
+	{
+		fout << "\tPlayer" << gameStats.sortedPlayersB[player].second << ": "
+			<< gameStats.sortedPlayersB[player].first.getGamesWon() << endl;
+	}
 
 	fout.close();
 }
