@@ -9,7 +9,7 @@ void printUsage(int exitCode)
 	cerr << "\t-i,--iterations\t\tSpecify number of iterations to run (default: 10)" << endl;
 	cerr << "\t-o,--output\t\tSpecify full or relative path of the file name to output results to (default: results/results.out)" << endl;
 	cerr << "\t-r,--resume\t\tSpecify the full or relative path of the file name containing hexWorld data (usually found in data/ subdirectories)" << endl;
-	
+
 	exit(exitCode);
 }
 
@@ -142,7 +142,7 @@ hexWorld entirePopulationFileParser(ifstream &fin)
 			{
 				pos = line.find(delim);
 				token = line.substr(0, pos);
-				
+
 				weight = atof(token.c_str());
 				singleInputNodeVector.push_back(weight);
 
@@ -229,7 +229,8 @@ void printPopulationRepresentative(hexWorld population, ofstream &fout)
 					sum += population.getHexGamePlayer(player).getWeight(layer, rowDestination, rowOrigination) * population.getHexGamePlayer(player).getGamesWon();
 				}
 
-				weightedAverage = sum / population.getNumPlayers();
+				// Multiply number of players by 6 to take into account weights from numGamesWon
+				weightedAverage = sum / (population.getNumPlayers() * 6);
 
 				fout << weightedAverage << ',';
 			}

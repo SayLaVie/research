@@ -5,21 +5,16 @@
 
 struct PopulationPair
 {
-	int numberOfTotalWinsA = 0;
-	// int bestPlayerA;
-	// int bestPlayerAWins;
-
+	int populationATotalWins = 0;
 	// Using a pair to keep track of players original location in the population
 	// before sorting
 	vector<pair<hexGamePlayer, int> > sortedPlayersA;
 
-	int numberOfTotalWinsB = 0;
-	// int bestPlayerB;
-	// int bestPlayerBWins;
+	int populationBTotalWins = 0;
 	vector<pair<hexGamePlayer, int> > sortedPlayersB;
 
-	int totalWinsAsA = 0;
-	int totalWinsAsB = 0;
+	int totalWinsAsFirstPlayer = 0;
+	int totalWinsAsSecondPlayer = 0;
 };
 
 extern struct Comparison

@@ -27,7 +27,7 @@ bool isNumeric(string input)
 
 void playHexGames(hexWorld populationA, hexWorld populationB, PopulationPair &gameStats)
 {
-	int numberWinsA, numberWinsB, numPlayers, tmpBestPlayerA, tmpBestPlayerB, hexPlayer, playerA, playerB;
+	int numberWinsA, numberWinsB, numPlayers, hexPlayer, playerA, playerB;
 	vector<pair<hexGamePlayer, int> > sortedPlayersA, sortedPlayersB;
 	player winner;
 
@@ -46,14 +46,14 @@ void playHexGames(hexWorld populationA, hexWorld populationB, PopulationPair &ga
 
 			if (winner == playerA)
 			{
-				gameStats.numberOfTotalWinsA += 1;
-				gameStats.totalWinsAsA += 1;
+				gameStats.populationATotalWins += 1;
+				gameStats.totalWinsAsFirstPlayer += 1;
 				populationA.addHexGamePlayerWin(playerA);
 			}
 			else
 			{
-				gameStats.numberOfTotalWinsB += 1;
-				gameStats.totalWinsAsB += 1;
+				gameStats.populationBTotalWins += 1;
+				gameStats.totalWinsAsSecondPlayer += 1;
 				populationB.addHexGamePlayerWin(playerB);
 			}
 
@@ -61,14 +61,14 @@ void playHexGames(hexWorld populationA, hexWorld populationB, PopulationPair &ga
 
 			if (winner == playerA)
 			{
-				gameStats.numberOfTotalWinsB += 1;
-				gameStats.totalWinsAsA += 1;
+				gameStats.populationBTotalWins += 1;
+				gameStats.totalWinsAsFirstPlayer += 1;
 				populationB.addHexGamePlayerWin(playerB);
 			}
 			else
 			{
-				gameStats.numberOfTotalWinsA += 1;
-				gameStats.totalWinsAsB += 1;
+				gameStats.populationATotalWins += 1;
+				gameStats.totalWinsAsSecondPlayer += 1;
 				populationA.addHexGamePlayerWin(playerA);
 			}
 		}
@@ -86,40 +86,6 @@ void playHexGames(hexWorld populationA, hexWorld populationB, PopulationPair &ga
 
 	gameStats.sortedPlayersA = sortedPlayersA;
 	gameStats.sortedPlayersB = sortedPlayersB;
-
-	// sortedPlayersA = populationA.getHexGamePlayers();
-	// sortedPlayersB = populationB.getHexGamePlayers();
-
-	// sort(sortedPlayersA.begin(), sortedPlayersA.end(), compare);
-	// sort(sortedPlayersB.begin(), sortedPlayersB.end(), compare);
-
-	// gameStats.sortedPlayersA = sortedPlayersA;
-	// gameStats.sortedPlayersB = sortedPlayersB;
-
-	// Search for the winningest player of each population.
-	// * Assumes that both populations are the same size *
-	// tmpBestPlayerA = 0;
-	// tmpBestPlayerB = 0;
-
-	// for (hexPlayer = 1; hexPlayer < numPlayers; hexPlayer += 1)
-	// {
-	// 	// Check populationA first
-	// 	if (populationA.getHexGamePlayer(hexPlayer).getGamesWon() > populationA.getHexGamePlayer(tmpBestPlayerA).getGamesWon())
-	// 	{
-	// 		tmpBestPlayerA = hexPlayer;
-	// 	}
-
-	// 	if (populationB.getHexGamePlayer(hexPlayer).getGamesWon() > populationB.getHexGamePlayer(tmpBestPlayerB).getGamesWon())
-	// 	{
-	// 		tmpBestPlayerB = hexPlayer;
-	// 	}
-	// }
-
-	// // Both tmpBestPlayers should now refer to each population's most winningest player
-	// gameStats.bestPlayerA = tmpBestPlayerA;
-	// gameStats.bestPlayerAWins = populationA.getHexGamePlayer(tmpBestPlayerA).getGamesWon();
-	// gameStats.bestPlayerB = tmpBestPlayerB;
-	// gameStats.bestPlayerBWins = populationB.getHexGamePlayer(tmpBestPlayerB).getGamesWon();
 }
 
 player playHexGame(hexGamePlayer botA, hexGamePlayer botB)
@@ -202,7 +168,7 @@ hexWorld entirePopulationFileParser(ifstream &fin)
 			{
 				pos = line.find(delim);
 				token = line.substr(0, pos);
-				
+
 				weight = atof(token.c_str());
 				singleInputNodeVector.push_back(weight);
 
