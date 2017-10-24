@@ -82,7 +82,7 @@ int main (int argc, char *argv[])
 	}
 
 	// Declare and initialize populationA
-	hexWorld populationA = entirePopulationFileParser(fin);
+	hexWorld populationA = hexWorld(entirePopulationFileParser(fin));
 
 	fin.close();
 
@@ -95,7 +95,7 @@ int main (int argc, char *argv[])
 		printUsage(1);
 	}
 
-	hexWorld populationB = entirePopulationFileParser(fin);
+	hexWorld populationB = hexWorld(entirePopulationFileParser(fin));
 
 	fin.close();
 
@@ -116,28 +116,23 @@ int main (int argc, char *argv[])
 	fout << "\t" << populationBFileName << endl;
 	fout << endl;
 	fout << "Total games won:" << endl;
-	fout << "\t" << populationAFileName << ": " << gameStats.numberOfTotalWinsA << endl;
-	fout << "\t" << populationBFileName << ": " << gameStats.numberOfTotalWinsB << endl;
+	fout << "\t" << populationAFileName << ": " << gameStats.populationATotalWins << endl;
+	fout << "\t" << populationBFileName << ": " << gameStats.populationBTotalWins << endl;
 	fout << endl;
 	fout << "Total number of games won as:" << endl;
-	fout << "\tPlayerA: " << gameStats.totalWinsAsA << endl;
-	fout << "\tPlayerB: " << gameStats.totalWinsAsB << endl;
+	fout << "\tPlayerA: " << gameStats.totalWinsAsFirstPlayer << endl;
+	fout << "\tPlayerB: " << gameStats.totalWinsAsSecondPlayer << endl;
 	fout << endl;
-	// fout << "Winningest players:" << endl;
-	// fout << "\t" << populationAFileName << ": " << gameStats.bestPlayerA << " with " 
-	// 	<< gameStats.bestPlayerAWins << " games won" << endl;
-	// fout << "\t" << populationBFileName << ": " << gameStats.bestPlayerB << " with "
-	// 	<< gameStats.bestPlayerBWins << " games won" << endl;
 
 	// Print out sorted players for both players
 	// Uses pairs defined in ...helpers.h
 	fout << "Players Sorted by number of wins" << endl;
 
 	fout << populationAFileName << ":" << endl;
-	
+
 	for (player = 0; player < gameStats.sortedPlayersA.size(); player += 1)
 	{
-		fout << "\tPlayer" << gameStats.sortedPlayersA[player].second << ": " 
+		fout << "\tPlayer" << gameStats.sortedPlayersA[player].second << ": "
 			<< gameStats.sortedPlayersA[player].first.getGamesWon() << endl;
 	}
 
