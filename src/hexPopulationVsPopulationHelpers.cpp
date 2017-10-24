@@ -30,6 +30,7 @@ void playHexGames(hexWorld populationA, hexWorld populationB, PopulationPair &ga
 	int numberWinsA, numberWinsB, numPlayers, hexPlayer, playerA, playerB;
 	vector<pair<hexGamePlayer, int> > sortedPlayersA, sortedPlayersB;
 	player winner;
+	hexGamePlayer hexPlayerA, hexPlayerB;
 
 	numberWinsA = 0;
 	numberWinsB = 0;
@@ -42,7 +43,10 @@ void playHexGames(hexWorld populationA, hexWorld populationB, PopulationPair &ga
 	{
 		for (playerB = 0; playerB < numPlayers; playerB += 1)
 		{
-			winner = playHexGame(populationA.getHexGamePlayer(playerA), populationB.getHexGamePlayer(playerB));
+			hexPlayerA = populationA.getHexGamePlayer(playerA);
+			hexPlayerB = populationB.getHexGamePlayer(playerB);
+
+			winner = playHexGame(hexPlayerA, hexPlayerB);
 
 			if (winner == playerA)
 			{
@@ -57,7 +61,10 @@ void playHexGames(hexWorld populationA, hexWorld populationB, PopulationPair &ga
 				populationB.addHexGamePlayerWin(playerB);
 			}
 
-			winner = playHexGame(populationB.getHexGamePlayer(playerB), populationA.getHexGamePlayer(playerA));
+			hexPlayerA = hexPlayerB;
+			hexPlayerB = populationA.getHexGamePlayer(playerA);
+
+			winner = playHexGame(hexPlayerA, hexPlayerB);
 
 			if (winner == playerA)
 			{
