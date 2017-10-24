@@ -41,9 +41,10 @@ void playHexGames(hexWorld populationA, hexWorld populationB, PopulationPair &ga
 	// Play two games with each player starting first
 	for (playerA = 0; playerA < numPlayers; playerA += 1)
 	{
+		hexPlayerA = populationA.getHexGamePlayer(playerA);
+
 		for (playerB = 0; playerB < numPlayers; playerB += 1)
 		{
-			hexPlayerA = populationA.getHexGamePlayer(playerA);
 			hexPlayerB = populationB.getHexGamePlayer(playerB);
 
 			winner = playHexGame(hexPlayerA, hexPlayerB);
@@ -52,31 +53,28 @@ void playHexGames(hexWorld populationA, hexWorld populationB, PopulationPair &ga
 			{
 				gameStats.populationATotalWins += 1;
 				gameStats.totalWinsAsFirstPlayer += 1;
-				populationA.addHexGamePlayerWin(playerA);
+				populationA.addPlayerWin(playerA);
 			}
 			else
 			{
 				gameStats.populationBTotalWins += 1;
 				gameStats.totalWinsAsSecondPlayer += 1;
-				populationB.addHexGamePlayerWin(playerB);
+				populationB.addPlayerWin(playerB);
 			}
 
-			hexPlayerA = hexPlayerB;
-			hexPlayerB = populationA.getHexGamePlayer(playerA);
-
-			winner = playHexGame(hexPlayerA, hexPlayerB);
+			winner = playHexGame(hexPlayerB, hexPlayerA);
 
 			if (winner == playerA)
 			{
 				gameStats.populationBTotalWins += 1;
 				gameStats.totalWinsAsFirstPlayer += 1;
-				populationB.addHexGamePlayerWin(playerB);
+				populationB.addPlayerWin(playerB);
 			}
 			else
 			{
 				gameStats.populationATotalWins += 1;
 				gameStats.totalWinsAsSecondPlayer += 1;
-				populationA.addHexGamePlayerWin(playerA);
+				populationA.addPlayerWin(playerA);
 			}
 		}
 	}

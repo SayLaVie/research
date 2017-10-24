@@ -66,8 +66,6 @@ public:
 	vector<hexGamePlayer> getHexGamePlayers() {return hexGamePlayers;}
 
 	// Add a win to a players stats
-	void addHexGamePlayerWin(int playerLocation) {hexGamePlayers[playerLocation].addGameWon();}
-	
 	void addPlayerWin(int playerLocation) {hexGamePlayers[playerLocation].addGameWon();}
 
 	int getBreeder(mt19937_64 &seedGenerator, vector<int> probabilities);
