@@ -383,7 +383,7 @@ void Board::printBoard(ofstream &fout)
          }
          else
          {
-            fout << setw(5) << right << "-";
+            fout << setw(5) << right << "--";
          }
       }
 

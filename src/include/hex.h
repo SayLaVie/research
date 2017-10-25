@@ -76,6 +76,7 @@ public:
    int getSize() const {return size;}
    void printBoard() const;
    void printBoard(ofstream &fout);
+   int getTurn() const{return turnCounter;}
 
    vector<Tile> getBoard() const{return BoardLayout;}
    Tile getTile(int location){return BoardLayout[location];}

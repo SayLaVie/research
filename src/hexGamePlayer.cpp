@@ -37,7 +37,9 @@ int hexGamePlayer::play(const Board &board, Player whichPlayer)
 
    else
    {
-      moveToMake = miniMax(board, whichPlayer, 0, -MAX_DEPTH + 1, MAX_DEPTH + 1);
+   	// Because thresholding is removed for last layer, the infinities need to be changed accordingly
+      // moveToMake = miniMax(board, whichPlayer, 0, -MAX_DEPTH + 1, MAX_DEPTH + 1);
+      moveToMake = miniMax(board, whichPlayer, 0, -100000, 100000);
    }
 
    if (board.isValidMove(moveToMake))
@@ -46,154 +48,42 @@ int hexGamePlayer::play(const Board &board, Player whichPlayer)
    }
 
    // There should never be an invalid move returned, so exit with an error here
-   cerr << "Invalid move selected" << endl;
+   cerr << "Invalid move selected at turn " << board.getTurn() << " by player " << (whichPlayer == PlayerA ? "PlayerA" : "PlayerB") << endl;
+   board.printBoard();
+   cout << endl;
    exit(1);
 }
 
 double hexGamePlayer::boardEvalLearning(Board board, Player whichPlayer)
 {
-   int location, tmpBestMove, column, row, jump;
+   int location, tmpBestMove;
    double utilityValue, eval;
    Board copyBoard;
 
+   // If this is ever returned, an error will be thrown.
    tmpBestMove = -1;
 
-   // Begin looking for moves in middle of board, going side to side
-   if (whichPlayer == PlayerA)
+   // Set utilityValue to positive/negative 'infinity'
+   utilityValue = -100000;
+
+   // Go through every potential move and evaluate the board after a 
+   // hypothetical move there.
+   for (location = 0; location < BOARD_SIZE * BOARD_SIZE; location += 1)
    {
-      column = 0;
-      row = BOARD_SIZE / 2 - ((BOARD_SIZE + 1) % 2);
-      jump = 1;
+   	if (board.isValidMove(location))
+   	{
+   		copyBoard = board;
+   		copyBoard.makeMove(location, whichPlayer);
 
-      utilityValue = -1;
+   		eval = neuralNetHeuristic(copyBoard, whichPlayer);
 
-      // Move left to right across board
-      while (row >= 0 && row < BOARD_SIZE)
-      {
-         while (column < BOARD_SIZE)
-         {
-            location = BOARD_SIZE * row + column;
+   		if (utilityValue < eval)
+   		{
+   			utilityValue = eval;
 
-            if (board.isValidMove(location))
-            {
-               copyBoard = board;
-               copyBoard.makeMove(location, whichPlayer);
-
-               eval = neuralNetHeuristic(copyBoard, whichPlayer);
-
-               if (utilityValue < eval)
-               {
-                  utilityValue = eval;
-
-                  tmpBestMove = location;
-               }
-            }
-
-            column += 1;
-         }
-
-         // Jump to a row above and fix column value
-         row += jump;
-         jump += 1;
-         column -= 1;
-
-         if (row >= 0 && row < BOARD_SIZE)
-         {
-            // Move right to left across board
-            while (column >= 0)
-            {
-               location = BOARD_SIZE * row + column;
-
-               if (board.isValidMove(location))
-               {
-                  copyBoard = board;
-                  copyBoard.makeMove(location, whichPlayer);
-
-                  eval = neuralNetHeuristic(copyBoard, whichPlayer);
-
-                  if (utilityValue < eval)
-                  {
-                     utilityValue = eval;
-
-                     tmpBestMove = location;
-                  }
-               }
-
-               column -= 1;
-            }
-         }
-
-         // Jump to a row below and fix column value
-         row -= jump;
-         jump += 1;
-         column += 1;
-      }
-   }
-   // Start in middle of board connecting top to bottom
-   else
-   {
-      column = BOARD_SIZE / 2 - ((BOARD_SIZE + 1) % 2);
-      row = 0;
-      jump = 1;
-
-      // Move bottom to top across board
-      while (column >= 0 && column < BOARD_SIZE)
-      {
-         while (row < BOARD_SIZE)
-         {
-            location = BOARD_SIZE * row + column;
-
-            if (board.isValidMove(location))
-            {
-               copyBoard = board;
-               copyBoard.makeMove(location, whichPlayer);
-
-               eval = neuralNetHeuristic(copyBoard, whichPlayer);
-
-               if (utilityValue < eval)
-               {
-                  utilityValue = eval;
-
-                  tmpBestMove = location;
-               }
-            }
-            row += 1;
-         }
-
-         // Jump and fix
-         column += jump;
-         jump += 1;
-         row -= 1;
-
-         if (column >= 0 && column < BOARD_SIZE)
-         {
-            // Move top to bottom across board
-            while (row >= 0)
-            {
-               location = BOARD_SIZE * row + column;
-
-               if (board.isValidMove(location))
-               {
-                  copyBoard = board;
-                  copyBoard.makeMove(location, whichPlayer);
-
-                  eval = neuralNetHeuristic(copyBoard, whichPlayer);
-
-                  if (utilityValue < eval)
-                  {
-                     utilityValue = eval;
-
-                     tmpBestMove = location;
-                  }
-               }
-               row -= 1;
-            }
-         }
-
-         column -= jump;
-         jump += 1;
-         row += 1;
-      }
+   			tmpBestMove = location;
+   		}
+   	}
    }
 
    return tmpBestMove;
@@ -203,7 +93,7 @@ double hexGamePlayer::boardEvalLearning(Board board, Player whichPlayer)
 // If it finishes at level 0, will return the location of the best move found.
 double hexGamePlayer::miniMax(Board board, Player whichPlayer, int depth, double alpha, double beta)
 {
-   int location, tmpBestMove, column, row, jump;
+   int location, tmpBestMove;
    double utilityValue, eval, heuristicValue;
    bool maximizer;
    Board copyBoard;
@@ -214,7 +104,7 @@ double hexGamePlayer::miniMax(Board board, Player whichPlayer, int depth, double
    if (board.isGameOver())
    {
       // Incentivize quick playing by decreasing the win value the further depth away it is
-      return maximizer ? 0 - (double)MAX_DEPTH / depth : 1 + (double)MAX_DEPTH / depth;
+      return maximizer ? -1 - (double)MAX_DEPTH / depth : 1 + (double)MAX_DEPTH / depth;
    }
 
    if (depth >= MAX_DEPTH)
@@ -225,294 +115,17 @@ double hexGamePlayer::miniMax(Board board, Player whichPlayer, int depth, double
 
       truePlayer = maximizer ? whichPlayer : (whichPlayer == PlayerA ? PlayerB : PlayerA);
       heuristicValue = neuralNetHeuristic(board, truePlayer);
-// cout << heuristicValue << endl;
+
       return heuristicValue;
    }
 
-   utilityValue = maximizer ? -MAX_DEPTH - 1 : MAX_DEPTH + 1;
-   tmpBestMove = -1; // invalid default move
+   // Set utilityValue to appropriate 'infinity'
+   utilityValue = maximizer ? -100000 : 100000;
 
+   // If this is ever returned, an error will be thrown
+   tmpBestMove = -1;
 
-   // Begin looking for moves in middle of board, going side to side
-   if (whichPlayer == PlayerA)
-   {
-      column = 0;
-      row = BOARD_SIZE / 2 - ((BOARD_SIZE + 1) % 2);
-      jump = 1;
-
-      // Move left to right across board
-      while (row >= 0 && row < BOARD_SIZE)
-      {
-         while (column < BOARD_SIZE)
-         {
-            location = BOARD_SIZE * row + column;
-
-            if (board.isValidMove(location))
-            {
-               copyBoard = board;
-               copyBoard.makeMove(location, whichPlayer);
-
-               eval = miniMax(copyBoard, whichPlayer == PlayerA ? PlayerB : PlayerA, depth + 1, alpha, beta);
-
-               if (maximizer)
-               {
-                  if (utilityValue < eval)
-                  {
-                     utilityValue = eval;
-
-                     tmpBestMove = location;
-                  }
-
-                  if (utilityValue >= beta)
-                  {
-                     if (depth == 0)
-                     {
-                        // cout << "Player" << (whichPlayer == playerA ? "A" : "B") << " Evaluation: " << utilityValue << endl;
-                        return tmpBestMove;
-                     }
-                     return utilityValue;
-                  }
-
-                  if (alpha < utilityValue)
-                  {
-                     alpha = utilityValue;
-                  }
-               }
-
-               else
-               {
-                  if (utilityValue > eval)
-                  {
-                     utilityValue = eval;
-                  }
-
-                  if (utilityValue <= alpha)
-                  {
-                     return utilityValue;
-                  }
-
-                  if (beta > utilityValue)
-                  {
-                     beta = utilityValue;
-                  }
-               }
-            }
-
-            column += 1;
-         }
-
-         // Jump to a row above and fix column value
-         row += jump;
-         jump += 1;
-         column -= 1;
-
-         if (row >= 0 && row < BOARD_SIZE)
-         {
-            // Move right to left across board
-            while (column >= 0)
-            {
-               location = BOARD_SIZE * row + column;
-
-               if (board.isValidMove(location))
-               {
-                  copyBoard = board;
-                  copyBoard.makeMove(location, whichPlayer);
-
-                  eval = miniMax(copyBoard, whichPlayer == PlayerA ? PlayerB : PlayerA, depth + 1, alpha, beta);
-
-                  if (maximizer)
-                  {
-                     if (utilityValue < eval)
-                     {
-                        utilityValue = eval;
-
-                        tmpBestMove = location;
-                     }
-
-                     if (utilityValue >= beta)
-                     {
-                        if (depth == 0)
-                        {
-                           // cout << "Player" << (whichPlayer == playerA ? "A" : "B") << " Evaluation: " << utilityValue << endl;
-                           return tmpBestMove;
-                        }
-                        return utilityValue;
-                     }
-
-                     if (alpha < utilityValue)
-                     {
-                        alpha = utilityValue;
-                     }
-                  }
-
-                  else
-                  {
-                     if (utilityValue > eval)
-                     {
-                        utilityValue = eval;
-                     }
-
-                     if (utilityValue <= alpha)
-                     {
-                        return utilityValue;
-                     }
-
-                     if (beta > utilityValue)
-                     {
-                        beta = utilityValue;
-                     }
-                  }
-               }
-
-               column -= 1;
-            }
-         }
-
-         // Jump to a row below and fix column value
-         row -= jump;
-         jump += 1;
-         column += 1;
-      }
-   }
-   // Start in middle of board connecting top to bottom
-   else
-   {
-      column = BOARD_SIZE / 2 - ((BOARD_SIZE + 1) % 2);
-      row = 0;
-      jump = 1;
-
-      // Move bottom to top across board
-      while (column >= 0 && column < BOARD_SIZE)
-      {
-         while (row < BOARD_SIZE)
-         {
-            location = BOARD_SIZE * row + column;
-
-            if (board.isValidMove(location))
-            {
-               copyBoard = board;
-               copyBoard.makeMove(location, whichPlayer);
-
-               eval = miniMax(copyBoard, whichPlayer == PlayerA ? PlayerB : PlayerA, depth + 1, alpha, beta);
-
-               if (maximizer)
-               {
-                  if (utilityValue < eval)
-                  {
-                     utilityValue = eval;
-
-                     tmpBestMove = location;
-                  }
-
-                  if (utilityValue >= beta)
-                  {
-                     if (depth == 0)
-                     {
-                        // cout << "Player" << (whichPlayer == playerA ? "A" : "B") << " Evaluation: " << utilityValue << endl;
-                        return tmpBestMove;
-                     }
-                     return utilityValue;
-                  }
-
-                  if (alpha < utilityValue)
-                  {
-                     alpha = utilityValue;
-                  }
-               }
-
-               else
-               {
-                  if (utilityValue > eval)
-                  {
-                     utilityValue = eval;
-                  }
-
-                  if (utilityValue <= alpha)
-                  {
-                     return utilityValue;
-                  }
-
-                  if (beta > utilityValue)
-                  {
-                     beta = utilityValue;
-                  }
-               }
-            }
-            row += 1;
-         }
-
-         // Jump and fix
-         column += jump;
-         jump += 1;
-         row -= 1;
-
-         if (column >= 0 && column < BOARD_SIZE)
-         {
-            // Move top to bottom across board
-            while (row >= 0)
-            {
-               location = BOARD_SIZE * row + column;
-
-               if (board.isValidMove(location))
-               {
-                  copyBoard = board;
-                  copyBoard.makeMove(location, whichPlayer);
-
-                  eval = miniMax(copyBoard, whichPlayer == PlayerA ? PlayerB : PlayerA, depth + 1, alpha, beta);
-
-                  if (maximizer)
-                  {
-                     if (utilityValue < eval)
-                     {
-                        utilityValue = eval;
-
-                        tmpBestMove = location;
-                     }
-
-                     if (utilityValue >= beta)
-                     {
-                        if (depth == 0)
-                        {
-                           // cout << "Player" << (whichPlayer == playerA ? "A" : "B") << " Evaluation: " << utilityValue << endl;
-                           return tmpBestMove;
-                        }
-                        return utilityValue;
-                     }
-
-                     if (alpha < utilityValue)
-                     {
-                        alpha = utilityValue;
-                     }
-                  }
-
-                  else
-                  {
-                     if (utilityValue > eval)
-                     {
-                        utilityValue = eval;
-                     }
-
-                     if (utilityValue <= alpha)
-                     {
-                        return utilityValue;
-                     }
-
-                     if (beta > utilityValue)
-                     {
-                        beta = utilityValue;
-                     }
-                  }
-               }
-               row -= 1;
-            }
-         }
-
-         column -= jump;
-         jump += 1;
-         row += 1;
-      }
-   }
-/*
+   // Evaluate each move with alpha-beta pruning
    for (location = 0; location < BOARD_SIZE * BOARD_SIZE; location += 1)
    {
       if (board.isValidMove(location))
@@ -520,7 +133,7 @@ double hexGamePlayer::miniMax(Board board, Player whichPlayer, int depth, double
          copyBoard = board;
          copyBoard.makeMove(location, whichPlayer);
 
-         eval = miniMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1, alpha, beta);
+         eval = miniMax(copyBoard, whichPlayer == PlayerA ? PlayerB : PlayerA, depth + 1, alpha, beta);
 
          if (maximizer)
          {
@@ -535,7 +148,6 @@ double hexGamePlayer::miniMax(Board board, Player whichPlayer, int depth, double
             {
                if (depth == 0)
                {
-                  // cout << "Player" << (whichPlayer == playerA ? "A" : "B") << " Evaluation: " << utilityValue << endl;
                   return tmpBestMove;
                }
                return utilityValue;
@@ -566,12 +178,10 @@ double hexGamePlayer::miniMax(Board board, Player whichPlayer, int depth, double
          }
       }
    }
-*/
 
    if (depth == 0)
    {
-      // cout << "Player" << (whichPlayer == playerA ? "A" : "B") << " Evaluation: " << utilityValue << endl;
-      return tmpBestMove;
+     return tmpBestMove;
    }
 
    return utilityValue;
@@ -638,7 +248,6 @@ double hexGamePlayer::neuralNetHeuristic(const Board board, Player whichPlayer)
 	// Now, feed the inputs from the board into our Neural Net
 	for (layer = 0; layer < neuralNetWeights.size(); ++layer)
 	{
-      // cout << endl << endl << endl << "Layer: " << layer << endl << endl << endl;
       outputVector.clear();
 
 		for (rowDestination = 0; rowDestination < neuralNetWeights[layer].size(); ++rowDestination)
@@ -667,8 +276,16 @@ double hexGamePlayer::neuralNetHeuristic(const Board board, Player whichPlayer)
 			}
 
 			// The summation becomes the input for the next layer. The number of inputs for the
-         // next layer will match up with the row depth.
-			outputVector.push_back(sigmoidFunction(summation));
+         // next layer will match up with the row depth. If this is the last layer, we don't
+         // need the threshold function.
+         if (layer == neuralNetWeights.size() -1)
+         {
+         	outputVector.push_back(summation);
+         }
+         else
+         {
+				outputVector.push_back(sigmoidFunction(summation));
+			}
 		}
 
       inputVector = outputVector;

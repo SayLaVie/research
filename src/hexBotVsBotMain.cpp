@@ -28,13 +28,13 @@ int main(int argc, char *argv[])
 
 		if (argument == "-d" || argument == "--depth")
 		{
-			if (arg + 1 >= argc || !isNumeric(argv[argc + 1]))
+			if (arg + 1 >= argc || !isNumeric(argv[arg + 1]))
 			{
 				cerr << "Depth output option requires one positive integer" << endl;
 			}
 
 			arg += 1;
-			MAX_DEPTH = atoi(argv[argc]);
+			MAX_DEPTH = atoi(argv[arg]);
 		}
 
 		else if (argument == "-h" || argument == "--help")
