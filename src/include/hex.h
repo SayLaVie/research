@@ -22,19 +22,19 @@ Global variables
 extern int MAX_DEPTH;
 const int BOARD_SIZE = 5;
 
-enum player {playerA, playerB, none};
+enum Player {PlayerA, PlayerB, None};
 
 class Tile
 {
 private:
-   player owner;
+   Player owner;
    bool bitFlag;
    int location, row, column, rank, parent, turnTaken;
 
 public:
    Tile(int location, int size);
-   player getOwner() const{return owner;}
-   void setOwner(player takenBy) {owner = takenBy;}
+   Player getOwner() const{return owner;}
+   void setOwner(Player takenBy) {owner = takenBy;}
 
    // The flag is whether or not the square is attached to the border
    bool getFlag() const{return bitFlag;}
@@ -70,7 +70,7 @@ public:
    Board(int size = 0);
    Board(const Board &copy);
    Board(vector<Tile> BoardLayout);
-   void makeMove(int location, player mover);
+   void makeMove(int location, Player mover);
    bool isValidMove(int location) const;
    bool isGameOver();
    int getSize() const {return size;}

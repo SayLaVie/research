@@ -22,8 +22,8 @@ private:
    // Private data about this players played games
    int gamesWon, movesMade;
 
-   double miniMax(Board board, player whichPlayer, int depth, double alpha, double beta);
-   double boardEvalLearning(Board board, player whichPlayer);
+   double miniMax(Board board, Player whichPlayer, int depth, double alpha, double beta);
+   double boardEvalLearning(Board board, Player whichPlayer);
 
    double sigmoidFunction(double input);
 
@@ -31,10 +31,10 @@ public:
    // initialize neuralNets with empty vector if not supplied
    hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights = {{{}}});
    hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights, int numGamesWon);
-   int play(const Board &board, player whichPlayer);
+   int play(const Board &board, Player whichPlayer);
 
    // double neuralNetHeuristic(const Board board, player whichPlayer);
-   double neuralNetHeuristic(const Board board, player whichPlayer);
+   double neuralNetHeuristic(const Board board, Player whichPlayer);
 
    // Data modifiers
    void addGameWon() {gamesWon += 1;}

@@ -4,7 +4,7 @@ void printUsage(int exitCode);
 
 bool isNumeric(string input);
 
-player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB);
+Player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB);
 
 void playHexGames(hexWorld &population, ofstream &fout);
 

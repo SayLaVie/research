@@ -12,7 +12,7 @@ Advisor: Dr. Rob LeGrand
 // Helper functions specific to hexEvolution
 void printUsage(int exitCode);
 void playHexGames(hexWorld &population, ofstream &fout);
-player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB);
+Player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB);
 
 int MAX_DEPTH = 0;
 

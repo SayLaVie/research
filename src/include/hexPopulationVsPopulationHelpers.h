@@ -31,7 +31,7 @@ bool isNumeric(string input);
 
 void playHexGames(hexWorld populationA, hexWorld populationB, PopulationPair &gameStats);
 
-player playHexGame(hexGamePlayer botA, hexGamePlayer botB);
+Player playHexGame(hexGamePlayer botA, hexGamePlayer botB);
 
 hexWorld entirePopulationFileParser(ifstream &fin);
 

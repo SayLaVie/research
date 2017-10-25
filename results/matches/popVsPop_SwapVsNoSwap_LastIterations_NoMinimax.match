@@ -3,54 +3,64 @@ Population matchup between:
 	data/1Layer/experiment_Sat_Oct21_2017_20:49:08/iteration14999/population.data
 
 Total games won:
-	data/1Layer/experiment_Sat_Oct21_2017_20:46:43/iteration14999/population.data: 10000
-	data/1Layer/experiment_Sat_Oct21_2017_20:49:08/iteration14999/population.data: 10000
+	data/1Layer/experiment_Sat_Oct21_2017_20:46:43/iteration14999/population.data: 11200
+	data/1Layer/experiment_Sat_Oct21_2017_20:49:08/iteration14999/population.data: 8800
 
 Total number of games won as:
-	PlayerA: 200
-	PlayerB: 19800
+	PlayerA: 17800
+	PlayerB: 2200
 
 Players Sorted by number of wins
 data/1Layer/experiment_Sat_Oct21_2017_20:46:43/iteration14999/population.data:
-	Player62: 100
+	Player50: 200
+	Player99: 200
+	Player95: 200
+	Player87: 200
+	Player69: 200
+	Player61: 200
+	Player51: 200
+	Player42: 200
+	Player40: 200
+	Player31: 200
+	Player26: 200
+	Player25: 200
+	Player23: 200
+	Player22: 200
+	Player8: 200
+	Player9: 200
+	Player4: 100
+	Player77: 100
+	Player76: 100
+	Player75: 100
 	Player74: 100
 	Player73: 100
 	Player72: 100
 	Player71: 100
 	Player70: 100
-	Player69: 100
+	Player79: 100
 	Player68: 100
 	Player67: 100
 	Player66: 100
 	Player65: 100
 	Player64: 100
 	Player63: 100
-	Player75: 100
-	Player61: 100
-	Player60: 100
+	Player62: 100
+	Player5: 100
 	Player59: 100
 	Player58: 100
-	Player57: 100
-	Player56: 100
-	Player55: 100
-	Player54: 100
-	Player53: 100
-	Player52: 100
-	Player51: 100
-	Player87: 100
-	Player99: 100
+	Player88: 100
+	Player1: 100
 	Player98: 100
 	Player97: 100
-	Player96: 100
-	Player95: 100
+	Player2: 100
 	Player94: 100
 	Player93: 100
 	Player92: 100
 	Player91: 100
 	Player90: 100
 	Player89: 100
-	Player88: 100
-	Player50: 100
+	Player78: 100
+	Player3: 100
 	Player86: 100
 	Player85: 100
 	Player84: 100
@@ -58,14 +68,20 @@ data/1Layer/experiment_Sat_Oct21_2017_20:46:43/iteration14999/population.data:
 	Player82: 100
 	Player81: 100
 	Player80: 100
-	Player79: 100
-	Player78: 100
-	Player77: 100
-	Player76: 100
-	Player12: 100
+	Player57: 100
 	Player24: 100
-	Player23: 100
-	Player22: 100
+	Player14: 100
+	Player35: 100
+	Player34: 100
+	Player33: 100
+	Player32: 100
+	Player28: 100
+	Player27: 100
+	Player10: 100
+	Player11: 100
+	Player36: 100
+	Player12: 100
+	Player13: 100
 	Player21: 100
 	Player20: 100
 	Player19: 100
@@ -73,144 +89,128 @@ data/1Layer/experiment_Sat_Oct21_2017_20:46:43/iteration14999/population.data:
 	Player17: 100
 	Player16: 100
 	Player15: 100
-	Player14: 100
-	Player13: 100
-	Player25: 100
-	Player11: 100
-	Player10: 100
-	Player9: 100
-	Player8: 100
-	Player7: 100
+	Player47: 100
+	Player56: 100
+	Player55: 100
+	Player54: 100
+	Player53: 100
+	Player52: 100
 	Player6: 100
-	Player5: 100
-	Player4: 100
-	Player3: 100
-	Player2: 100
-	Player1: 100
-	Player37: 100
+	Player0: 100
 	Player49: 100
 	Player48: 100
-	Player47: 100
+	Player37: 100
 	Player46: 100
 	Player45: 100
 	Player44: 100
 	Player43: 100
-	Player42: 100
+	Player7: 100
 	Player41: 100
-	Player40: 100
 	Player39: 100
 	Player38: 100
-	Player0: 100
-	Player36: 100
-	Player35: 100
-	Player34: 100
-	Player33: 100
-	Player32: 100
-	Player31: 100
-	Player30: 100
-	Player29: 100
-	Player28: 100
-	Player27: 100
-	Player26: 100
+	Player29: 0
+	Player30: 0
+	Player96: 0
+	Player60: 0
 
 data/1Layer/experiment_Sat_Oct21_2017_20:49:08/iteration14999/population.data:
-	Player62: 100
-	Player74: 100
-	Player73: 100
-	Player72: 100
-	Player71: 100
-	Player70: 100
-	Player69: 100
-	Player68: 100
-	Player67: 100
-	Player66: 100
-	Player65: 100
-	Player64: 100
-	Player63: 100
-	Player75: 100
-	Player61: 100
-	Player60: 100
-	Player59: 100
-	Player58: 100
-	Player57: 100
-	Player56: 100
-	Player55: 100
-	Player54: 100
-	Player53: 100
-	Player52: 100
-	Player51: 100
-	Player87: 100
-	Player99: 100
-	Player98: 100
-	Player97: 100
-	Player96: 100
-	Player95: 100
-	Player94: 100
-	Player93: 100
-	Player92: 100
-	Player91: 100
-	Player90: 100
-	Player89: 100
-	Player88: 100
-	Player50: 100
-	Player86: 100
-	Player85: 100
-	Player84: 100
-	Player83: 100
-	Player82: 100
-	Player81: 100
-	Player80: 100
-	Player79: 100
-	Player78: 100
-	Player77: 100
-	Player76: 100
-	Player12: 100
-	Player24: 100
-	Player23: 100
-	Player22: 100
-	Player21: 100
-	Player20: 100
-	Player19: 100
-	Player18: 100
-	Player17: 100
-	Player16: 100
-	Player15: 100
-	Player14: 100
-	Player13: 100
-	Player25: 100
-	Player11: 100
-	Player10: 100
-	Player9: 100
-	Player8: 100
-	Player7: 100
-	Player6: 100
-	Player5: 100
-	Player4: 100
-	Player3: 100
-	Player2: 100
-	Player1: 100
-	Player37: 100
-	Player49: 100
-	Player48: 100
-	Player47: 100
-	Player46: 100
-	Player45: 100
-	Player44: 100
-	Player43: 100
-	Player42: 100
-	Player41: 100
-	Player40: 100
-	Player39: 100
-	Player38: 100
-	Player0: 100
-	Player36: 100
-	Player35: 100
-	Player34: 100
-	Player33: 100
-	Player32: 100
-	Player31: 100
-	Player30: 100
-	Player29: 100
-	Player28: 100
-	Player27: 100
-	Player26: 100
+	Player62: 88
+	Player74: 88
+	Player73: 88
+	Player72: 88
+	Player71: 88
+	Player70: 88
+	Player69: 88
+	Player68: 88
+	Player67: 88
+	Player66: 88
+	Player65: 88
+	Player64: 88
+	Player63: 88
+	Player75: 88
+	Player61: 88
+	Player60: 88
+	Player59: 88
+	Player58: 88
+	Player57: 88
+	Player56: 88
+	Player55: 88
+	Player54: 88
+	Player53: 88
+	Player52: 88
+	Player51: 88
+	Player87: 88
+	Player99: 88
+	Player98: 88
+	Player97: 88
+	Player96: 88
+	Player95: 88
+	Player94: 88
+	Player93: 88
+	Player92: 88
+	Player91: 88
+	Player90: 88
+	Player89: 88
+	Player88: 88
+	Player50: 88
+	Player86: 88
+	Player85: 88
+	Player84: 88
+	Player83: 88
+	Player82: 88
+	Player81: 88
+	Player80: 88
+	Player79: 88
+	Player78: 88
+	Player77: 88
+	Player76: 88
+	Player12: 88
+	Player24: 88
+	Player23: 88
+	Player22: 88
+	Player21: 88
+	Player20: 88
+	Player19: 88
+	Player18: 88
+	Player17: 88
+	Player16: 88
+	Player15: 88
+	Player14: 88
+	Player13: 88
+	Player25: 88
+	Player11: 88
+	Player10: 88
+	Player9: 88
+	Player8: 88
+	Player7: 88
+	Player6: 88
+	Player5: 88
+	Player4: 88
+	Player3: 88
+	Player2: 88
+	Player1: 88
+	Player37: 88
+	Player49: 88
+	Player48: 88
+	Player47: 88
+	Player46: 88
+	Player45: 88
+	Player44: 88
+	Player43: 88
+	Player42: 88
+	Player41: 88
+	Player40: 88
+	Player39: 88
+	Player38: 88
+	Player0: 88
+	Player36: 88
+	Player35: 88
+	Player34: 88
+	Player33: 88
+	Player32: 88
+	Player31: 88
+	Player30: 88
+	Player29: 88
+	Player28: 88
+	Player27: 88
+	Player26: 88

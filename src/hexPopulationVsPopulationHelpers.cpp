@@ -27,9 +27,9 @@ bool isNumeric(string input)
 
 void playHexGames(hexWorld populationA, hexWorld populationB, PopulationPair &gameStats)
 {
-	int numberWinsA, numberWinsB, numPlayers, hexPlayer, playerA, playerB;
+	int numberWinsA, numberWinsB, numPlayers, hexPlayer, populationAPlayer, populationBPlayer;
 	vector<pair<hexGamePlayer, int> > sortedPlayersA, sortedPlayersB;
-	player winner;
+	Player winner;
 	hexGamePlayer hexPlayerA, hexPlayerB;
 
 	numberWinsA = 0;
@@ -39,42 +39,42 @@ void playHexGames(hexWorld populationA, hexWorld populationB, PopulationPair &ga
 	numPlayers = populationA.getNumPlayers();
 
 	// Play two games with each player starting first
-	for (playerA = 0; playerA < numPlayers; playerA += 1)
+	for (populationAPlayer = 0; populationAPlayer < numPlayers; populationAPlayer += 1)
 	{
-		hexPlayerA = populationA.getHexGamePlayer(playerA);
+		hexPlayerA = populationA.getHexGamePlayer(populationAPlayer);
 
-		for (playerB = 0; playerB < numPlayers; playerB += 1)
+		for (populationBPlayer = 0; populationBPlayer < numPlayers; populationBPlayer += 1)
 		{
-			hexPlayerB = populationB.getHexGamePlayer(playerB);
+			hexPlayerB = populationB.getHexGamePlayer(populationBPlayer);
 
 			winner = playHexGame(hexPlayerA, hexPlayerB);
 
-			if (winner == playerA)
+			if (winner == PlayerA)
 			{
 				gameStats.populationATotalWins += 1;
 				gameStats.totalWinsAsFirstPlayer += 1;
-				populationA.addPlayerWin(playerA);
+				populationA.addPlayerWin(populationAPlayer);
 			}
 			else
 			{
 				gameStats.populationBTotalWins += 1;
 				gameStats.totalWinsAsSecondPlayer += 1;
-				populationB.addPlayerWin(playerB);
+				populationB.addPlayerWin(populationBPlayer);
 			}
 
 			winner = playHexGame(hexPlayerB, hexPlayerA);
 
-			if (winner == playerA)
+			if (winner == PlayerA)
 			{
 				gameStats.populationBTotalWins += 1;
 				gameStats.totalWinsAsFirstPlayer += 1;
-				populationB.addPlayerWin(playerB);
+				populationB.addPlayerWin(populationBPlayer);
 			}
 			else
 			{
 				gameStats.populationATotalWins += 1;
 				gameStats.totalWinsAsSecondPlayer += 1;
-				populationA.addPlayerWin(playerA);
+				populationA.addPlayerWin(populationAPlayer);
 			}
 		}
 	}
@@ -93,19 +93,19 @@ void playHexGames(hexWorld populationA, hexWorld populationB, PopulationPair &ga
 	gameStats.sortedPlayersB = sortedPlayersB;
 }
 
-player playHexGame(hexGamePlayer botA, hexGamePlayer botB)
+Player playHexGame(hexGamePlayer botA, hexGamePlayer botB)
 {
 	int turnNumber, playerMove;
 	Board board(BOARD_SIZE);
-	player currentPlayer;
+	Player currentPlayer;
 
 	turnNumber = 0;
 
 	while (!board.isGameOver())
 	{
-		currentPlayer = static_cast<player>(turnNumber % 2);
+		currentPlayer = static_cast<Player>(turnNumber % 2);
 
-		if (currentPlayer == playerA)
+		if (currentPlayer == PlayerA)
 		{
 			playerMove = botA.play(board, currentPlayer);
 		}

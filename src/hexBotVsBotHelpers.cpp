@@ -97,7 +97,7 @@ void playHexGame(hexGamePlayer botA, string nameBotA, hexGamePlayer botB, string
 {
 	int turnNumber, playerMove;
 	Board board(BOARD_SIZE);
-	player currentPlayer;
+	Player currentPlayer;
 
 	turnNumber = 0;
 
@@ -108,19 +108,19 @@ void playHexGame(hexGamePlayer botA, string nameBotA, hexGamePlayer botB, string
 	// BotA is playerA
 	while (!board.isGameOver())
 	{
-		currentPlayer = static_cast<player>(turnNumber % 2);
+		currentPlayer = static_cast<Player>(turnNumber % 2);
 
-		if (currentPlayer == playerA)
+		if (currentPlayer == PlayerA)
 		{
 			// Changed isEvolving value to true (last parameter) in order to use boardEvalLearning instead of minimax			
-			playerMove = botA.play(board, playerA);
-			board.makeMove(playerMove, playerA);
+			playerMove = botA.play(board, PlayerA);
+			board.makeMove(playerMove, PlayerA);
 		}
 		else
 		{
 			// Changed isEvolving value to true (last parameter) in order to use boardEvalLearning instead of minimax
-			playerMove = botB.play(board, playerB);
-			board.makeMove(playerMove, playerB);
+			playerMove = botB.play(board, PlayerB);
+			board.makeMove(playerMove, PlayerB);
 		}
 
 		turnNumber += 1;
@@ -129,7 +129,7 @@ void playHexGame(hexGamePlayer botA, string nameBotA, hexGamePlayer botB, string
 	// Print out results of this match
 	board.printBoard(fout);
 
-	fout << endl << endl << "Winner of this match is " << (currentPlayer == playerA ? nameBotA : nameBotB) << endl << endl << endl;
+	fout << endl << endl << "Winner of this match is " << (currentPlayer == PlayerA ? nameBotA : nameBotB) << endl << endl << endl;
 
 	fout << "\tSecond match" << endl;
 	fout << "Player A: " << nameBotB << endl;
@@ -141,20 +141,20 @@ void playHexGame(hexGamePlayer botA, string nameBotA, hexGamePlayer botB, string
 
 	while (!board.isGameOver())
 	{
-		currentPlayer = static_cast<player>(turnNumber % 2);
+		currentPlayer = static_cast<Player>(turnNumber % 2);
 
-		if (currentPlayer == playerA)
+		if (currentPlayer == PlayerA)
 		{
 			// botB is playerA now
 			// Changed isEvolving value to true (last parameter) in order to use boardEvalLearning instead of minimax			
-			playerMove = botB.play(board, playerA);
-			board.makeMove(playerMove, playerA);
+			playerMove = botB.play(board, PlayerA);
+			board.makeMove(playerMove, PlayerA);
 		}
 		else
 		{
 			// Changed isEvolving value to true (last parameter) in order to use boardEvalLearning instead of minimax			
-			playerMove = botA.play(board, playerB);
-			board.makeMove(playerMove, playerB);
+			playerMove = botA.play(board, PlayerB);
+			board.makeMove(playerMove, PlayerB);
 		}
 
 		turnNumber += 1;
@@ -163,5 +163,5 @@ void playHexGame(hexGamePlayer botA, string nameBotA, hexGamePlayer botB, string
 	// Print out results of match
 	board.printBoard(fout);
 
-	fout << endl << endl << "Winner of this match is " << (currentPlayer == playerA ? nameBotB : nameBotA) << endl;
+	fout << endl << endl << "Winner of this match is " << (currentPlayer == PlayerA ? nameBotB : nameBotA) << endl;
 }

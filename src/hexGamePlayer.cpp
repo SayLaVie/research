@@ -25,9 +25,9 @@ hexGamePlayer::hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights, 
 
 // This function starts off the minimax function with default values, and returns the integer location
 // of which move to play next
-int hexGamePlayer::play(const Board &board, player whichPlayer)
+int hexGamePlayer::play(const Board &board, Player whichPlayer)
 {
-   int moveToMake, location;
+   int moveToMake;
    Board copyBoard;
 
    if (MAX_DEPTH == 0)
@@ -48,22 +48,9 @@ int hexGamePlayer::play(const Board &board, player whichPlayer)
    // There should never be an invalid move returned, so exit with an error here
    cerr << "Invalid move selected" << endl;
    exit(1);
-
-   /*
-   // If no good move was found, simply choose the next available move
-   for (location = 0; location < BOARD_SIZE * BOARD_SIZE; location += 1)
-   {
-      if (board.isValidMove(location))
-      {
-         return location;
-      }
-   }
-
-   return moveToMake;
-   */
 }
 
-double hexGamePlayer::boardEvalLearning(Board board, player whichPlayer)
+double hexGamePlayer::boardEvalLearning(Board board, Player whichPlayer)
 {
    int location, tmpBestMove, column, row, jump;
    double utilityValue, eval;
@@ -72,7 +59,7 @@ double hexGamePlayer::boardEvalLearning(Board board, player whichPlayer)
    tmpBestMove = -1;
 
    // Begin looking for moves in middle of board, going side to side
-   if (whichPlayer == playerA)
+   if (whichPlayer == PlayerA)
    {
       column = 0;
       row = BOARD_SIZE / 2 - ((BOARD_SIZE + 1) % 2);
@@ -214,13 +201,13 @@ double hexGamePlayer::boardEvalLearning(Board board, player whichPlayer)
 
 // This is the recursive minimax function, with a depth limit (maxDepth set in the hex.h file).
 // If it finishes at level 0, will return the location of the best move found.
-double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double alpha, double beta)
+double hexGamePlayer::miniMax(Board board, Player whichPlayer, int depth, double alpha, double beta)
 {
    int location, tmpBestMove, column, row, jump;
    double utilityValue, eval, heuristicValue;
    bool maximizer;
    Board copyBoard;
-   player truePlayer;
+   Player truePlayer;
 
    maximizer = depth % 2 == 0;
 
@@ -236,7 +223,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
       // heuristicValue = neuralNetHeuristic(board, whichPlayer);
       // return maximizer ? heuristicValue : -heuristicValue;
 
-      truePlayer = maximizer ? whichPlayer : (whichPlayer == playerA ? playerB : playerA);
+      truePlayer = maximizer ? whichPlayer : (whichPlayer == PlayerA ? PlayerB : PlayerA);
       heuristicValue = neuralNetHeuristic(board, truePlayer);
 // cout << heuristicValue << endl;
       return heuristicValue;
@@ -247,7 +234,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
 
 
    // Begin looking for moves in middle of board, going side to side
-   if (whichPlayer == playerA)
+   if (whichPlayer == PlayerA)
    {
       column = 0;
       row = BOARD_SIZE / 2 - ((BOARD_SIZE + 1) % 2);
@@ -265,7 +252,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
                copyBoard = board;
                copyBoard.makeMove(location, whichPlayer);
 
-               eval = miniMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1, alpha, beta);
+               eval = miniMax(copyBoard, whichPlayer == PlayerA ? PlayerB : PlayerA, depth + 1, alpha, beta);
 
                if (maximizer)
                {
@@ -331,7 +318,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
                   copyBoard = board;
                   copyBoard.makeMove(location, whichPlayer);
 
-                  eval = miniMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1, alpha, beta);
+                  eval = miniMax(copyBoard, whichPlayer == PlayerA ? PlayerB : PlayerA, depth + 1, alpha, beta);
 
                   if (maximizer)
                   {
@@ -406,7 +393,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
                copyBoard = board;
                copyBoard.makeMove(location, whichPlayer);
 
-               eval = miniMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1, alpha, beta);
+               eval = miniMax(copyBoard, whichPlayer == PlayerA ? PlayerB : PlayerA, depth + 1, alpha, beta);
 
                if (maximizer)
                {
@@ -471,7 +458,7 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
                   copyBoard = board;
                   copyBoard.makeMove(location, whichPlayer);
 
-                  eval = miniMax(copyBoard, whichPlayer == playerA ? playerB : playerA, depth + 1, alpha, beta);
+                  eval = miniMax(copyBoard, whichPlayer == PlayerA ? PlayerB : PlayerA, depth + 1, alpha, beta);
 
                   if (maximizer)
                   {
@@ -592,16 +579,16 @@ double hexGamePlayer::miniMax(Board board, player whichPlayer, int depth, double
 
 
 // Neural net takes in vector of vectors of weights, returns a double between 0 and 1
-double hexGamePlayer::neuralNetHeuristic(const Board board, player whichPlayer)
+double hexGamePlayer::neuralNetHeuristic(const Board board, Player whichPlayer)
 {
 	int location, jump, layer, rowOrigination, rowDestination;
 	vector<int> boardState;
 	vector<double> inputVector, outputVector;
 	double summation;
-	player thisOwner;
+	Player thisOwner;
 
    // The board needs to look differently depending on which player we are
-   if (whichPlayer == playerA)
+   if (whichPlayer == PlayerA)
    {
 
    	// First, extract the state of the current board
@@ -611,7 +598,7 @@ double hexGamePlayer::neuralNetHeuristic(const Board board, player whichPlayer)
    	{
          thisOwner = board.getBoard()[location].getOwner();
 
-   		if (thisOwner == none)
+   		if (thisOwner == None)
    		{
             boardState.push_back(0);
          }
@@ -634,7 +621,7 @@ double hexGamePlayer::neuralNetHeuristic(const Board board, player whichPlayer)
          {
             thisOwner = board.getBoard()[jump].getOwner();
 
-            if (thisOwner == none)
+            if (thisOwner == None)
             {
                boardState.push_back(0);
             } else if (thisOwner == whichPlayer)

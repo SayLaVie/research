@@ -26,26 +26,26 @@ bool isNumeric(string input)
 	return true;
 }
 
-player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
+Player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
 {
 	int playerMove, numberOfTurns;
-	player currentPlayer;
+	Player currentPlayer;
 	Board board(BOARD_SIZE);
 
 	numberOfTurns = 0;
 
 	while (!board.isGameOver())
 	{
-		currentPlayer = static_cast<player>(numberOfTurns % 2);
+		currentPlayer = static_cast<Player>(numberOfTurns % 2);
 
 		// Call .play with a depth of 0 to signify that we aren't using minimax
-		if (currentPlayer == playerA)
+		if (currentPlayer == PlayerA)
 		{
-			playerMove = hexPlayerA.play(board, playerA);
+			playerMove = hexPlayerA.play(board, currentPlayer);
 		}
 		else
 		{
-			playerMove = hexPlayerB.play(board, playerB);
+			playerMove = hexPlayerB.play(board, currentPlayer);
 		}
 
 		// Put an 'if not valid move' conditional here
@@ -62,7 +62,7 @@ player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
 void playHexGames(hexWorld &population, ofstream &fout)
 {
 	int playerLocation, currentNeighbor;
-	player gameWinner;
+	Player gameWinner;
 	vector<int> neighboringPlayers;
 
 	for (playerLocation = 0; playerLocation < population.getNumPlayers(); playerLocation += 1)
@@ -70,17 +70,12 @@ void playHexGames(hexWorld &population, ofstream &fout)
 		neighboringPlayers.clear();
 		neighboringPlayers = population.getNeighbors(playerLocation);
 
-		/**
-		Testing Area
-		**/
-		// fout << "\tPlayer" << playerLocation << " vs:" << endl;
-
 		for (currentNeighbor = 0; currentNeighbor < neighboringPlayers.size(); currentNeighbor += 1)
 		{
 			// fout << "\t\t" << neighboringPlayers[currentNeighbor] << ": ";
 			gameWinner = playHexGame(population.getHexGamePlayer(playerLocation), population.getHexGamePlayer(neighboringPlayers[currentNeighbor]));
 
-			if (gameWinner == playerA)
+			if (gameWinner == PlayerA)
 			{
 				// fout << "Win" << endl;
 				population.addPlayerWin(playerLocation);

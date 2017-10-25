@@ -10,7 +10,7 @@ advisor: Dr. Rob LeGrand
 // Constructor used during board creation
 Tile::Tile(int location, int size)
 {
-   owner = none;
+   owner = None;
    turnTaken = 0;
    rank = 0;
    parent = location;
@@ -108,7 +108,7 @@ int Board::FindSet(int x)
 }
 
 // Updates the owner of a tile, and calls findNeighbors to determine flag value
-void Board::makeMove(int location, player mover)
+void Board::makeMove(int location, Player mover)
 {
    Tile *locationTile = &(BoardLayout[location]);
    int row, column;
@@ -125,7 +125,7 @@ void Board::makeMove(int location, player mover)
       turnCounter += 1;
 
       // Set the border flag for this tile
-      locationTile->setFlag(locationTile->getOwner() == playerA ? column == 0 : row == 0);
+      locationTile->setFlag(locationTile->getOwner() == PlayerA ? column == 0 : row == 0);
 
       findNeighbors(location);
    }
@@ -138,7 +138,7 @@ void Board::findNeighbors(int location)
 
    int row, column, neighbor;
    bool left, right, up, down, originalFlag;
-   player mover;
+   Player mover;
 
    mover = BoardLayout[location].getOwner();
    row = locationTile->getRow();
@@ -243,7 +243,7 @@ void Board::findNeighbors(int location)
 // Checks if the hypothetical move is out-of-bounds, or if it is already owned by a player
 bool Board::isValidMove(int location) const
 {
-   return location >= 0 && location < size * size && BoardLayout[location].getOwner() == none;
+   return location >= 0 && location < size * size && BoardLayout[location].getOwner() == None;
 }
 
 // Searches the border associated with a player and checks the flag's of those tiles to see if they are connected to the border on the opposite side
@@ -256,7 +256,7 @@ bool Board::isGameOver()
    {
       location = size * row + column;
 
-      if (BoardLayout[location].getOwner() == playerA && BoardLayout[FindSet(location)].getFlag() == true)
+      if (BoardLayout[location].getOwner() == PlayerA && BoardLayout[FindSet(location)].getFlag() == true)
       {
          return true;
       }
@@ -271,7 +271,7 @@ bool Board::isGameOver()
    {
       location = size * row + column;
 
-      if (BoardLayout[location].getOwner() == playerB && BoardLayout[FindSet(location)].getFlag() == true)
+      if (BoardLayout[location].getOwner() == PlayerB && BoardLayout[FindSet(location)].getFlag() == true)
       {
          return true;
       }
@@ -314,11 +314,11 @@ void Board::printBoard() const
             ++offset;
          }
 
-         if (BoardLayout[hex].getOwner() == playerA)
+         if (BoardLayout[hex].getOwner() == PlayerA)
          {
             cout << setw(5 - offset) << right << "A" << BoardLayout[hex].getTurnTaken();
          }
-         else if (BoardLayout[hex].getOwner() == playerB)
+         else if (BoardLayout[hex].getOwner() == PlayerB)
          {
             cout << setw(5 - offset) << right << "B" << BoardLayout[hex].getTurnTaken();
          }
@@ -373,11 +373,11 @@ void Board::printBoard(ofstream &fout)
             ++offset;
          }
 
-         if (BoardLayout[hex].getOwner() == playerA)
+         if (BoardLayout[hex].getOwner() == PlayerA)
          {
             fout << setw(5 - offset) << right << "A" << BoardLayout[hex].getTurnTaken();
          }
-         else if (BoardLayout[hex].getOwner() == playerB)
+         else if (BoardLayout[hex].getOwner() == PlayerB)
          {
             fout << setw(5 - offset) << right << "B" << BoardLayout[hex].getTurnTaken();
          }

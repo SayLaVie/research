@@ -97,9 +97,9 @@ void playHexGame(hexGamePlayer bot)
 	Board board(BOARD_SIZE);
 	string answer, move;
 	int row, column, playerMove, turnNumber;
-	double botEval;
+	// double botEval;
 	bool answerQuestion, madeMove;
-	player currentPlayer, humanPlayer;
+	Player currentPlayer, humanPlayer;
 
 	answerQuestion = false;
 
@@ -120,11 +120,11 @@ void playHexGame(hexGamePlayer bot)
 
 	if (toupper(answer[0]) == 'Y')
 	{
-		humanPlayer = playerA;
+		humanPlayer = PlayerA;
 	}
 	else
 	{
-		humanPlayer = playerB;
+		humanPlayer = PlayerB;
 	}
 
 	turnNumber = 0;
@@ -135,7 +135,7 @@ void playHexGame(hexGamePlayer bot)
 
 	while (!board.isGameOver())
 	{
-		currentPlayer = static_cast<player>(turnNumber % 2);
+		currentPlayer = static_cast<Player>(turnNumber % 2);
 
 		if (currentPlayer == humanPlayer)
 		{
