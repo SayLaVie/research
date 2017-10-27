@@ -46,7 +46,7 @@ private:
 	void swapWeightsBetweenPlayers(int playerALocation, int playerBLocation);
 
 public:
-	hexWorld(int numPlayers = 100, vector<int> netShape = {BOARD_SIZE * BOARD_SIZE, 1});
+	hexWorld(int numPlayers = 100, vector<int> netShape = {BOARD_SIZE * BOARD_SIZE, BOARD_SIZE, 1});
 
 	hexWorld(vector<hexGamePlayer> hexGamePlayers);
 

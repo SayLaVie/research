@@ -17,3 +17,6 @@ void printCurrentGenerationToFile(hexWorld population, ofstream &fout);
 // Find a weighted average for each weight throughout the population, and create a hexGamePlayer
 // with these weights.
 void printPopulationRepresentative(hexWorld population, ofstream &fout);
+
+// Print a data file for each player in the iteration
+void printEachPopulationPlayer(hexWorld population, string fileNamePrefix);

@@ -236,3 +236,28 @@ void printPopulationRepresentative(hexWorld population, ofstream &fout)
 
 	fout << "endPlayer" << endl;
 }
+
+void printEachPopulationPlayer(hexWorld population, string fileNamePrefix)
+{
+	string playerFileName;
+	int player;
+	ofstream fout;
+
+	for (player = 0; player < population.getNumPlayers(); player += 1)
+	{
+		playerFileName = fileNamePrefix + "/player" + to_string(player) + ".data";
+
+		fout.open(playerFileName);
+
+		if (!fout.is_open())
+		{
+			cerr << "Trouble opening file " << playerFileName << endl;
+			exit(1);
+		}
+
+		fout << "// Player" << player << endl;
+		population.getHexGamePlayer(player).printWeights(fout);
+
+		fout.close();
+	}
+}

@@ -217,6 +217,8 @@ int main(int argc, char *argv[])
 			printPopulationRepresentative(population, foutSave);
 
 			foutSave.close();
+
+			printEachPopulationPlayer(population, iterationDirectory);
 		}
 	}
 
