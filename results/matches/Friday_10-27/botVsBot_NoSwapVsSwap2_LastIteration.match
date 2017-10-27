@@ -1,0 +1,42 @@
+	First match
+Player A: data/1Layer/NoSwap/experiment_Wed_Oct25_2017_01:46:56/iteration14999/player94.data
+Player B: data/1Layer/Swap/experiment_Thu_Oct26_2017_18:58:29/iteration14999/player37.data
+
+
+                   *A*  *B*  *C*  *D*  *E*
+
+           *4*  A11   A3   A4   B3   B9    *4*
+
+        *3*   B7   B0   A2   B5   A9    *3*
+
+     *2*   B8   A5   B1   A6   A8    *2*
+
+  *1*  B10   B6   B2   A7   A0    *1*
+
+*0*  A10   --   B4   --   A1    *0*
+
+   *A*  *B*  *C*  *D*  *E*
+
+Winner of this match is data/1Layer/NoSwap/experiment_Wed_Oct25_2017_01:46:56/iteration14999/player94.data
+
+
+	Second match
+Player A: data/1Layer/Swap/experiment_Thu_Oct26_2017_18:58:29/iteration14999/player37.data
+Player B: data/1Layer/NoSwap/experiment_Wed_Oct25_2017_01:46:56/iteration14999/player94.data
+
+
+                   *A*  *B*  *C*  *D*  *E*
+
+           *4*   B1   B0   B8   B9   A9    *4*
+
+        *3*   --   B7   B6   A5   A3    *3*
+
+     *2*   A4   A2   A1   B2   B4    *2*
+
+  *1*   --   A6   B5   A0   B3    *1*
+
+*0*  A10   --   A8   A7  B10    *0*
+
+   *A*  *B*  *C*  *D*  *E*
+
+Winner of this match is data/1Layer/NoSwap/experiment_Wed_Oct25_2017_01:46:56/iteration14999/player94.data
