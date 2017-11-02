@@ -29,7 +29,9 @@ void printUsage(int exitCode);
 
 bool isNumeric(string input);
 
-void playHexGames(hexWorld populationA, hexWorld populationB, PopulationPair &gameStats);
+void playHexGamesBipartite(hexWorld populationA, hexWorld populationB, PopulationPair &gameStats);
+
+void playHexGamesMelee(hexWorld populationA, hexWorld populationB, PopulationPair &gameStats);
 
 Player playHexGame(hexGamePlayer botA, hexGamePlayer botB);
 

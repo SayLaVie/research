@@ -437,12 +437,28 @@ void swapWeights(vector<vector<vector<double> > > &net)
 		numOriginationsB = net[randomLayerB][randomDestinationB].size();
 
 		// uniform_int_distributions for choosing A and B's randomOrigination
-		uniform_int_distribution<int> randomOriginationGenA(0, numOriginationsA);
-		uniform_int_distribution<int> randomOriginationGenB(0, numOriginationsB);
+		uniform_int_distribution<int> randomOriginationGenA(0, numOriginationsA - 1);
+		uniform_int_distribution<int> randomOriginationGenB(0, numOriginationsB - 1);
 
 		// Choose random rowOriginations for A and B
 		randomOriginationA = randomOriginationGenA(seedGenerator);
 		randomOriginationB = randomOriginationGenB(seedGenerator);
+	}
+
+	if (std::isnan(net[randomLayerA][randomDestinationA][randomOriginationA]) ||
+		std::isnan(net[randomLayerB][randomDestinationB][randomOriginationB]))
+	{
+		cerr << "Invalid weight selected for swap" << endl;
+		cerr << "\tChoices for A:" << endl;
+		cerr << "\t\tLayer: " << randomLayerA << "\tnum layers: " << numLayers << endl;
+		cerr << "\t\tDest: " << randomDestinationA << "\tnum Dests: " << numDestinationsA << endl;
+		cerr << "\t\tOrig: " << randomOriginationA << "\tnum Origs: " << numOriginationsA << endl;
+		cerr << "\t\tWeight for A: " << net[randomLayerA][randomDestinationA][randomOriginationA] << endl;		
+		cerr << "\tChoices for B:" << endl;
+		cerr << "\t\tLayer: " << randomLayerB << "\tnum layers: " << numLayers << endl;
+		cerr << "\t\tDest: " << randomDestinationB << "\tnum Dests: " << numDestinationsB << endl;
+		cerr << "\t\tOrig: " << randomOriginationB << "\tnum Origs: " << numOriginationsB << endl;
+		cerr << "\t\tWeight for B: " << net[randomLayerB][randomDestinationB][randomOriginationB] << endl;
 	}
 
 	swapTemp = net[randomLayerA][randomDestinationA][randomOriginationA];

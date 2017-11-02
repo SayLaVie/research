@@ -1,0 +1,20 @@
+Evolving a Hex-Playing Agent
+Michael McCarver and Rob LeGrand, PhD
+
+Intro with related work
+
+Hex is an adversarial board game in which there is always exactly one winner. The game was invented in 1942 by Piet Hein, and independently reinvented in 1948 by John Nash. John Nash offered an existence proof in 1949 of a first-player advantage, but no general winning strategy exists for the game (Gardner). An exhaustive search with a minimax style algorithm yields perfect play, but the running time of such a search increases exponentially as board sizes grow. The purpose of this research is to:
+   1) Create a strong Hex player that relies on an ANN (artificial neural network) to make evaluations of the state of a Hex board during any stage of play, so that minimax search strategies can be bypassed entirely.
+   2) Evaluate the effects of the size and shape of ANN on the ability of the ANN to learn good board evaluation
+   3) Evaluate the effects of the evolutionary strategies of the genetic algorithm on the ability of the ANN to learn good board evaluation
+
+Similar research to ours exists. Young, Vasan, and Hayward used Deep Q-learning and self-play to train a CNN (convolutional neural network) to play Hex on a 13x13 board with no search. One key difference between our studies is that Young, Vasan, and Hayward began their experiment with supervised training of their agent on a database of games. Our experiment is completely unsupervised. David Fogel used a similar approach to ours to teach an ANN to play checkers, as published in his book 'Blondie 24'. His algorithm was also completely unsupervised, but it still utilized a depth-limited minimax search.
+
+
+
+
+
+Sources
+
+Martin Gardner "Hexaflexagons, Probability Paradoxes, and the Tower of Hanoi" (might be a more appropriate citation media)
+

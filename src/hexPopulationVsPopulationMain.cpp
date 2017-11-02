@@ -6,6 +6,7 @@ int main (int argc, char *argv[])
 {
 	int arg, player;
 	string outputFile, populationAFileName, populationBFileName, argument;
+	bool playBipartite;
 	ofstream fout;
 	ifstream fin;
 	PopulationPair gameStats;
@@ -13,12 +14,20 @@ int main (int argc, char *argv[])
 	outputFile = "results/population.match";
 	MAX_DEPTH = 0;
 
+	// Default is playing every player against every player
+	playBipartite = false;
+
 	// Parse through options
 	for (arg = 1; arg < argc; arg += 1)
 	{
 		argument = argv[arg];
 
-		if (argument == "-d" || argument == "--depth")
+		if (argument == "-b" || argument == "--bipartite")
+		{
+			playBipartite = true;
+		}
+
+		else if (argument == "-d" || argument == "--depth")
 		{
 			if (arg + 1 >= argc || !isNumeric(argv[arg + 1]))
 			{
@@ -108,7 +117,15 @@ int main (int argc, char *argv[])
 		printUsage(1);
 	}
 
-	playHexGames(populationA, populationB, gameStats);
+	if (playBipartite)
+	{
+		playHexGamesBipartite(populationA, populationB, gameStats);		
+	}
+	else
+	{
+		playHexGamesMelee(populationA, populationB, gameStats);
+	}
+
 
 	// Print out game stats to output file
 	fout << "Population matchup between:" << endl;

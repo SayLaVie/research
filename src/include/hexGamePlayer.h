@@ -46,6 +46,7 @@ public:
    double getWeight(int layer, int rowDestination, int rowOrigination);
    void setWeight(int layer, int rowDestination, int rowOrigination, double newWeight);
    void printWeights(ofstream &fout);
+   void printWeights();
 
    vector<vector<vector<double> > > getNet() {return neuralNetWeights;}
 };

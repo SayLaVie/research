@@ -4,6 +4,7 @@ void printUsage(int exitCode)
 {
 	cerr << "Usage: hexPopulationVsPopulation <option(s)>" << endl;
 	cerr << "Options:" << endl;
+	cerr << "\t-b,--bipartite\t\tStrictly play agents from different populations (no intermingling)" << endl;
 	cerr << "\t-d,--depth\t\tSpecify a depth for the minimax search (default: depth=0 i.e. do not use minimax)" << endl;
 	cerr << "\t-h,--help\t\tShow this message" << endl;
 	cerr << "\t-o,--output\t\tSpecify the relative or full path name of a file to print data to (default: results/population.match" << endl;
@@ -25,7 +26,7 @@ bool isNumeric(string input)
 	return true;
 }
 
-void playHexGames(hexWorld populationA, hexWorld populationB, PopulationPair &gameStats)
+void playHexGamesBipartite(hexWorld populationA, hexWorld populationB, PopulationPair &gameStats)
 {
 	int numberWinsA, numberWinsB, numPlayers, hexPlayer, populationAPlayer, populationBPlayer;
 	vector<pair<hexGamePlayer, int> > sortedPlayersA, sortedPlayersB;
@@ -78,6 +79,157 @@ void playHexGames(hexWorld populationA, hexWorld populationB, PopulationPair &ga
 			}
 		}
 	}
+
+	// Push players of both populations into vectors for sorting
+	for (hexPlayer = 0; hexPlayer < numPlayers; hexPlayer += 1)
+	{
+		sortedPlayersA.push_back(pair<hexGamePlayer, int>(populationA.getHexGamePlayer(hexPlayer), hexPlayer));
+		sortedPlayersB.push_back(pair<hexGamePlayer, int>(populationB.getHexGamePlayer(hexPlayer), hexPlayer));
+	}
+
+	sort(sortedPlayersA.begin(), sortedPlayersA.end(), compare);
+	sort(sortedPlayersB.begin(), sortedPlayersB.end(), compare);
+
+	gameStats.sortedPlayersA = sortedPlayersA;
+	gameStats.sortedPlayersB = sortedPlayersB;
+}
+
+void playHexGamesMelee(hexWorld populationA, hexWorld populationB, PopulationPair &gameStats)
+{
+	int numberWinsA, numberWinsB, numPlayers, hexPlayer, playerA, playerB;
+	vector<pair<hexGamePlayer, int> > sortedPlayersA, sortedPlayersB;
+	Player winner;
+	hexGamePlayer hexPlayerA, hexPlayerB;
+
+	numberWinsA = 0;
+	numberWinsB = 0;
+
+	// * Assuming that both populations are the same size *
+	numPlayers = populationA.getNumPlayers();
+
+	// Play populationA against itself
+	for (playerA = 0; playerA < numPlayers; playerA += 1)
+	{
+		hexPlayerA = populationA.getHexGamePlayer(playerA);
+
+		for (playerB = 0; playerB < numPlayers; playerB += 1)
+		{
+			if (playerA != playerB)
+			{
+				hexPlayerB = populationA.getHexGamePlayer(playerB);
+
+				winner = playHexGame(hexPlayerA, hexPlayerB);
+
+				if (winner == PlayerA)
+				{
+					gameStats.totalWinsAsFirstPlayer += 1;
+					populationA.addPlayerWin(playerA);
+				}
+				else
+				{
+					gameStats.totalWinsAsSecondPlayer += 1;
+					populationA.addPlayerWin(playerB);
+				}
+
+				winner = playHexGame(hexPlayerB, hexPlayerA);
+
+
+				if (winner == PlayerA)
+				{
+					gameStats.totalWinsAsFirstPlayer += 1;
+					populationA.addPlayerWin(playerB);
+				}
+				else
+				{
+					gameStats.totalWinsAsSecondPlayer += 1;
+					populationA.addPlayerWin(playerA);
+				}
+			}
+		}
+	}
+
+		// Play populationB against itself
+	for (playerA = 0; playerA < numPlayers; playerA += 1)
+	{
+		hexPlayerA = populationB.getHexGamePlayer(playerA);
+
+		for (playerB = 0; playerB < numPlayers; playerB += 1)
+		{
+			if (playerA != playerB)
+			{
+				hexPlayerB = populationB.getHexGamePlayer(playerB);
+
+				winner = playHexGame(hexPlayerA, hexPlayerB);
+
+				if (winner == PlayerA)
+				{
+					gameStats.totalWinsAsFirstPlayer += 1;
+					populationB.addPlayerWin(playerA);
+				}
+				else
+				{
+					gameStats.totalWinsAsSecondPlayer += 1;
+					populationB.addPlayerWin(playerB);
+				}
+
+				winner = playHexGame(hexPlayerB, hexPlayerA);
+
+
+				if (winner == PlayerA)
+				{
+					gameStats.totalWinsAsFirstPlayer += 1;
+					populationB.addPlayerWin(playerB);
+				}
+				else
+				{
+					gameStats.totalWinsAsSecondPlayer += 1;
+					populationB.addPlayerWin(playerA);
+				}
+			}
+		}
+	}
+
+	// Play populationA against populationB
+	for (playerA = 0; playerA < numPlayers; playerA += 1)
+	{
+		hexPlayerA = populationA.getHexGamePlayer(playerA);
+
+		for (playerB = 0; playerB < numPlayers; playerB += 1)
+		{
+			hexPlayerB = populationB.getHexGamePlayer(playerB);
+
+			winner = playHexGame(hexPlayerA, hexPlayerB);
+
+			if (winner == PlayerA)
+			{
+				gameStats.populationATotalWins += 1;
+				gameStats.totalWinsAsFirstPlayer += 1;
+				populationA.addPlayerWin(playerA);
+			}
+			else
+			{
+				gameStats.populationATotalWins += 1;
+				gameStats.totalWinsAsSecondPlayer += 1;
+				populationB.addPlayerWin(playerB);
+			}
+
+			winner = playHexGame(hexPlayerB, hexPlayerA);
+
+
+			if (winner == PlayerA)
+			{
+				gameStats.populationBTotalWins += 1;
+				gameStats.totalWinsAsFirstPlayer += 1;
+				populationB.addPlayerWin(playerB);
+			}
+			else
+			{
+				gameStats.populationATotalWins += 1;
+				gameStats.totalWinsAsSecondPlayer += 1;
+				populationA.addPlayerWin(playerA);
+			}
+		}
+	}	
 
 	// Push players of both populations into vectors for sorting
 	for (hexPlayer = 0; hexPlayer < numPlayers; hexPlayer += 1)

@@ -51,7 +51,9 @@ int hexGamePlayer::play(const Board &board, Player whichPlayer)
    cerr << "Invalid move selected at turn " << board.getTurn() << " by player " << (whichPlayer == PlayerA ? "PlayerA" : "PlayerB") << endl;
    board.printBoard();
    cout << endl;
-   exit(1);
+   printWeights();
+   // exit(1);
+   return -1;
 }
 
 double hexGamePlayer::boardEvalLearning(Board board, Player whichPlayer)
@@ -84,6 +86,23 @@ double hexGamePlayer::boardEvalLearning(Board board, Player whichPlayer)
    			tmpBestMove = location;
    		}
    	}
+   }
+
+   // If an error is about to be thrown, print out some data for debugging
+   if (tmpBestMove == -1)
+   { 
+	   // for (location = 0; location < BOARD_SIZE * BOARD_SIZE; location += 1)
+	   // {
+	   // 	if (board.isValidMove(location))
+	   // 	{
+	   // 		copyBoard = board;
+	   // 		copyBoard.makeMove(location, whichPlayer);
+
+	   // 		eval = neuralNetHeuristic(copyBoard, whichPlayer);
+
+	   // 		cout << "Hypothetical move: " << location << "\tEval: " << eval << endl;
+	   // 	}
+	   // }  	
    }
 
    return tmpBestMove;
@@ -234,10 +253,14 @@ double hexGamePlayer::neuralNetHeuristic(const Board board, Player whichPlayer)
             if (thisOwner == None)
             {
                boardState.push_back(0);
-            } else if (thisOwner == whichPlayer)
+            }
+
+            else if (thisOwner == whichPlayer)
             {
                boardState.push_back(1);
-            } else
+            }
+
+            else
             {
                boardState.push_back(-1);
             }
@@ -278,12 +301,42 @@ double hexGamePlayer::neuralNetHeuristic(const Board board, Player whichPlayer)
 			// The summation becomes the input for the next layer. The number of inputs for the
          // next layer will match up with the row depth. If this is the last layer, we don't
          // need the threshold function.
-         if (layer == neuralNetWeights.size() -1)
+         if (layer == neuralNetWeights.size() - 1)
          {
+         	if (std::isnan(summation))
+         	{
+         		cerr << "isnan in un-thresholded summation" << endl;
+         		cerr << "\tlayer " << layer << " rowDest " << rowDestination << " rowOrigination " << rowOrigination << endl;
+         		cerr << "bias " << neuralNetWeights[layer][rowDestination][0] << endl;
+
+         		for (rowOrigination = 1; rowOrigination < neuralNetWeights[layer][rowDestination].size(); ++rowOrigination)
+         		{
+         			cerr << "rowOrigination " << rowOrigination << endl;
+         			cerr << "\t\tinput " << inputVector[rowOrigination - 1] << endl;
+         			cerr << "\t\tweight " << neuralNetWeights[layer][rowDestination][rowOrigination] << endl;
+         			cerr << endl;
+         		}
+         	}
+
          	outputVector.push_back(summation);
          }
          else
          {
+         	// Bug finding things
+         	if (std::isnan(sigmoidFunction(summation)))
+         	{
+         		cerr << "sigmoid function returns nan" << endl;
+         		cerr << "\tlayer " << layer << " rowDest " << rowDestination << " rowOrigination " << rowOrigination << endl;
+
+         		for (rowOrigination = 1; rowOrigination < neuralNetWeights[layer][rowDestination].size(); ++rowOrigination)
+         		{
+         			cerr << "rowOrigination " << rowOrigination << endl;
+         			cerr << "\t\tinput " << boardState[rowOrigination - 1] << endl;
+         			cerr << "\t\tweight " << neuralNetWeights[layer][rowDestination][rowOrigination] << endl;
+         			cerr << endl;
+         		}         		
+         	}
+
 				outputVector.push_back(sigmoidFunction(summation));
 			}
 		}
@@ -293,6 +346,13 @@ double hexGamePlayer::neuralNetHeuristic(const Board board, Player whichPlayer)
 
    // The last input vector should have only one entry -- the final output of
    // the neural net.
+
+	if (std::isnan(sigmoidFunction(summation)))
+	{
+		// cerr << "Summation: " << summation << endl;
+		// cerr << "Layer " << layer << endl;
+		// cerr << "RowDestination " << rowDestination << endl;
+	}
 
    return inputVector[0];
 }
@@ -341,4 +401,27 @@ void hexGamePlayer::printWeights(ofstream &fout)
       }
    }
    fout << "endPlayer" << endl;
+}
+
+void hexGamePlayer::printWeights()
+{
+   cerr << "stat " << gamesWon << endl;
+
+   for (int layer = 0; layer < neuralNetWeights.size(); layer += 1)
+   {
+      cerr << "\tlayer" << endl;
+
+      for (int rowDestination = 0; rowDestination < neuralNetWeights[layer].size(); rowDestination += 1)
+      {
+         cerr << "\t\tnode ";
+
+         for (int rowOrigination = 0; rowOrigination < neuralNetWeights[layer][rowDestination].size(); rowOrigination += 1)
+         {
+            cerr << neuralNetWeights[layer][rowDestination][rowOrigination] << ',';
+         }
+
+         cerr << endl;
+      }
+   }
+   cerr << "endPlayer" << endl;
 }

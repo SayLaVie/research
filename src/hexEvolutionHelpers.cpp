@@ -49,6 +49,10 @@ Player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
 		}
 
 		// Put an 'if not valid move' conditional here
+		if (!board.isValidMove(playerMove))
+		{
+			return None;
+		}
 
 		board.makeMove(playerMove, currentPlayer);
 
@@ -77,12 +81,15 @@ void playHexGames(hexWorld &population, ofstream &fout)
 
 			if (gameWinner == PlayerA)
 			{
-				// fout << "Win" << endl;
 				population.addPlayerWin(playerLocation);
+			}
+			else if (gameWinner == None)
+			{
+				cerr << "invalid move made in matchup between players " << playerLocation << " and " << neighboringPlayers[currentNeighbor] << endl;
+				exit(1);
 			}
 			else
 			{
-				// fout << "Loss" << endl;
 				population.addPlayerWin(neighboringPlayers[currentNeighbor]);
 			}
 		}
