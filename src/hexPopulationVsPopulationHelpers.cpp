@@ -131,6 +131,7 @@ void playHexGamesMelee(hexWorld populationA, hexWorld populationB, PopulationPai
 					populationA.addPlayerWin(playerB);
 				}
 
+				// Switch players
 				winner = playHexGame(hexPlayerB, hexPlayerA);
 
 
@@ -172,6 +173,7 @@ void playHexGamesMelee(hexWorld populationA, hexWorld populationB, PopulationPai
 					populationB.addPlayerWin(playerB);
 				}
 
+				// Switch positions
 				winner = playHexGame(hexPlayerB, hexPlayerA);
 
 
@@ -208,11 +210,12 @@ void playHexGamesMelee(hexWorld populationA, hexWorld populationB, PopulationPai
 			}
 			else
 			{
-				gameStats.populationATotalWins += 1;
+				gameStats.populationBTotalWins += 1;
 				gameStats.totalWinsAsSecondPlayer += 1;
 				populationB.addPlayerWin(playerB);
 			}
 
+			// Switch positions
 			winner = playHexGame(hexPlayerB, hexPlayerA);
 
 
