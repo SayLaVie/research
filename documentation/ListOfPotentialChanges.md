@@ -13,3 +13,6 @@ This is a list of potential variables we can adjust throughout the research proc
 - Is the coin toss biased?
 - Information to be considered in the fitness function
    - numMovesMade during game
+- Copies instead of Swaps (in swappingStrategy)
+- Inertia
+   - Whether or not we bias keeping one's own genes
