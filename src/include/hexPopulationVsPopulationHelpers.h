@@ -15,6 +15,8 @@ struct PopulationPair
 
 	int totalWinsAsFirstPlayer = 0;
 	int totalWinsAsSecondPlayer = 0;
+
+	vector<pair<pair<hexGamePlayer, int>, int> > sortedPlayersAll;
 };
 
 extern struct Comparison
@@ -24,6 +26,14 @@ extern struct Comparison
 		return a.first.getGamesWon() > b.first.getGamesWon();
 	}
 } compare;
+
+extern struct ComparisonAll
+{
+	bool operator() (pair<pair<hexGamePlayer, int>, int> a, pair<pair<hexGamePlayer, int>, int> b)
+	{
+		return a.first.first.getGamesWon() > b.first.first.getGamesWon();
+	}
+} compareAll;
 
 void printUsage(int exitCode);
 

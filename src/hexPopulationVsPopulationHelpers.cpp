@@ -98,6 +98,7 @@ void playHexGamesMelee(hexWorld populationA, hexWorld populationB, PopulationPai
 {
 	int numberWinsA, numberWinsB, numPlayers, hexPlayer, playerA, playerB;
 	vector<pair<hexGamePlayer, int> > sortedPlayersA, sortedPlayersB;
+	vector<pair<pair<hexGamePlayer, int>, int> > sortedPlayersAll;
 	Player winner;
 	hexGamePlayer hexPlayerA, hexPlayerB;
 
@@ -204,6 +205,9 @@ void playHexGamesMelee(hexWorld populationA, hexWorld populationB, PopulationPai
 		}
 	}	
 
+	// Currently not keeping track of individually sorted populations
+	// Code is still here in case we change our minds in the future
+/*
 	// Push players of both populations into vectors for sorting
 	for (hexPlayer = 0; hexPlayer < numPlayers; hexPlayer += 1)
 	{
@@ -216,6 +220,20 @@ void playHexGamesMelee(hexWorld populationA, hexWorld populationB, PopulationPai
 
 	gameStats.sortedPlayersA = sortedPlayersA;
 	gameStats.sortedPlayersB = sortedPlayersB;
+*/
+
+	// Push all players into a single vector, keeping track of which population each belongs to
+	// *Assumes both populations are same size*
+	for (hexPlayer = 0; hexPlayer < numPlayers; hexPlayer += 1)
+	{
+		// The last int represents which population they belong to - 1 is pop1, 2 is pop2
+		sortedPlayersAll.push_back(pair<pair<hexGamePlayer, int>, int>(pair<hexGamePlayer, int>(populationA.getHexGamePlayer(hexPlayer), hexPlayer), 1));
+		sortedPlayersAll.push_back(pair<pair<hexGamePlayer, int>, int>(pair<hexGamePlayer, int>(populationB.getHexGamePlayer(hexPlayer), hexPlayer), 2));
+	}
+
+	sort(sortedPlayersAll.begin(), sortedPlayersAll.end(), compareAll);
+
+	gameStats.sortedPlayersAll = sortedPlayersAll;
 }
 
 Player playHexGame(hexGamePlayer botA, hexGamePlayer botB)
