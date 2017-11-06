@@ -1,0 +1,5 @@
+Starting fresh experiments.
+15000 iterations with:
+	No swapping of weights
+	boardEval function instead of minimax
+	boardSize = 5x5
