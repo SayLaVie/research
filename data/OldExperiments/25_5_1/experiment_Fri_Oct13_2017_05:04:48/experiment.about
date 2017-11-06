@@ -1,6 +1,0 @@
-This experiment uses data from the 100 iteration experiement with the same NetShape
-
-This experiment has the following specs:
-	NetShape: 25 inputs going to 5 nodes going to 1 node
-	MaxDepth: 1
-	BoardSize: 5x5

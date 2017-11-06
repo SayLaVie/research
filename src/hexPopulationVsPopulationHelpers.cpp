@@ -130,21 +130,6 @@ void playHexGamesMelee(hexWorld populationA, hexWorld populationB, PopulationPai
 					gameStats.totalWinsAsSecondPlayer += 1;
 					populationA.addPlayerWin(playerB);
 				}
-
-				// Switch players
-				winner = playHexGame(hexPlayerB, hexPlayerA);
-
-
-				if (winner == PlayerA)
-				{
-					gameStats.totalWinsAsFirstPlayer += 1;
-					populationA.addPlayerWin(playerB);
-				}
-				else
-				{
-					gameStats.totalWinsAsSecondPlayer += 1;
-					populationA.addPlayerWin(playerA);
-				}
 			}
 		}
 	}
@@ -171,21 +156,6 @@ void playHexGamesMelee(hexWorld populationA, hexWorld populationB, PopulationPai
 				{
 					gameStats.totalWinsAsSecondPlayer += 1;
 					populationB.addPlayerWin(playerB);
-				}
-
-				// Switch positions
-				winner = playHexGame(hexPlayerB, hexPlayerA);
-
-
-				if (winner == PlayerA)
-				{
-					gameStats.totalWinsAsFirstPlayer += 1;
-					populationB.addPlayerWin(playerB);
-				}
-				else
-				{
-					gameStats.totalWinsAsSecondPlayer += 1;
-					populationB.addPlayerWin(playerA);
 				}
 			}
 		}

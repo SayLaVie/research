@@ -143,23 +143,29 @@ int main (int argc, char *argv[])
 
 	// Print out sorted players for both players
 	// Uses pairs defined in ...helpers.h
-	fout << "Players Sorted by number of wins" << endl;
+	fout << "Players Sorted by number of wins" << endl << endl;
 
-	fout << populationAFileName << ":" << endl;
+	fout << setw(20) << "PopulationA" << setw(25) << "PopulationB" << endl << endl;
 
+	// Let's assume both populations are the same size, to make printing easier
 	for (player = 0; player < gameStats.sortedPlayersA.size(); player += 1)
 	{
-		fout << "\tPlayer" << gameStats.sortedPlayersA[player].second << ": "
-			<< gameStats.sortedPlayersA[player].first.getGamesWon() << endl;
+		fout << setw(14) << "Player" << gameStats.sortedPlayersA[player].second << ": "
+			<< gameStats.sortedPlayersA[player].first.getGamesWon() <<  " A";
+
+		fout << setw(16) << right << "Player" << gameStats.sortedPlayersB[player].second << ": "
+			<< gameStats.sortedPlayersB[player].first.getGamesWon() << " B" << endl;
 	}
 
 	fout << endl;
+/*
 	fout << populationBFileName << ":" << endl;
+
 	for (player = 0; player < gameStats.sortedPlayersB.size(); player += 1)
 	{
 		fout << "\tPlayer" << gameStats.sortedPlayersB[player].second << ": "
-			<< gameStats.sortedPlayersB[player].first.getGamesWon() << endl;
+			<< gameStats.sortedPlayersB[player].first.getGamesWon() << " B" << endl;
 	}
-
+*/
 	fout.close();
 }

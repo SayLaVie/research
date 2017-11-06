@@ -122,8 +122,8 @@ double hexGamePlayer::miniMax(Board board, Player whichPlayer, int depth, double
 
    if (board.isGameOver())
    {
-      // Incentivize quick playing by decreasing the win value the further depth away it is
-      return maximizer ? -1 - (double)MAX_DEPTH / depth : 1 + (double)MAX_DEPTH / depth;
+      // Incentivize quick playing by decreasing the win value the further depth away it was found
+      return maximizer ? -100000 - (double)MAX_DEPTH / depth : 100000 + (double)MAX_DEPTH / depth;
    }
 
    if (depth >= MAX_DEPTH)

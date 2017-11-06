@@ -135,6 +135,9 @@ void hexWorld::nextGeneration()
                // because there is a bais weight in every rowOriginationVector.
 					for (rowOrigination = 0; rowOrigination < netShape[layer] + 1; rowOrigination += 1)
 					{
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+						// This section uses coin toss inertia (50/50 chance that the player will keep their own weight)
+						/* Commented out when not using this version of inertia */
 						// If coin toss says to keep weight
 						if (coinToss(seedGenerator))
 						{
@@ -148,7 +151,7 @@ void hexWorld::nextGeneration()
 							breederChoice = 0;
 
 							// Make a vector with each neighbor's numGamesWon
-							for (neighbor = 0; neighbor < neighbors.size(); ++neighbor)
+							for (neighbor = 0; neighbor < neighbors.size(); neighbor += 1)
 							{
 								gamesWon = getHexGamePlayer(neighbor).getGamesWon();
 								neighborsGamesWon.push_back(gamesWon);
@@ -159,6 +162,42 @@ void hexWorld::nextGeneration()
 
 							currentWeight = getHexGamePlayer(neighbors[breederChoice]).getWeight(layer, rowDestination, rowOrigination);
 						}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/* Commented out when not using this version of inertia
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////			
+						// This section replaces the commented out portion above
+
+						neighborsGamesWon.clear();
+						breederChoice = 0;
+
+						// Vector with everyone's numGamesWon
+						for (neighbor = 0; neighbor < neighbors.size(); neighbor += 1)
+						{
+							gamesWon = getHexGamePlayer(neighbor).getGamesWon();
+							neighborsGamesWon.push_back(gamesWon);
+						}
+
+						// Add current player onto end of neighbors vector
+						gamesWon = getHexGamePlayer(player).getGamesWon();
+						neighborsGamesWon.push_back(gamesWon);
+
+						breederChoice = getBreeder(seedGenerator, neighborsGamesWon);
+
+						// If breeder choice is the last element, then we chose to keep the weight
+						if (breederChoice == neighborsGamesWon.size() - 1)
+						{
+							currentWeight = getHexGamePlayer(player).getWeight(layer, rowDestination, rowOrigination);
+						}
+						// Otherwise, breeder choice is a neighbor
+						else
+						{
+							currentWeight = getHexGamePlayer(neighbors[breederChoice]).getWeight(layer, rowDestination, rowOrigination);
+						}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+*/
 
 						// Mutate currentWeight according to normal distribution centered on currentWeight
 						currentWeight = generateWeight(seedGenerator, currentWeight);
@@ -472,6 +511,26 @@ void swapWeights(vector<vector<vector<double> > > &net)
 // This is where specific changes to swapping strategy are implemented
 void swappingStrategy(vector<vector<vector<double> > > &net)
 {
-	// Always swap two random weights, but only one time
-	swapWeights(net);
+	int maxSwaps, swapsSoFar;
+	double p;
+
+	// Set specs for swapping strategy here
+	// maxSwaps is number of swaps strategy will stop swapping when reached
+	// p is failure probability
+
+	maxSwaps = 10000;
+	swapsSoFar = 0;
+	p = 0.5;
+
+	// Bernoulli_distribution to generate successes and failures, with probability of failure
+	// set at p.
+	bernoulli_distribution failure(p);
+
+	// As long as we encounter failures, we want to keep swapping
+	while (failure(seedGenerator) && swapsSoFar < maxSwaps)
+	{
+		swapWeights(net);
+
+		swapsSoFar += 1;
+	}
 }

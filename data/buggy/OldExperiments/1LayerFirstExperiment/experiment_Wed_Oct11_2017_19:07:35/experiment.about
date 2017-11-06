@@ -1,6 +1,0 @@
-This experiment is a sort of continutaion of experiments experiment_Mon_Oct09_2017_17:26:45 and experiment_Sun_Oct08_2017_21:50:26
-It still uses the same NetShape, but MaxDepth has been reduced to 0 (the minimum depth)
-
-	NetShape: 25 inputs to 1 node
-	MaxDepth: 0
-	BoardSize: 5x5
