@@ -7,7 +7,7 @@ Hex is an adversarial board game in which there is always exactly one winner. Th
    (picture of hex board)
 
 
-Research into Hex is often concerning with solving the game. Here, solving generally means finding perfect moves that give the player a guaranteed win. Levels of 'solved' vary from knowing only the best first move (weakly solved), to knowing the best move at all points in the game (strongly solved). As of 2011, humans have only been able to solve some center moves weakly for boards sized 8x8 and 9x9 (Beyond Humans). In 2014, Pawlewicz and Hayward developed a Scalable Parallel DFPN Search and used it to solve all previously intractable 9x9 openings and one 10x10 opening. The hardest 9x9 opening took 111 days (Scalable Parallel DFPN Search).
+Research into Hex is often concerned with solving the game. Here, solving generally means finding perfect moves that give the player a guaranteed win. Levels of 'solved' vary from knowing only the best first move (weakly solved), to knowing the best move at all points in the game (strongly solved). As of 2011, humans have only been able to solve some center moves weakly for boards sized 8x8 and 9x9 (Beyond Humans). In 2014, Pawlewicz and Hayward developed a Scalable Parallel DFPN Search and used it to solve all previously intractable 9x9 openings and one 10x10 opening. The hardest 9x9 opening took 111 days (Scalable Parallel DFPN Search).
 
 Because perfectly solving
 
