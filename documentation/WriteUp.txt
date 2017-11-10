@@ -8,31 +8,30 @@ Hex is an adversarial board game in which there is always exactly one winner. Th
 
 Research into Hex is often concerned with solving the game. Here, solving generally means finding perfect moves that give the player a guaranteed win. Levels of 'solved' vary from knowing only the best first move (weakly solved), to knowing the best move at all points in the game (strongly solved). As of 2011, humans have only been able to solve some center moves weakly for boards sized 8x8 and 9x9 (Beyond Humans). In 2014, Pawlewicz and Hayward developed a Scalable Parallel DFPN Search and used it to solve all previously intractable 9x9 openings and one 10x10 opening. The hardest 9x9 opening took 111 days (Scalable Parallel DFPN Search).
 
-Other avenues of research have been explored in the context of boardgame play. David Fogel trained a nerual network with an evolutionary algorithm to teach it to play checkers, with the goal of evolving a 'good' player. The neural network was accompanied with a minimax search of variable depth (Blondie 24). Young, Vasan, and Hayward used Deep Q-Learning and self-play to train a CNN (convolutional neural network) to play Hex on a 13x13 board with no search. They began the experiment with supervised training on *database of games?* in order to teach their program the basics of gameplay quickly (neurohex).
+Other avenues of research have been explored in the context of boardgame play. David Fogel trained a nerual network with an evolutionary algorithm to teach it to play checkers, with the goal of evolving a 'good'(do I need to define good?) player. The neural network was accompanied with a minimax search of variable depth (Blondie 24). Young, Vasan, and Hayward used Deep Q-Learning and self-play to train a CNN (convolutional neural network) to play Hex on a 13x13 board with no search. They began the experiment with supervised training on *database of games?* in order to teach their program the basics of gameplay quickly (neurohex).
    **Do I need to go into detail about their results?**
 
 
                Experimental Setup:
-Our research is inspired by the work of David Fogel in Blondie 24. We set out to evolve the weights of an ANN through genetic algorithm. One key difference between our research, however, is that at no point do we utilize a minimax search. Our 'populations' of experiments are completely blind to the game Hex, except for the fact that they can see whether or not a move is valid.
 
+Our research is inspired by the work of David Fogel's Blondie 24, and similarly, we set out to evolve the weights of an ANN through genetic algorithm. One key difference between our research is that we do not use a minimax search to guide our evolutions. Our 'populations' of experiments are completely blind to the game mechanics of Hex, except for the fact that they can see whether or not a potential move is valid. (Mention neuroHex' concern about not being able to learn effective game play for a long time?)
+
+Distribution and arrangement of players (hexagonal, 100 players)(each player has 6 neighbors)
 
 The purpose of this research is to:
    1) Create a strong Hex player that relies on an ANN (artificial neural network) to make evaluations of the state of a Hex board during any stage of play, so that minimax search strategies can be bypassed entirely.
    2) Evaluate the effects of the size and shape of ANN on the ability of the ANN to learn board evaluation
    3) Evaluate the effects of the evolutionary approaches of the genetic algorithm on the ability of the ANN to learn board evaluation
 
-An exhaustive search with a minimax style algorithm yields perfect play, but the running time of such a search increases exponentially as board sizes grow.
 
-
+During the breeding process of creating the next population, we included a 50% chance that each specific weight would be kept by the player. The other 50% of the time, the weight would be chosen from amongst the players six neighbors with a probability distribution according to our fitness function. Our fitness function was how many games each player won against their neighbors. Once an individual weight was determined, we mutated the weight slightly, by choosing a new weight based on a normal distribution with a standard deviation of 1, centered around the original weight.
 
 
                Experimental Results:
-
-
-
+We began our experiments simply. Our initial populations had a single-layer single-node neural network. To compare, we also grew populations with a 'swapping' rule, where each player always swapped two of their own weights exactly one time, but was otherwise the same. The populations that never swapped tended to evolve into 'equilibrium' states, where all players would record the same amount of wins. The populations that always swapped once did not breen themselves into this rut. When the two populations were played against each other (every player plays every other player from both populations), the original population yielded players that mostly had the same number of wins. The swapping population, however, had a wide distribution of players. Some were very good, and some were very bad.
 
                Conclusions:
-
+Hex is hard.
 
 
 
