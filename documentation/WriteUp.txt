@@ -48,4 +48,6 @@ Scalable Parallel DFPN Search
 
 Solving Hex: Beyond Humans
 
+NeuroHex
+
 Blondie 24
