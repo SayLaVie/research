@@ -137,6 +137,7 @@ void hexWorld::nextGeneration()
 					{
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 						// This section uses coin toss inertia (50/50 chance that the player will keep their own weight)
+						// On 11/15 added own weight into neighbor vector, so that even if coin toss is lost, may keep weight
 						/* Commented out when not using this version of inertia */
 						// If coin toss says to keep weight
 						if (coinToss(seedGenerator))
@@ -157,10 +158,23 @@ void hexWorld::nextGeneration()
 								neighborsGamesWon.push_back(gamesWon);
 							}
 
+							// Add current player onto end of neighbors vector
+							gamesWon = getHexGamePlayer(player).getGamesWon();
+							neighborsGamesWon.push_back(gamesWon);
+
 							// Use the getBreeder function to determine whose genes to use
 							breederChoice = getBreeder(seedGenerator, neighborsGamesWon);
 
-							currentWeight = getHexGamePlayer(neighbors[breederChoice]).getWeight(layer, rowDestination, rowOrigination);
+							// If breeder choice is the last element, then we chose to keep the weight
+							if (breederChoice == neighborsGamesWon.size() - 1)
+							{
+								currentWeight = getHexGamePlayer(player).getWeight(layer, rowDestination, rowOrigination);
+							}
+							// Otherwise, breeder choice is a neighbor
+							else
+							{
+								currentWeight = getHexGamePlayer(neighbors[breederChoice]).getWeight(layer, rowDestination, rowOrigination);
+							}							
 						}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -320,6 +334,9 @@ hexWorld& hexWorld::operator=(hexWorld rhs)
 	this->hexGamePlayers.clear();
 	this->hexGamePlayers = rhs.getHexGamePlayers();
 	this->numPlayers = rhs.getNumPlayers();
+
+	// May want to assign net shape as well
+	this->netShape = rhs.getNetShape();
 
 	return *this;
 }
@@ -520,7 +537,7 @@ void swappingStrategy(vector<vector<vector<double> > > &net)
 
 	maxSwaps = 10000;
 	swapsSoFar = 0;
-	p = 0.5;
+	p = 0.25;
 
 	// Bernoulli_distribution to generate successes and failures, with probability of failure
 	// set at p.

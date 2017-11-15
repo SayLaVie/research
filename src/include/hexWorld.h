@@ -65,6 +65,9 @@ public:
 	hexGamePlayer getHexGamePlayer(int playerLocation) {return hexGamePlayers[playerLocation];}
 	vector<hexGamePlayer> getHexGamePlayers() {return hexGamePlayers;}
 
+	// Return netshape
+	vector<int> getNetShape() {return netShape;}
+
 	// Add a win to a players stats
 	void addPlayerWin(int playerLocation) {hexGamePlayers[playerLocation].addGameWon();}
 
