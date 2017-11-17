@@ -44,6 +44,11 @@ Hex is hard.
 
 
                Future Work:
+Hardness Scale, try different net topologies, chunking and other alternate methods of board input, compare evolutions with minimax searches, vary size of population, scale standard deviation based on size of weights (for jiggling), try different (more symmetrical) thresholding function,
+
+
+
+
 
 Sources
 
