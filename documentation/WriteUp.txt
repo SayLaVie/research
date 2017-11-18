@@ -10,6 +10,8 @@ Research into Hex is often concerned with solving the game. Here, solving genera
 
 Other avenues of research have been explored in the context of boardgame play. David Fogel trained a nerual network with an evolutionary algorithm to teach it to play checkers with the goal of evolving a 'good'(do I need to define good?) player. The neural network was accompanied with a minimax search of variable depth (Blondie 24). Young, Vasan, and Hayward used Deep Q-Learning and self-play to train a CNN (convolutional neural network) to play Hex on a 13x13 board with no search. They began the experiment with supervised training on *database of games?* in order to teach their program the basics of gameplay quickly (neurohex).
    **Do I need to go into detail about their results?**
+   Briefly say how much progress was made:
+      Blondi24 was able to perform x after n amount of iterations...etc...
 
 
                Experimental Setup:
@@ -17,7 +19,8 @@ Other avenues of research have been explored in the context of boardgame play. D
 Our research is inspired by the work of David Fogel's Blondie 24, and similarly, we set out to evolve the weights of an ANN through genetic algorithm. We create a population of 100 Hex players, arranged on a torus so that players at the top and bottom of the map are neighbors, as well as players on the left and right. Each position that a player occupies is a hexagon so that each player has six neighbors. One iteration of evolution consists of each player playing Hex against each of their six neighbors. In this method, each player plays a total of two games against each of their neighbors, once as first player and once as second player. Our algorithm keeps track of the number of games won by each player, and once all of the matches are finished, we use that statistic as a fitness function. We enter the last phase of the iteration where the genetic breeding takes place. We move through each weight of each player and make a determination of whether to keep the original weight or to replace it.
 
 
-One key difference between our research is that we do not use a minimax search to guide our evolutions. Our populations of experiments are completely blind to the game mechanics of Hex, except for the fact that they can see whether or not a potential move is valid (Mention neuroHex' concern about not being able to learn effective game play for a long time?). The distance between moves during gameplay and reward at the end of a game means that learning which moves were effective at which points of the game is very difficult. By making our algorithm ignorant of winning moves, we intend to explore more fully the effect that differences in our experimental setup have on the ability of our algorithm to learn Hex.
+One key difference between our research is that we do not use a minimax search to guide our evolutions. **Go into more detail about difference about not using minimax -- maybe its own paragraph (like 4 sentences)**
+Our populations of experiments are completely blind to the game mechanics of Hex, except for the fact that they can see whether or not a potential move is valid (Mention neuroHex' concern about not being able to learn effective game play for a long time?). The distance between moves during gameplay and reward at the end of a game means that learning which moves were effective at which points of the game is very difficult. By making our algorithm ignorant of winning moves, we intend to explore more fully the effect that differences in our experimental setup have on the ability of our algorithm to learn Hex.
 
 There are two main categories of changes we made to our experimental setup: The evolutionary approaches used in our genetic algorithm and the shape of our ANN.
 
@@ -35,6 +38,8 @@ During the breeding process of creating the next population, we included a 50% c
                Experimental Results:
 We began our experiments simply. Our initial populations had a single-layer single-node neural network. To compare, we also grew populations with a 'swapping' rule, where each player always swapped two of their own weights exactly one time, but was otherwise the same. The populations that never swapped tended to evolve into 'equilibrium' states, where all players would record the same amount of wins. The populations that always swapped once did not breen themselves into this rut. When the two populations were played against each other (every player plays every other player from both populations), the original population yielded players that mostly had the same number of wins. The swapping population, however, had a wide distribution of players. Some were very good, and some were very bad.
 
+How does college football rank teams?
+
                Conclusions:
 Hex is hard.
 
@@ -44,7 +49,7 @@ Hex is hard.
 
 
                Future Work:
-Hardness Scale, try different net topologies, chunking and other alternate methods of board input, compare evolutions with minimax searches, vary size of population, scale standard deviation based on size of weights (for jiggling), try different (more symmetrical) thresholding function,
+Hardness Scale, try different net topologies, chunking and other alternate methods of board input, compare evolutions with minimax searches, vary size of population, scale standard deviation based on size of weights (for jiggling), try different (more symmetrical) thresholding function, ideas about improving learning?
 
 
 
