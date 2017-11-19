@@ -1,10 +1,14 @@
-This is a list of potential variables we can adjust throughout the research process.
+This is a list of potential variables we can adjust throughout the research process. This will also be referenced for future works.
 
 - depth limit
 - board size
 - size of population
 - shape of neural net
-- method of board-state input (chunking, etc...)
+- what aspects of gameplay is the ANN aware of
+	- Currently aware of move validity
+- method of board-state input
+	- Chunking
+	- Whether a tile is connected to a side
 - distribution model (which RNG's to use)
 - evolution (how to pass on genes)
 - shape of hex world

@@ -83,9 +83,12 @@ Pawlewicz, Jakub, and Ryan B. Hayward. "Scalable parallel DFPN search." In Inter
 }
 
 
+   Quotable Things:
+"SPDFPN solved all previously intractable 9×9 Hex opening moves; the hardest opening took 111 days. Also, in 63 days, it solved one10×10 Hex opening move. This is the first time a computer or human has solveda 10×10 Hex opening move" (pg. 1)
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Blondie24: Playing at the Edge of AI
+      Blondie24: Playing at the Edge of AI
 
 Citations:
    MLA
@@ -101,3 +104,31 @@ Fogel, David B. Blondie24: Playing at the Edge of AI. Morgan Kaufmann, 2001.
   year={2001},
   publisher={Morgan Kaufmann}
 }
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+      Solving Hex: Beyond Humans
+
+Citations:
+   MLA
+Arneson, Broderick, Ryan B. Hayward, and Philip Henderson. "Solving Hex: Beyond Humans." Computers and Games 6515 (2010): 1-10.
+   APA
+Arneson, B., Hayward, R. B., & Henderson, P. (2010). Solving Hex: Beyond Humans. Computers and Games, 6515, 1-10.
+   Chicago
+Arneson, Broderick, Ryan B. Hayward, and Philip Henderson. "Solving Hex: Beyond Humans." Computers and Games 6515 (2010): 1-10.
+   BibTex
+@article{arneson2010solving,
+  title={Solving Hex: Beyond Humans.},
+  author={Arneson, Broderick and Hayward, Ryan B and Henderson, Philip},
+  journal={Computers and Games},
+  volume={6515},
+  pages={1--10},
+  year={2010},
+  publisher={Springer}
+}
+
+
+
+   Quotable Things
+Hex Solving Benchmarks is on page 2.
+Limitations of human solving on page 3.
