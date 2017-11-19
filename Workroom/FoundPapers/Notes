@@ -1,0 +1,103 @@
+            NeuroHex: A Deep Q-learning Hex Agent
+
+Citations:
+   MLA
+Young, Kenny, Gautham Vasan, and Ryan Hayward. "NeuroHex: A Deep Q-learning Hex Agent." Computer Games. Springer, Cham, 2016. 3-18.
+   APA
+Young, K., Vasan, G., & Hayward, R. (2016). NeuroHex: A Deep Q-learning Hex Agent. In Computer Games (pp. 3-18). Springer, Cham.
+   Chicago
+Young, Kenny, Gautham Vasan, and Ryan Hayward. "NeuroHex: A Deep Q-learning Hex Agent." In Computer Games, pp. 3-18. Springer, Cham, 2016.
+   BibTex
+@incollection{young2016neurohex,
+  title={NeuroHex: A Deep Q-learning Hex Agent},
+  author={Young, Kenny and Vasan, Gautham and Hayward, Ryan},
+  booktitle={Computer Games},
+  pages={3--18},
+  year={2016},
+  publisher={Springer}
+}
+
+
+
+   Quotable Things:
+"Computers have solved all 9x9 1-move openings and two 10x10 1-move openings..."(pg. 2)
+
+"Another challenge is that the reward signal in Hex occurs only at the end of a
+game, so (with respect to move actions) is infrequent, meaning that most updates
+are  based  only  on  network  evaluations  without  immediate  win/loss  feedback" (pg. 3)
+
+"The state of the Hex board is encoded as a 3 dimensional array with 2 spatial
+dimensions and 6 channels as follows: white stone present;   black stone present;
+white stone group connected to left edge;   white stone group connected to right
+edge;    black stone group connected to top edge;    black stone group connected
+to bottom edge." (pg. 6)
+
+"Our  network  consists  of  10  convolutional  layers  followed  by  one
+fully connected output layer."(pg. 7)
+
+
+
+
+   Reading Notes
+- Motivated by DeepMind's (Google) recent success with Go.
+
+- Q-learning ... earns a mapping from states to action
+values by backing up action value estimates from subsequent states to improve
+those in previous states
+
+- Experience replay stores agent experiences in memory and sampling from these experiences to perform updates
+
+- This work applies the Deep Q-learning with Experience Replay to Hex
+
+- They have a move complicated board-state
+   The state of the Hex board is encoded as a 3 dimensional array with 2 spatial
+dimensions and 6 channels as follows: white stone present;   black stone present;
+white stone group connected to left edge;   white stone group connected to right
+edge;    black stone group connected to top edge;    black stone group connected
+to bottom edge.
+
+
+
+This paper makes mention to future work throughout the writing
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+         Scalable Parallel DFPN Search
+
+Citations:
+   MLA
+Pawlewicz, Jakub, and Ryan B. Hayward. "Scalable parallel DFPN search." International Conference on Computers and Games. Springer, Cham, 2013.
+   APA
+Pawlewicz, J., & Hayward, R. B. (2013, August). Scalable parallel DFPN search. In International Conference on Computers and Games (pp. 138-150). Springer, Cham.
+   Chicago
+Pawlewicz, Jakub, and Ryan B. Hayward. "Scalable parallel DFPN search." In International Conference on Computers and Games, pp. 138-150. Springer, Cham, 2013.
+   BibTex
+@inproceedings{pawlewicz2013scalable,
+  title={Scalable parallel DFPN search},
+  author={Pawlewicz, Jakub and Hayward, Ryan B},
+  booktitle={International Conference on Computers and Games},
+  pages={138--150},
+  year={2013},
+  organization={Springer}
+}
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Blondie24: Playing at the Edge of AI
+
+Citations:
+   MLA
+Fogel, David B. Blondie24: Playing at the Edge of AI. Morgan Kaufmann, 2001.
+   APA
+Fogel, D. B. (2001). Blondie24: Playing at the Edge of AI. Morgan Kaufmann.
+   Chicago
+Fogel, David B. Blondie24: Playing at the Edge of AI. Morgan Kaufmann, 2001.
+   BibTex
+@book{fogel2001blondie24,
+  title={Blondie24: Playing at the Edge of AI},
+  author={Fogel, David B},
+  year={2001},
+  publisher={Morgan Kaufmann}
+}
