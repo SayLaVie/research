@@ -132,3 +132,19 @@ Arneson, Broderick, Ryan B. Hayward, and Philip Henderson. "Solving Hex: Beyond 
    Quotable Things
 Hex Solving Benchmarks is on page 2.
 Limitations of human solving on page 3.
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+            The game of Hex
+            
+Gardner, Martin. "The game of Hex." Hexaflexagons and Other Mathematical Diversions: The First Scientific American Book of Puzzles and Games (1959): 73-83.
+Gardner, M. (1959). The game of Hex. Hexaflexagons and Other Mathematical Diversions: The First Scientific American Book of Puzzles and Games, 73-83.
+Gardner, Martin. "The game of Hex." Hexaflexagons and Other Mathematical Diversions: The First Scientific American Book of Puzzles and Games (1959): 73-83.
+@article{gardner1959game,
+  title={The game of Hex},
+  author={Gardner, Martin},
+  journal={Hexaflexagons and Other Mathematical Diversions: The First Scientific American Book of Puzzles and Games},
+  pages={73--83},
+  year={1959}
+}
