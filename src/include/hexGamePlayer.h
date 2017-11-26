@@ -33,7 +33,7 @@ public:
    hexGamePlayer(vector<vector<vector<double> > > neuralNetWeights, int numGamesWon);
    int play(const Board &board, Player whichPlayer);
 
-   // double neuralNetHeuristic(const Board board, player whichPlayer);
+   // neuralNetHeuristic made public to be called for troubleshooting
    double neuralNetHeuristic(const Board board, Player whichPlayer);
 
    // Data modifiers

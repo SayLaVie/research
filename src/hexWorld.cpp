@@ -70,8 +70,8 @@ void hexWorld::nextGeneration()
 	int layer, rowDestination, rowOrigination, player, neighbor, gamesWon, breederChoice;
 	vector<hexGamePlayer> newHexGamePlayers;
 
-	// Bernoulli_distribution is effectively a coin toss. Returns true or false.
-	bernoulli_distribution coinToss(0.5);
+	// Bernoulli_distribution sets the probability of inertia
+	bernoulli_distribution coinToss(0);
 
 	// Check if this is the first generation (start with randomized weights)
 	if (hexGamePlayers.size() == 0)
@@ -429,7 +429,7 @@ hexWorld& hexWorld::operator=(hexWorld rhs)
 // }
 
 // Swap two weights in a neuralNet vector
-void swapWeights(vector<vector<vector<double> > > &net)
+void hexWorld::swapWeights(vector<vector<vector<double> > > &net)
 {
 	// Sizes of particular vectors.
 	int numLayers, numDestinationsA, numDestinationsB, numOriginationsA, numOriginationsB;
@@ -526,7 +526,7 @@ void swapWeights(vector<vector<vector<double> > > &net)
 }
 
 // This is where specific changes to swapping strategy are implemented
-void swappingStrategy(vector<vector<vector<double> > > &net)
+void hexWorld::swappingStrategy(vector<vector<vector<double> > > &net)
 {
 	int maxSwaps, swapsSoFar;
 	double p;
@@ -535,9 +535,9 @@ void swappingStrategy(vector<vector<vector<double> > > &net)
 	// maxSwaps is number of swaps strategy will stop swapping when reached
 	// p is failure probability
 
-	maxSwaps = 10000;
+	maxSwaps = 1;
 	swapsSoFar = 0;
-	p = 0.25;
+	p = 1.0;
 
 	// Bernoulli_distribution to generate successes and failures, with probability of failure
 	// set at p.

@@ -44,6 +44,10 @@ private:
 
 	// Swap random weights between two players
 	void swapWeightsBetweenPlayers(int playerALocation, int playerBLocation);
+	// Swap weights within one player
+	void swapWeights(vector<vector<vector<double> > > &net);
+	// Specify the strategy for how often/how likely swaps will occur
+	void swappingStrategy(vector<vector<vector<double> > > &net);
 
 public:
 	hexWorld(int numPlayers = 100, vector<int> netShape = {BOARD_SIZE * BOARD_SIZE, BOARD_SIZE, 1});
