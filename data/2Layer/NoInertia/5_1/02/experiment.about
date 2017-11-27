@@ -1,3 +1,0 @@
-This experiment uses the 2 Layer 25 -> 5 -> 1 network model
-
-There is no inertia (i.e. There is no coin toss bias for a player to keep their own weights)

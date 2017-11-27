@@ -9,11 +9,6 @@ Advisor: Dr. Rob LeGrand
 #include <cstdlib>
 #include <sys/stat.h>
 
-// Helper functions specific to hexEvolution
-void printUsage(int exitCode);
-void playHexGames(hexWorld &population, ofstream &fout);
-Player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB);
-
 int MAX_DEPTH = 0;
 
 int main(int argc, char *argv[])

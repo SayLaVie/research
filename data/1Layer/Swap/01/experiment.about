@@ -1,5 +1,0 @@
-Fresh experiments.
-15000 iterations of:
-	Always swapping weights exactly 1 time
-	boardEvalLearning instead of minimax
-	boardSize = 5x5

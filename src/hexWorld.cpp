@@ -535,9 +535,9 @@ void hexWorld::swappingStrategy(vector<vector<vector<double> > > &net)
 	// maxSwaps is number of swaps strategy will stop swapping when reached
 	// p is failure probability
 
-	maxSwaps = 1;
+	maxSwaps = 0;
 	swapsSoFar = 0;
-	p = 1.0;
+	p = 0;
 
 	// Bernoulli_distribution to generate successes and failures, with probability of failure
 	// set at p.

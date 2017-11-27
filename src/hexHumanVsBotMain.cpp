@@ -15,7 +15,7 @@ Advisor: Dr. Rob LeGrand
 // Define extern variable netShape
 vector<int> netShape;
 int MAX_DEPTH;
-void printUsage(int exitCode);
+// void printUsage(int exitCode);
 
 int main(int argc, char *argv[])
 {

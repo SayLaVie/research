@@ -38,7 +38,6 @@ Player playHexGame(hexGamePlayer hexPlayerA, hexGamePlayer hexPlayerB)
 	{
 		currentPlayer = static_cast<Player>(numberOfTurns % 2);
 
-		// Call .play with a depth of 0 to signify that we aren't using minimax
 		if (currentPlayer == PlayerA)
 		{
 			playerMove = hexPlayerA.play(board, currentPlayer);
