@@ -71,7 +71,7 @@ void hexWorld::nextGeneration()
 	vector<hexGamePlayer> newHexGamePlayers;
 
 	// Bernoulli_distribution sets the probability of inertia
-	bernoulli_distribution coinToss(0);
+	bernoulli_distribution coinToss(0.5);
 
 	// Check if this is the first generation (start with randomized weights)
 	if (hexGamePlayers.size() == 0)
@@ -161,6 +161,8 @@ void hexWorld::nextGeneration()
 							// Add current player onto end of neighbors vector
 							gamesWon = getHexGamePlayer(player).getGamesWon();
 							neighborsGamesWon.push_back(gamesWon);
+							// The following is a variation on the way to weigh gamesWon in our fitness function by using powers of 2
+							// neighborsGamesWon.push_back(static_cast<int>(pow(2.0, gamesWon)));
 
 							// Use the getBreeder function to determine whose genes to use
 							breederChoice = getBreeder(seedGenerator, neighborsGamesWon);
@@ -535,9 +537,9 @@ void hexWorld::swappingStrategy(vector<vector<vector<double> > > &net)
 	// maxSwaps is number of swaps strategy will stop swapping when reached
 	// p is failure probability
 
-	maxSwaps = 0;
+	maxSwaps = 1;
 	swapsSoFar = 0;
-	p = 0;
+	p = 1;
 
 	// Bernoulli_distribution to generate successes and failures, with probability of failure
 	// set at p.
