@@ -7,9 +7,9 @@ Author: Michael McCarver
 Advisor: Dr. Rob LeGrand
 */
 
-#include <hexPlayerRatingHelpers.h>
+#include <hexPopulationRatingHelpers.h>
 
-int MAX_DEPTH = 0;
+int MAX_DEPTH;
 
 int main(int argc, char *argv[])
 {
@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
 	ofstream foutResults, foutSave;
 	int arg;
 	string argument, outputFile, playerFileName;
+	MAX_DEPTH = 0;
 
 	// Default values
 	outputFile = "results/playerHardness.rating";
@@ -92,12 +93,12 @@ int main(int argc, char *argv[])
 
 	// Declare and initialize hexGamePlayer opponent from input file data
 	// *NOTE* there is currently no input sanitation
-	hexGamePlayer hexPlayer(singleNeuralNetFileParser(fin));
+	hexWorld hexPopulation(entirePopulationFileParser(fin));
 
-	foutResults << "Player " << playerFileName << endl;
+	foutResults << playerFileName << endl << endl;
 
 	// Play all games against random players
-	playHexGames(hexPlayer, foutResults);
+	playHexGames(hexPopulation, foutResults);
 
 	foutResults.close();
 }
