@@ -22,4 +22,4 @@ This code is meant to be run in a *nix environment. To compile, run `make all` f
 - hexPopulationRating
    - This program plays an experimental population against 2000 random agents and keeps track of each players number of games won as well as each player's winningness as PlayerA.
 
-More detailed explanations can be viewed by running `./<program name> --help` or `./<program name> -h`. Subdirectories of research/data/ hold output files from experiments run during fall 2017.
+More detailed explanations can be viewed by running `./<program name> --help` or `./<program name> -h`. Subdirectories of `research/data/` hold output files from experiments run during fall 2017.
