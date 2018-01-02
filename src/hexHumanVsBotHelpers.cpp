@@ -23,7 +23,7 @@ bool isNumeric(string input)
 
 	return true;
 }
- 
+
 // Takes ifstream and parses nerualNetWeights 3-D vector from file.
 vector<vector<vector<double> > > singleNeuralNetFileParser(ifstream &fin)
 {
@@ -63,7 +63,7 @@ vector<vector<vector<double> > > singleNeuralNetFileParser(ifstream &fin)
 			{
 				pos = line.find(delim);
 				token = line.substr(0, pos);
-				
+
 				weight = atof(token.c_str());
 				singleInputNodeVector.push_back(weight);
 
@@ -140,18 +140,26 @@ void playHexGame(hexGamePlayer bot)
 		if (currentPlayer == humanPlayer)
 		{
 			madeMove = false;
-			
+
 			while (!madeMove)
 			{
 				board.printBoard();
 				cout << endl << "Move: ";
 				cin >> move;
 
-				if (move.length() > 2 || !isalpha(move[0]) || toupper(move[0]) - 64 > BOARD_SIZE || 
+				column = toupper(move[0]) - 65;
+				row = move[1] - 48;
+				playerMove = BOARD_SIZE * row + column;
+
+				if (move.length() > 2 || !isalpha(move[0]) || toupper(move[0]) - 64 > BOARD_SIZE ||
 						!isdigit(move[1]) || (move[1] - 48) + 1 > BOARD_SIZE)
 				{
 					cout << "Make sure that your move is of the form <alpha><digit>" << endl;
 					cout << "For example, A0" << endl;
+				}
+				else if (!board.isValidMove(playerMove))
+				{
+					cout << "Invalid move! Please make another move." << endl;
 				}
 				else
 				{
@@ -159,11 +167,7 @@ void playHexGame(hexGamePlayer bot)
 				}
 			}
 
-			column = toupper(move[0]) - 65;
-			row = move[1] - 48;			
-			playerMove = BOARD_SIZE * row + column;
-
-			board.makeMove(playerMove, currentPlayer);			
+			board.makeMove(playerMove, currentPlayer);
 		}
 		else
 		{
