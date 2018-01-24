@@ -7,11 +7,6 @@ advisor: Dr. Rob LeGrand
 
 /**************************
 This function creates and maintains a population of hexGamePlayers.
-We may have a private evolution function within this class to
-handle the evolution of new generations (or simply create a new world
-when needed). This class will probably need to maintain the neighbor
-relationships (used to determine which hexGamePlayers will play against
-each other).
 **************************/
 
 #ifndef HEXWORLD_H
@@ -22,11 +17,6 @@ each other).
 #include <ctime>
 #include <utility>
 
-/**
-Global seed generator
-I ran into trouble declaring it as const. It's possible that the generator could
-be re-seeded
-**/
 // static default_random_engine seedGenerator(time(NULL));
 static mt19937_64 seedGenerator(time(NULL));
 
@@ -46,6 +36,8 @@ private:
 	void swapWeightsBetweenPlayers(int playerALocation, int playerBLocation);
 	// Swap weights within one player
 	void swapWeights(vector<vector<vector<double> > > &net);
+	// Copy value of one weight onto another weight within one player
+	void copyWeight(vector<vector<vector<double> > > &net);
 	// Specify the strategy for how often/how likely swaps will occur
 	void swappingStrategy(vector<vector<vector<double> > > &net);
 

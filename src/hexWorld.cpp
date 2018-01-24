@@ -71,7 +71,7 @@ void hexWorld::nextGeneration()
 	vector<hexGamePlayer> newHexGamePlayers;
 
 	// Bernoulli_distribution sets the probability of inertia
-	bernoulli_distribution coinToss(0.5);
+	bernoulli_distribution coinToss(0);
 
 	// Check if this is the first generation (start with randomized weights)
 	if (hexGamePlayers.size() == 0)
@@ -135,7 +135,7 @@ void hexWorld::nextGeneration()
                // because there is a bais weight in every rowOriginationVector.
 					for (rowOrigination = 0; rowOrigination < netShape[layer] + 1; rowOrigination += 1)
 					{
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 						// This section uses coin toss inertia (50/50 chance that the player will keep their own weight)
 						// On 11/15 added own weight into neighbor vector, so that even if coin toss is lost, may keep weight
 						/* Commented out when not using this version of inertia */
@@ -161,6 +161,7 @@ void hexWorld::nextGeneration()
 							// Add current player onto end of neighbors vector
 							gamesWon = getHexGamePlayer(player).getGamesWon();
 							neighborsGamesWon.push_back(gamesWon);
+
 							// The following is a variation on the way to weigh gamesWon in our fitness function by using powers of 2
 							// neighborsGamesWon.push_back(static_cast<int>(pow(2.0, gamesWon)));
 
@@ -178,42 +179,6 @@ void hexWorld::nextGeneration()
 								currentWeight = getHexGamePlayer(neighbors[breederChoice]).getWeight(layer, rowDestination, rowOrigination);
 							}							
 						}
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-/* Commented out when not using this version of inertia
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////			
-						// This section replaces the commented out portion above
-
-						neighborsGamesWon.clear();
-						breederChoice = 0;
-
-						// Vector with everyone's numGamesWon
-						for (neighbor = 0; neighbor < neighbors.size(); neighbor += 1)
-						{
-							gamesWon = getHexGamePlayer(neighbor).getGamesWon();
-							neighborsGamesWon.push_back(gamesWon);
-						}
-
-						// Add current player onto end of neighbors vector
-						gamesWon = getHexGamePlayer(player).getGamesWon();
-						neighborsGamesWon.push_back(gamesWon);
-
-						breederChoice = getBreeder(seedGenerator, neighborsGamesWon);
-
-						// If breeder choice is the last element, then we chose to keep the weight
-						if (breederChoice == neighborsGamesWon.size() - 1)
-						{
-							currentWeight = getHexGamePlayer(player).getWeight(layer, rowDestination, rowOrigination);
-						}
-						// Otherwise, breeder choice is a neighbor
-						else
-						{
-							currentWeight = getHexGamePlayer(neighbors[breederChoice]).getWeight(layer, rowDestination, rowOrigination);
-						}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-*/
 
 						// Mutate currentWeight according to normal distribution centered on currentWeight
 						currentWeight = generateWeight(seedGenerator, currentWeight);
@@ -527,6 +492,97 @@ void hexWorld::swapWeights(vector<vector<vector<double> > > &net)
 	net[randomLayerB][randomDestinationB][randomOriginationB] = swapTemp;
 }
 
+// Copy the value of one weight onto the value of another weight, both weights randomly selected
+void hexWorld::copyWeight(vector<vector<vector<double> > > &net)
+{
+	// Sizes of particular vectors.
+	int numLayers, numDestinationsA, numDestinationsB, numOriginationsA, numOriginationsB;
+
+	// ints containing the randomly picked indexes for the neuralNetWeights of the players
+	int randomLayerA, randomLayerB, randomDestinationA, randomDestinationB, randomOriginationA, randomOriginationB;
+
+	numLayers = net.size();
+
+	// If there is only one layer, no need to randomly choose one
+	if (numLayers == 1)
+	{
+		randomLayerA = 0;
+		randomLayerB = 0;
+
+		// Since there is only one layer, the number of destinations will be 1.
+		// This variable's not really needed in this case.
+		numDestinationsA = 1;
+		numDestinationsB = 1;
+
+		// Number of originations will be the same as each other
+		numOriginationsA = net[0][0].size();
+		numOriginationsB = numOriginationsA;
+
+		// Set the Destination (again, there is only 1 destination in a single layer network)
+		randomDestinationA = 0;
+		randomDestinationB = 0;
+
+		// uniform_int_distribution for choosing originations (same span for both players)
+		uniform_int_distribution<int> randomOrigination(0, numOriginationsA - 1);
+
+		randomOriginationA = randomOrigination(seedGenerator);
+		randomOriginationB = randomOrigination(seedGenerator);
+	}
+	// Number of destinations may be different if there is a multi-layer network
+	else
+	{
+		// uniform_int_distribution for choosing which layer to swap for each
+		uniform_int_distribution<int> randomLayer(0, numLayers - 1);
+		randomLayerA = randomLayer(seedGenerator);
+		randomLayerB = randomLayer(seedGenerator);
+
+		// Since the neuralNets are multi layered, the sizes of rowDestination and rowOrigination may be 
+		// different from each other 
+		numDestinationsA = net[randomLayerA].size();
+		numDestinationsB = net[randomLayerB].size();
+
+		// uniform_int_distribution for choosing A and B's randomDestination
+		uniform_int_distribution<int> randomDestinationGenA(0, numDestinationsA - 1);
+		uniform_int_distribution<int> randomDestinationGenB(0, numDestinationsB - 1);
+
+		// Choose random rowDestinations for A and B
+		randomDestinationA = randomDestinationGenA(seedGenerator);
+		randomDestinationB = randomDestinationGenB(seedGenerator);
+
+		// Set sizes of rowOriginations
+		numOriginationsA = net[randomLayerA][randomDestinationA].size();
+		numOriginationsB = net[randomLayerB][randomDestinationB].size();
+
+		// uniform_int_distributions for choosing A and B's randomOrigination
+		uniform_int_distribution<int> randomOriginationGenA(0, numOriginationsA - 1);
+		uniform_int_distribution<int> randomOriginationGenB(0, numOriginationsB - 1);
+
+		// Choose random rowOriginations for A and B
+		randomOriginationA = randomOriginationGenA(seedGenerator);
+		randomOriginationB = randomOriginationGenB(seedGenerator);
+	}
+
+	if (std::isnan(net[randomLayerA][randomDestinationA][randomOriginationA]) ||
+		std::isnan(net[randomLayerB][randomDestinationB][randomOriginationB]))
+	{
+		cerr << "Invalid weight selected for swap" << endl;
+		cerr << "\tChoices for A:" << endl;
+		cerr << "\t\tLayer: " << randomLayerA << "\tnum layers: " << numLayers << endl;
+		cerr << "\t\tDest: " << randomDestinationA << "\tnum Dests: " << numDestinationsA << endl;
+		cerr << "\t\tOrig: " << randomOriginationA << "\tnum Origs: " << numOriginationsA << endl;
+		cerr << "\t\tWeight for A: " << net[randomLayerA][randomDestinationA][randomOriginationA] << endl;		
+		cerr << "\tChoices for B:" << endl;
+		cerr << "\t\tLayer: " << randomLayerB << "\tnum layers: " << numLayers << endl;
+		cerr << "\t\tDest: " << randomDestinationB << "\tnum Dests: " << numDestinationsB << endl;
+		cerr << "\t\tOrig: " << randomOriginationB << "\tnum Origs: " << numOriginationsB << endl;
+		cerr << "\t\tWeight for B: " << net[randomLayerB][randomDestinationB][randomOriginationB] << endl;
+	}
+
+	// The value of A is replaced by the value of B
+	net[randomLayerA][randomDestinationA][randomOriginationA] = 
+		net[randomLayerB][randomDestinationB][randomOriginationB];
+}
+
 // This is where specific changes to swapping strategy are implemented
 void hexWorld::swappingStrategy(vector<vector<vector<double> > > &net)
 {
@@ -548,7 +604,9 @@ void hexWorld::swappingStrategy(vector<vector<vector<double> > > &net)
 	// As long as we encounter failures, we want to keep swapping
 	while (failure(seedGenerator) && swapsSoFar < maxSwaps)
 	{
-		swapWeights(net);
+		// swapWeights(net);
+		// Alternatively, we can use copyWeight instead of swapWeights
+		copyWeight(net);
 
 		swapsSoFar += 1;
 	}
