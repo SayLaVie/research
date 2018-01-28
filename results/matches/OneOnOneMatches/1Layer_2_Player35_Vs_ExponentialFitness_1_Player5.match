@@ -1,0 +1,42 @@
+	First match
+Player A: data/1Layer/2/iteration19999/player35.data
+Player B: data/ExponentialFitness/1/iteration19999/player5.data
+
+
+                   *A*  *B*  *C*  *D*  *E*
+
+           *4*   A6   B3   B5   A3   --    *4*
+
+        *3*   --   A4   B4   --   B6    *3*
+
+     *2*   A1   A2   B2   --   --    *2*
+
+  *1*   --   B0   A5   B1   --    *1*
+
+*0*   --   --   --   A7   A0    *0*
+
+   *A*  *B*  *C*  *D*  *E*
+
+Winner of this match is data/1Layer/2/iteration19999/player35.data
+
+
+	Second match
+Player A: data/ExponentialFitness/1/iteration19999/player5.data
+Player B: data/1Layer/2/iteration19999/player35.data
+
+
+                   *A*  *B*  *C*  *D*  *E*
+
+           *4*   B0   --   --   --   --    *4*
+
+        *3*   --   B4   --   --   B3    *3*
+
+     *2*   --   A4   B2   A5   --    *2*
+
+  *1*   A6   A0   A1   A2   A3    *1*
+
+*0*   --   --   B1   --   B5    *0*
+
+   *A*  *B*  *C*  *D*  *E*
+
+Winner of this match is data/ExponentialFitness/1/iteration19999/player5.data
