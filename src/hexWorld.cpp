@@ -165,7 +165,8 @@ void hexWorld::nextGeneration()
 							// The following is a variation on the way to weigh gamesWon in our fitness function by using powers of 2
 							// neighborsGamesWon.push_back(static_cast<int>(pow(2.0, gamesWon)));
 
-							// Use the getBreeder function to determine whose genes to use
+							// Use the getBreeder function to determine whose genes to use. 
+							// Takes a seed Generator and a vector of relative probabilities (neighborsGamesWon)
 							breederChoice = getBreeder(seedGenerator, neighborsGamesWon);
 
 							// If breeder choice is the last element, then we chose to keep the weight
